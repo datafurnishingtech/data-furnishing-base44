@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 
 const bureauCards = [
   { name: "Experian", abbr: "EX", coverage: 98.7, change: 2.6 },
@@ -20,14 +21,14 @@ const additionalBureaus = [
 ];
 
 const furnisherCoverage = [
-  { name: "Synchrony Bank", abbr: "SYN", product: "Synchrony Bank Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 97.2, confidence: "High", trend: "up" },
-  { name: "Capital One", abbr: "CO", product: "Quicksilver Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 96.1, confidence: "High", trend: "up" },
-  { name: "Chase", abbr: "CH", product: "Freedom Unlimited", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 98.8, confidence: "High", trend: "up" },
-  { name: "American Express", abbr: "AE", product: "Blue Cash Everyday", type: "Charge Card", bureaus: ["EX", "EQ", "TU", "IN"], coverage: 95.6, confidence: "High", trend: "up" },
-  { name: "Citi", abbr: "CI", product: "Citi Double Cash", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 94.2, confidence: "Medium", trend: "right" },
-  { name: "LendingClub", abbr: "LC", product: "Personal Loan", type: "Personal Loan", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 89.3, confidence: "Medium", trend: "up" },
-  { name: "QuickLoans", abbr: "QL", product: "Fixed 30yr Mortgage", type: "Mortgage", bureaus: ["EX", "EQ", "TU", "IN", "SB"], coverage: 86.7, confidence: "Medium", trend: "up" },
-  { name: "NetCredit", abbr: "NC", product: "Credit Builder Loan", type: "Personal Loan", bureaus: ["EX", "EQ", "TU", "IN"], coverage: 72.1, confidence: "Low", trend: "down" },
+  { name: "Synchrony Bank", domain: "synchrony.com", abbr: "SYN", product: "Synchrony Bank Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 97.2, confidence: "High", trend: "up" },
+  { name: "Capital One", domain: "capitalone.com", abbr: "CO", product: "Quicksilver Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 96.1, confidence: "High", trend: "up" },
+  { name: "Chase", domain: "chase.com", abbr: "CH", product: "Freedom Unlimited", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 98.8, confidence: "High", trend: "up" },
+  { name: "American Express", domain: "americanexpress.com", abbr: "AE", product: "Blue Cash Everyday", type: "Charge Card", bureaus: ["EX", "EQ", "TU", "IN"], coverage: 95.6, confidence: "High", trend: "up" },
+  { name: "Citi", domain: "citi.com", abbr: "CI", product: "Citi Double Cash", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 94.2, confidence: "Medium", trend: "right" },
+  { name: "LendingClub", domain: "lendingclub.com", abbr: "LC", product: "Personal Loan", type: "Personal Loan", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 89.3, confidence: "Medium", trend: "up" },
+  { name: "Quicken Loans", domain: "quickenloans.com", abbr: "QL", product: "Fixed 30yr Mortgage", type: "Mortgage", bureaus: ["EX", "EQ", "TU", "IN", "SB"], coverage: 86.7, confidence: "Medium", trend: "up" },
+  { name: "NetCredit", domain: "netcredit.com", abbr: "NC", product: "Credit Builder Loan", type: "Personal Loan", bureaus: ["EX", "EQ", "TU", "IN"], coverage: 72.1, confidence: "Low", trend: "down" },
 ];
 
 const coverageGaps = [
@@ -137,7 +138,7 @@ export default function BureauCoverage() {
                 >
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-[8px] font-semibold text-primary">{f.abbr}</div>
+                      <FurnisherLogo domain={f.domain} name={f.name} size="sm" />
                       <span className="text-[11px] font-normal text-foreground">{f.name}</span>
                     </div>
                   </td>

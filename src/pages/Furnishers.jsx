@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Building2, ShieldCheck, UserPlus, Globe, Search, Filter, MoreVertical, CheckCircle2, Clock, X, ArrowRight, ExternalLink } from "lucide-react";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,30 +25,7 @@ const furnishers = [
   { name: "TransUnion Auto", domain: "transunion.com", category: "Auto Lending", products: 5, bureaus: ["TU"], volume: "321K", verification: "Verified", lastUpdated: "May 28, 2025" },
 ];
 
-const initials = (name) => name.split(" ").map(w => w[0]).join("").slice(0, 2);
 
-function FurnisherLogo({ domain, name, size = "sm" }) {
-  const [failed, setFailed] = React.useState(false);
-  const dim = size === "lg" ? "w-10 h-10" : "w-7 h-7";
-  const textSize = size === "lg" ? "text-[11px]" : "text-[9px]";
-  if (!failed) {
-    return (
-      <div className={`${dim} rounded-md overflow-hidden bg-white border border-border/40 flex items-center justify-center flex-shrink-0`}>
-        <img
-          src={`https://logo.clearbit.com/${domain}`}
-          alt={name}
-          className="w-full h-full object-contain p-0.5"
-          onError={() => setFailed(true)}
-        />
-      </div>
-    );
-  }
-  return (
-    <div className={`${dim} rounded-md bg-primary/10 flex items-center justify-center ${textSize} font-semibold text-primary flex-shrink-0`}>
-      {initials(name)}
-    </div>
-  );
-}
 
 export default function Furnishers() {
   const [selected, setSelected] = useState(furnishers[0]);
