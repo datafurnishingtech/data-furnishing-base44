@@ -13,15 +13,15 @@ const furnishers = [
   { name: "Synchrony Bank", domain: "synchrony.com", category: "Financial Services", products: 12, bureaus: ["TU", "EQ", "EX"], volume: "2.3M", verification: "Verified", lastUpdated: "May 31, 2025" },
   { name: "Capital One", domain: "capitalone.com", category: "Financial Services", products: 15, bureaus: ["TU", "EQ", "EX"], volume: "2.2M", verification: "Verified", lastUpdated: "May 31, 2025" },
   { name: "American Express", domain: "americanexpress.com", category: "Financial Services", products: 9, bureaus: ["TU", "EQ", "EX"], volume: "1.5M", verification: "Verified", lastUpdated: "May 31, 2025" },
-  { name: "Citi", domain: "citi.com", category: "Financial Services", products: 10, bureaus: ["TU", "EQ", "EX"], volume: "1.5M", verification: "Verified", lastUpdated: "May 31, 2025" },
-  { name: "Barclays", domain: "barclays.com", category: "Financial Services", products: 8, bureaus: ["TU", "EQ", "EX"], volume: "1.2M", verification: "Pending", lastUpdated: "May 31, 2025" },
+  { name: "Citi", domain: "citibank.com", category: "Financial Services", products: 10, bureaus: ["TU", "EQ", "EX"], volume: "1.5M", verification: "Verified", lastUpdated: "May 31, 2025" },
+  { name: "Barclays", domain: "barclays.co.uk", category: "Financial Services", products: 8, bureaus: ["TU", "EQ", "EX"], volume: "1.2M", verification: "Pending", lastUpdated: "May 31, 2025" },
   { name: "Wells Fargo", domain: "wellsfargo.com", category: "Financial Services", products: 14, bureaus: ["TU", "EQ", "EX"], volume: "1.1M", verification: "Verified", lastUpdated: "May 31, 2025" },
   { name: "Discover Financial", domain: "discover.com", category: "Financial Services", products: 7, bureaus: ["TU", "EQ", "EX"], volume: "960K", verification: "Verified", lastUpdated: "May 30, 2025" },
   { name: "Chase", domain: "chase.com", category: "Financial Services", products: 13, bureaus: ["TU", "EQ", "EX"], volume: "872K", verification: "Verified", lastUpdated: "May 30, 2025" },
   { name: "U.S. Bank", domain: "usbank.com", category: "Financial Services", products: 11, bureaus: ["TU", "EQ"], volume: "745K", verification: "Verified", lastUpdated: "May 30, 2025" },
   { name: "Ally Financial", domain: "ally.com", category: "Financial Services", products: 8, bureaus: ["TU", "EQ"], volume: "615K", verification: "Verified", lastUpdated: "May 29, 2025" },
   { name: "Navient", domain: "navient.com", category: "Financial Services", products: 6, bureaus: ["TU", "EQ", "EX"], volume: "502K", verification: "Verified", lastUpdated: "May 29, 2025" },
-  { name: "Experian RentBureau", domain: "rentbureau.com", category: "Rent Reporting", products: 4, bureaus: ["TU", "EQ", "EX"], volume: "430K", verification: "Verified", lastUpdated: "May 29, 2025" },
+  { name: "Experian RentBureau", domain: "experian.com", category: "Rent Reporting", products: 4, bureaus: ["TU", "EQ", "EX"], volume: "430K", verification: "Verified", lastUpdated: "May 29, 2025" },
   { name: "TransUnion Auto", domain: "transunion.com", category: "Auto Lending", products: 5, bureaus: ["TU"], volume: "321K", verification: "Verified", lastUpdated: "May 28, 2025" },
 ];
 

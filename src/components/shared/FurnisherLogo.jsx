@@ -3,9 +3,9 @@ import React, { useState } from "react";
 const initials = (name) => name.split(" ").map(w => w[0]).join("").slice(0, 2);
 
 const logoSources = (domain) => [
+  `https://img.logo.dev/${domain}?token=pk_f5OB1ayuQZekUv3LLHO2Dg&size=64&format=png`,
   `https://logo.clearbit.com/${domain}`,
-  `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
-  `https://icons.duckduckgo.com/ip3/${domain}.ico`,
+  `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
 ];
 
 export default function FurnisherLogo({ domain, name, size = "sm" }) {
