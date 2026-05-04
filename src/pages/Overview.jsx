@@ -2,16 +2,17 @@ import React from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Building2, TrendingUp, Globe, Package, ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 import { Badge } from "@/components/ui/badge";
 import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area } from "recharts";
 
 const topFurnishers = [
-  { rank: 1, name: "Synchrony Bank", tradelines: "2.3M" },
-  { rank: 2, name: "Capital One", tradelines: "2.2M" },
-  { rank: 3, name: "American Express", tradelines: "1.5M" },
-  { rank: 4, name: "Citi", tradelines: "1.5M" },
-  { rank: 5, name: "Barclays", tradelines: "1.2M" },
+  { rank: 1, name: "Synchrony Bank", domain: "synchrony.com", tradelines: "2.3M" },
+  { rank: 2, name: "Capital One", domain: "capitalone.com", tradelines: "2.2M" },
+  { rank: 3, name: "American Express", domain: "americanexpress.com", tradelines: "1.5M" },
+  { rank: 4, name: "Citi", domain: "citibank.com", tradelines: "1.5M" },
+  { rank: 5, name: "Barclays", domain: "barclays.co.uk", tradelines: "1.2M" },
 ];
 
 const recentAlerts = [
@@ -38,11 +39,11 @@ const watchlistData = [
 ];
 
 const tradeActivity = [
-  { id: "TRD-982731", furnisher: "Synchrony Bank", product: "Credit Card", bureau: "TransUnion", date: "May 31, 2025", status: "Verified" },
-  { id: "TRD-982730", furnisher: "Capital One", product: "Credit Card", bureau: "Equifax", date: "May 31, 2025", status: "Verified" },
-  { id: "TRD-982729", furnisher: "American Express", product: "Charge Card", bureau: "Experian", date: "May 31, 2025", status: "Verified" },
-  { id: "TRD-982728", furnisher: "Citi", product: "Personal Loan", bureau: "TransUnion", date: "May 31, 2025", status: "Pending" },
-  { id: "TRD-982727", furnisher: "Barclays", product: "Credit Card", bureau: "Equifax", date: "May 31, 2025", status: "Verified" },
+  { id: "TRD-982731", furnisher: "Synchrony Bank", domain: "synchrony.com", product: "Credit Card", bureau: "TransUnion", date: "May 31, 2025", status: "Verified" },
+  { id: "TRD-982730", furnisher: "Capital One", domain: "capitalone.com", product: "Credit Card", bureau: "Equifax", date: "May 31, 2025", status: "Verified" },
+  { id: "TRD-982729", furnisher: "American Express", domain: "americanexpress.com", product: "Charge Card", bureau: "Experian", date: "May 31, 2025", status: "Verified" },
+  { id: "TRD-982728", furnisher: "Citi", domain: "citibank.com", product: "Personal Loan", bureau: "TransUnion", date: "May 31, 2025", status: "Pending" },
+  { id: "TRD-982727", furnisher: "Barclays", domain: "barclays.co.uk", product: "Credit Card", bureau: "Equifax", date: "May 31, 2025", status: "Verified" },
 ];
 
 const trendData = [
@@ -109,7 +110,12 @@ export default function Overview() {
                 {topFurnishers.map((f) => (
                   <tr key={f.rank} className="border-b border-border/30 last:border-0">
                     <td className="py-2 text-[10px] text-muted-foreground/50 w-6 tabular-nums">{f.rank}</td>
-                    <td className="py-2 text-[11px] font-normal text-foreground">{f.name}</td>
+                    <td className="py-2">
+                      <div className="flex items-center gap-2">
+                        <FurnisherLogo domain={f.domain} name={f.name} size="sm" />
+                        <span className="text-[11px] font-normal text-foreground">{f.name}</span>
+                      </div>
+                    </td>
                     <td className="py-2 text-[11px] text-foreground/80 text-right tabular-nums">{f.tradelines}</td>
                   </tr>
                 ))}
@@ -219,7 +225,12 @@ export default function Overview() {
               {tradeActivity.map((t) => (
                 <tr key={t.id} className="border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors">
                   <td className="py-2 text-[10px] text-muted-foreground/60 font-mono tabular-nums">{t.id}</td>
-                  <td className="py-2 text-[11px] font-normal text-foreground">{t.furnisher}</td>
+                  <td className="py-2">
+                    <div className="flex items-center gap-2">
+                      <FurnisherLogo domain={t.domain} name={t.furnisher} size="sm" />
+                      <span className="text-[11px] font-normal text-foreground">{t.furnisher}</span>
+                    </div>
+                  </td>
                   <td className="py-2 text-[11px] text-foreground/70">{t.product}</td>
                   <td className="py-2 text-[11px] text-foreground/70">{t.bureau}</td>
                   <td className="py-2 text-[10px] text-muted-foreground/60 tabular-nums">{t.date}</td>

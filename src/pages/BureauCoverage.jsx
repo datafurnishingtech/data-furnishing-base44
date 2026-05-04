@@ -25,7 +25,7 @@ const furnisherCoverage = [
   { name: "Capital One", domain: "capitalone.com", abbr: "CO", product: "Quicksilver Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 96.1, confidence: "High", trend: "up" },
   { name: "Chase", domain: "chase.com", abbr: "CH", product: "Freedom Unlimited", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 98.8, confidence: "High", trend: "up" },
   { name: "American Express", domain: "americanexpress.com", abbr: "AE", product: "Blue Cash Everyday", type: "Charge Card", bureaus: ["EX", "EQ", "TU", "IN"], coverage: 95.6, confidence: "High", trend: "up" },
-  { name: "Citi", domain: "citi.com", abbr: "CI", product: "Citi Double Cash", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 94.2, confidence: "Medium", trend: "right" },
+  { name: "Citi", domain: "citibank.com", abbr: "CI", product: "Citi Double Cash", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 94.2, confidence: "Medium", trend: "right" },
   { name: "LendingClub", domain: "lendingclub.com", abbr: "LC", product: "Personal Loan", type: "Personal Loan", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 89.3, confidence: "Medium", trend: "up" },
   { name: "Quicken Loans", domain: "quickenloans.com", abbr: "QL", product: "Fixed 30yr Mortgage", type: "Mortgage", bureaus: ["EX", "EQ", "TU", "IN", "SB"], coverage: 86.7, confidence: "Medium", trend: "up" },
   { name: "NetCredit", domain: "netcredit.com", abbr: "NC", product: "Credit Builder Loan", type: "Personal Loan", bureaus: ["EX", "EQ", "TU", "IN"], coverage: 72.1, confidence: "Low", trend: "down" },
@@ -192,7 +192,7 @@ export default function BureauCoverage() {
               <button onClick={() => setSelectedFurnisher(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50" /></button>
             </div>
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-semibold text-primary flex-shrink-0">{selectedFurnisher.abbr}</div>
+              <FurnisherLogo domain={selectedFurnisher.domain} name={selectedFurnisher.name} size="md" />
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-[11px] font-medium text-foreground">{selectedFurnisher.name}</span>
