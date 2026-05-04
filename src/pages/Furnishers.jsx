@@ -26,6 +26,29 @@ const furnishers = [
 
 const initials = (name) => name.split(" ").map(w => w[0]).join("").slice(0, 2);
 
+function FurnisherLogo({ domain, name, size = "sm" }) {
+  const [failed, setFailed] = React.useState(false);
+  const dim = size === "lg" ? "w-10 h-10" : "w-7 h-7";
+  const textSize = size === "lg" ? "text-[11px]" : "text-[9px]";
+  if (!failed) {
+    return (
+      <div className={`${dim} rounded-md overflow-hidden bg-white border border-border/40 flex items-center justify-center flex-shrink-0`}>
+        <img
+          src={`https://logo.clearbit.com/${domain}`}
+          alt={name}
+          className="w-full h-full object-contain p-0.5"
+          onError={() => setFailed(true)}
+        />
+      </div>
+    );
+  }
+  return (
+    <div className={`${dim} rounded-md bg-primary/10 flex items-center justify-center ${textSize} font-semibold text-primary flex-shrink-0`}>
+      {initials(name)}
+    </div>
+  );
+}
+
 export default function Furnishers() {
   const [selected, setSelected] = useState(furnishers[0]);
 
@@ -120,9 +143,7 @@ export default function Furnishers() {
                 >
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-[9px] font-semibold text-primary flex-shrink-0">
-                        {initials(f.name)}
-                      </div>
+                      <FurnisherLogo domain={f.domain} name={f.name} size="sm" />
                       <div>
                         <p className="text-[11px] font-normal text-foreground">{f.name}</p>
                         <p className="text-[10px] text-muted-foreground/60">{f.domain}</p>
@@ -190,9 +211,7 @@ export default function Furnishers() {
             </div>
 
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-[11px] font-semibold text-primary flex-shrink-0">
-                {initials(selected.name)}
-              </div>
+              <FurnisherLogo domain={selected.domain} name={selected.name} size="lg" />
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-[11px] font-medium text-foreground truncate">{selected.name}</span>
