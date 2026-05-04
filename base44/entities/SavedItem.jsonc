@@ -1,0 +1,39 @@
+{
+  "name": "SavedItem",
+  "type": "object",
+  "properties": {
+    "workspace_id": {
+      "type": "string"
+    },
+    "item_type": {
+      "type": "string",
+      "enum": [
+        "company",
+        "product"
+      ],
+      "default": "company"
+    },
+    "company_id": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    }
+  },
+  "required": [
+    "workspace_id",
+    "item_type"
+  ]
+}

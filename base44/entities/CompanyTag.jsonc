@@ -1,0 +1,16 @@
+{
+  "name": "CompanyTag",
+  "type": "object",
+  "properties": {
+    "company_id": {
+      "type": "string"
+    },
+    "tag_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "company_id",
+    "tag_id"
+  ]
+}

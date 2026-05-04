@@ -1,0 +1,154 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "company_id": {
+      "type": "string",
+      "description": "Reference to Company entity"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "product_type": {
+      "type": "string",
+      "enum": [
+        "credit_builder_loan",
+        "secured_card",
+        "charge_card",
+        "revolving_line",
+        "installment_account",
+        "rent_reporting",
+        "utility_reporting",
+        "subscription_reporting",
+        "business_tradeline",
+        "net_terms",
+        "vendor_credit",
+        "fleet_card",
+        "commercial_loan",
+        "business_credit_card",
+        "auto_loan",
+        "auto_lease",
+        "bnpl",
+        "pos_financing",
+        "lease_to_own",
+        "specialty_data",
+        "bureau_data",
+        "api_infrastructure",
+        "other"
+      ]
+    },
+    "consumer_or_business": {
+      "type": "string",
+      "enum": [
+        "consumer",
+        "business",
+        "both",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "description": {
+      "type": "string"
+    },
+    "eligibility_summary": {
+      "type": "string"
+    },
+    "pricing_summary": {
+      "type": "string"
+    },
+    "monthly_cost": {
+      "type": "number"
+    },
+    "setup_fee": {
+      "type": "number"
+    },
+    "annual_fee": {
+      "type": "number"
+    },
+    "reported_limit_min": {
+      "type": "number"
+    },
+    "reported_limit_max": {
+      "type": "number"
+    },
+    "reporting_speed": {
+      "type": "string"
+    },
+    "reporting_frequency": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "weekly",
+        "real_time",
+        "unknown",
+        "other"
+      ],
+      "default": "unknown"
+    },
+    "account_type_reported": {
+      "type": "string"
+    },
+    "payment_required": {
+      "type": "boolean"
+    },
+    "requires_credit_check": {
+      "type": "boolean"
+    },
+    "requires_business_entity": {
+      "type": "boolean"
+    },
+    "requires_ein": {
+      "type": "boolean"
+    },
+    "requires_ssn": {
+      "type": "boolean"
+    },
+    "requires_bank_connection": {
+      "type": "boolean"
+    },
+    "requires_landlord_participation": {
+      "type": "boolean"
+    },
+    "requires_property_manager": {
+      "type": "boolean"
+    },
+    "affiliate_available": {
+      "type": "boolean"
+    },
+    "marketplace_available": {
+      "type": "boolean"
+    },
+    "apply_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "verified",
+        "needs_review",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "confidence_score": {
+      "type": "number"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "last_verified_at": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "company_id",
+    "product_name",
+    "product_type"
+  ]
+}

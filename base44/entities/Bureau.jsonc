@@ -1,0 +1,45 @@
+{
+  "name": "Bureau",
+  "type": "object",
+  "properties": {
+    "bureau_name": {
+      "type": "string"
+    },
+    "abbr": {
+      "type": "string",
+      "description": "Short abbreviation e.g. EX, EQ, TU"
+    },
+    "bureau_type": {
+      "type": "string",
+      "enum": [
+        "consumer",
+        "business",
+        "specialty",
+        "data_exchange"
+      ],
+      "default": "consumer"
+    },
+    "website_url": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string",
+      "default": "US"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "bureau_name",
+    "bureau_type"
+  ]
+}

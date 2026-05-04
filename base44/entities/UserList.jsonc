@@ -1,0 +1,27 @@
+{
+  "name": "UserList",
+  "type": "object",
+  "properties": {
+    "workspace_id": {
+      "type": "string"
+    },
+    "list_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "private",
+        "workspace"
+      ],
+      "default": "private"
+    }
+  },
+  "required": [
+    "workspace_id",
+    "list_name"
+  ]
+}

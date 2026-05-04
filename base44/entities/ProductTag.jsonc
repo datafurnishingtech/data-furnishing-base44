@@ -1,0 +1,16 @@
+{
+  "name": "ProductTag",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string"
+    },
+    "tag_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "product_id",
+    "tag_id"
+  ]
+}

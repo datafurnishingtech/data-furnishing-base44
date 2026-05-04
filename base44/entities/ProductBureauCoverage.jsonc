@@ -1,0 +1,78 @@
+{
+  "name": "ProductBureauCoverage",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "Reference to Product entity"
+    },
+    "bureau_id": {
+      "type": "string",
+      "description": "Reference to Bureau entity"
+    },
+    "company_id": {
+      "type": "string",
+      "description": "Denormalized for faster filtering"
+    },
+    "reporting_status": {
+      "type": "string",
+      "enum": [
+        "confirmed_reports",
+        "likely_reports",
+        "does_not_report",
+        "unknown",
+        "delinquency_only",
+        "optional_add_on"
+      ],
+      "default": "unknown"
+    },
+    "reporting_type": {
+      "type": "string",
+      "enum": [
+        "positive_payment_history",
+        "negative_only",
+        "full_tradeline",
+        "inquiry_only",
+        "alternative_data",
+        "business_payment_data",
+        "rental_payment_data",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "account_classification": {
+      "type": "string",
+      "enum": [
+        "revolving",
+        "installment",
+        "open_account",
+        "charge_account",
+        "rental",
+        "utility",
+        "business_trade",
+        "commercial_finance",
+        "auto",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "evidence_url": {
+      "type": "string"
+    },
+    "confidence_score": {
+      "type": "number"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "product_id",
+    "bureau_id",
+    "reporting_status"
+  ]
+}

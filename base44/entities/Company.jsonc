@@ -1,0 +1,126 @@
+{
+  "name": "Company",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Display name of the company"
+    },
+    "legal_name": {
+      "type": "string",
+      "description": "Legal registered name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-friendly identifier"
+    },
+    "website_url": {
+      "type": "string",
+      "description": "Company website"
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "Logo image URL"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "One-line summary"
+    },
+    "long_description": {
+      "type": "string",
+      "description": "Full profile description"
+    },
+    "company_type": {
+      "type": "string",
+      "enum": [
+        "direct_furnisher",
+        "tradeline_provider",
+        "reporting_intermediary",
+        "tradeline_adjacent",
+        "credit_builder",
+        "rent_reporting",
+        "business_credit_vendor",
+        "commercial_lender",
+        "auto_lender",
+        "bnpl_pos_finance",
+        "specialty_reporting_company",
+        "data_infrastructure",
+        "bureau",
+        "unknown"
+      ],
+      "description": "Primary classification of the company"
+    },
+    "primary_category_id": {
+      "type": "string",
+      "description": "Reference to Category entity"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "verified",
+        "needs_review",
+        "rejected",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "partially_verified",
+        "verified"
+      ],
+      "default": "unverified"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "0-100 data confidence score"
+    },
+    "headquarters_location": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string",
+      "default": "US"
+    },
+    "state": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "support_email": {
+      "type": "string"
+    },
+    "contact_page_url": {
+      "type": "string"
+    },
+    "pricing_page_url": {
+      "type": "string"
+    },
+    "application_url": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Primary research source"
+    },
+    "source_notes": {
+      "type": "string"
+    },
+    "approved_by_user_id": {
+      "type": "string"
+    },
+    "last_verified_at": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "company_name",
+    "company_type"
+  ]
+}
