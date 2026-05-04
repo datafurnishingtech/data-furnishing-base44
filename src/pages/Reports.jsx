@@ -36,107 +36,103 @@ export default function Reports() {
       <div className="flex-1 min-w-0">
         <PageHeader title="Reports" subtitle="Export structured credit ecosystem intelligence and automate recurring insights." />
 
-        <div className="grid grid-cols-5 gap-4 mb-6">
-          <StatCard label="Generated Reports" value="456" change={18.6} icon={FileText} />
-          <StatCard label="Scheduled Reports" value="38" change={11.4} icon={Clock} />
-          <StatCard label="Shared Reports" value="124" change={22.1} icon={Share2} />
-          <StatCard label="Custom Templates" value="19" change={5.6} icon={Layout} />
-          <StatCard label="Export Activity" value="9.2K" change={16.3} icon={TrendingUp} />
+        {/* Stats */}
+        <div className="grid grid-cols-5 gap-3 mb-6">
+          <StatCard label="Generated reports" value="456" change={18.6} />
+          <StatCard label="Scheduled reports" value="38" change={11.4} />
+          <StatCard label="Shared reports" value="124" change={22.1} />
+          <StatCard label="Custom templates" value="19" change={5.6} />
+          <StatCard label="Export activity" value="9.2K" change={16.3} />
         </div>
 
         {/* Recent Reports */}
-        <div className="bg-card rounded-xl border border-border overflow-hidden mb-6">
-          <div className="px-5 py-4 border-b border-border">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold">Recent Reports</h3>
-              <Button variant="outline" size="sm" className="gap-1.5 text-xs">Export</Button>
+        <div className="bg-card rounded-lg border border-border/60 overflow-hidden mb-5">
+          <div className="px-4 py-3 border-b border-border/50">
+            <div className="flex items-center justify-between mb-2.5">
+              <h3 className="text-[11.5px] font-medium text-foreground">Recent reports</h3>
+              <Button variant="outline" size="sm" className="text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">Export</Button>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className="relative flex-1 max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input placeholder="Search reports by name or owner..." className="pl-9 h-8 text-xs" />
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />
+                <Input placeholder="Search reports by name or owner..." className="pl-8 h-7 text-[11px] border-border/60" />
               </div>
-              {["All Types", "All Owners", "All Statuses"].map((f) => (
-                <Select key={f}><SelectTrigger className="w-auto min-w-[100px] h-8 text-xs"><SelectValue placeholder={f} /></SelectTrigger><SelectContent><SelectItem value="all">{f}</SelectItem></SelectContent></Select>
+              {["All types", "All owners", "All statuses"].map((f) => (
+                <Select key={f}><SelectTrigger className="w-auto min-w-[90px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal"><SelectValue placeholder={f} /></SelectTrigger><SelectContent><SelectItem value="all">{f}</SelectItem></SelectContent></Select>
               ))}
-              <Button variant="outline" size="sm" className="gap-1.5 text-xs h-8"><Filter className="w-3 h-3" /> Filters</Button>
+              <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60"><Filter className="w-3 h-3" /> Filters</Button>
             </div>
           </div>
           <table className="w-full">
             <thead>
-              <tr className="bg-muted/30 text-[10px] text-muted-foreground uppercase border-b border-border">
-                <th className="text-left px-4 py-2 font-medium">Report Name</th>
-                <th className="text-left px-3 py-2 font-medium">Type</th>
-                <th className="text-left px-3 py-2 font-medium">Owner</th>
-                <th className="text-left px-3 py-2 font-medium">Last Run</th>
-                <th className="text-left px-3 py-2 font-medium">Schedule</th>
-                <th className="text-left px-3 py-2 font-medium">Status</th>
-                <th className="text-left px-3 py-2 font-medium">Format</th>
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <th className="text-left px-4 py-2.5 font-medium">Report name</th>
+                <th className="text-left px-3 py-2.5 font-medium">Type</th>
+                <th className="text-left px-3 py-2.5 font-medium">Owner</th>
+                <th className="text-left px-3 py-2.5 font-medium">Last run</th>
+                <th className="text-left px-3 py-2.5 font-medium">Schedule</th>
+                <th className="text-left px-3 py-2.5 font-medium">Status</th>
+                <th className="text-left px-3 py-2.5 font-medium">Format</th>
                 <th className="w-8"></th>
               </tr>
             </thead>
             <tbody>
-              {reports.map((r) => (
-                <tr
-                  key={r.name}
-                  onClick={() => setSelected(r)}
-                  className={`border-b border-border/50 hover:bg-muted/20 cursor-pointer ${selected?.name === r.name ? "bg-primary/5" : ""}`}
-                >
-                  <td className="px-4 py-3 text-xs font-medium">{r.name}</td>
-                  <td className="px-3 py-3 text-xs">{r.type}</td>
-                  <td className="px-3 py-3">
+              {reports.map((r, idx) => (
+                <tr key={r.name} onClick={() => setSelected(r)} className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${selected?.name === r.name ? "bg-primary/5" : ""}`}>
+                  <td className="px-4 py-2.5 text-[11px] font-normal text-foreground">{r.name}</td>
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{r.type}</td>
+                  <td className="px-3 py-2.5">
                     <div className="flex items-center gap-1.5">
-                      <div className={`w-5 h-5 rounded-full ${initColors[reports.indexOf(r) % initColors.length]} flex items-center justify-center text-[8px] font-bold text-white`}>{r.initials}</div>
-                      <span className="text-xs">{r.owner}</span>
+                      <div className={`w-5 h-5 rounded-full ${initColors[idx % initColors.length]} flex items-center justify-center text-[8px] font-bold text-white`}>{r.initials}</div>
+                      <span className="text-[11px] text-foreground/70">{r.owner}</span>
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-xs text-muted-foreground">{r.lastRun}</td>
-                  <td className="px-3 py-3 text-xs">{r.schedule}</td>
-                  <td className="px-3 py-3">
-                    <span className={`inline-flex items-center gap-1 text-xs ${r.status === "Completed" ? "text-emerald-500" : "text-destructive"}`}>
-                      {r.status === "Completed" ? <CheckCircle2 className="w-3 h-3" /> : <AlertCircle className="w-3 h-3" />}
+                  <td className="px-3 py-2.5 text-[10px] text-muted-foreground/60 tabular-nums">{r.lastRun}</td>
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{r.schedule}</td>
+                  <td className="px-3 py-2.5">
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-medium ${r.status === "Completed" ? "text-emerald-500" : "text-destructive"}`}>
+                      {r.status === "Completed" ? <CheckCircle2 className="w-2.5 h-2.5" /> : <AlertCircle className="w-2.5 h-2.5" />}
                       {r.status}
                     </span>
                   </td>
-                  <td className="px-3 py-3"><Badge variant="outline" className="text-[10px] h-5">{r.format}</Badge></td>
-                  <td className="px-2"><MoreVertical className="w-3.5 h-3.5 text-muted-foreground" /></td>
+                  <td className="px-3 py-2.5"><Badge variant="outline" className="text-[9.5px] h-4 px-1.5 border-border/60">{r.format}</Badge></td>
+                  <td className="px-2"><MoreVertical className="w-3 h-3 text-muted-foreground/30" /></td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="flex items-center justify-between px-4 py-3 border-t border-border">
-            <span className="text-xs text-muted-foreground">Showing 1 to 8 of 456 reports</span>
+          <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
+            <span className="text-[10px] text-muted-foreground/60">Showing 1–8 of 456 reports</span>
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5, "...", 57].map((p, i) => (
-                <button key={i} className={`w-7 h-7 text-xs rounded flex items-center justify-center ${p === 1 ? "bg-primary text-white" : "text-muted-foreground hover:bg-muted"}`}>{p}</button>
+                <button key={i} className={`w-6 h-6 text-[10px] rounded flex items-center justify-center ${p === 1 ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"}`}>{p}</button>
               ))}
             </div>
           </div>
         </div>
 
         {/* Report Templates */}
-        <div className="bg-card rounded-xl border border-border p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-card rounded-lg border border-border/60 p-5">
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-sm font-semibold">Report Templates</h3>
-              <p className="text-xs text-muted-foreground">Start from a template to quickly generate insights.</p>
+              <h3 className="text-[11.5px] font-medium text-foreground">Report templates</h3>
+              <p className="text-[10px] text-muted-foreground/60 mt-0.5">Start from a template to quickly generate insights.</p>
             </div>
-            <button className="text-xs text-primary font-medium hover:underline">View all templates →</button>
+            <button className="text-[10px] text-primary/70 hover:text-primary transition-colors flex items-center gap-1">View all templates <ArrowRight className="w-2.5 h-2.5" /></button>
           </div>
           <div className="grid grid-cols-5 gap-3">
             {templates.map((t) => (
-              <div key={t.name} className="border border-border rounded-lg p-3 hover:border-primary/30 transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-2">
-                  <FileText className="w-4 h-4" />
+              <div key={t.name} className="border border-border/60 rounded-lg p-3 hover:border-primary/30 transition-colors">
+                <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-2">
+                  <FileText className="w-3.5 h-3.5" />
                 </div>
-                <h4 className="text-xs font-semibold mb-1">{t.name}</h4>
-                <p className="text-[10px] text-muted-foreground mb-3 line-clamp-2">{t.desc}</p>
-                <div className="flex gap-3 text-[10px] text-muted-foreground mb-3">
-                  <span>{t.metrics} Metrics</span>
-                  <span>{t.pages} Pages</span>
-                  <span>{t.frequency}</span>
+                <h4 className="text-[11px] font-medium text-foreground mb-1 leading-snug">{t.name}</h4>
+                <p className="text-[10px] text-muted-foreground/70 mb-2.5 line-clamp-2 leading-relaxed">{t.desc}</p>
+                <div className="flex gap-2 text-[9.5px] text-muted-foreground/60 mb-2.5">
+                  <span>{t.metrics} metrics</span>
+                  <span>{t.pages} pages</span>
                 </div>
-                <Button variant="outline" size="sm" className="w-full text-[10px] h-7">Use Template</Button>
+                <button className="w-full border border-border/60 text-[10px] h-6 rounded flex items-center justify-center hover:bg-muted/30 transition-colors text-foreground/70">Use template</button>
               </div>
             ))}
           </div>
@@ -145,69 +141,73 @@ export default function Reports() {
 
       {/* Right Panel */}
       {selected && (
-        <div className="w-[280px] flex-shrink-0">
-          <div className="bg-card rounded-xl border border-border p-5 sticky top-20">
+        <div className="w-[260px] flex-shrink-0">
+          <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-primary" />
-                <h3 className="text-xs font-semibold">{selected.name}</h3>
+                <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
+                <h3 className="text-[11px] font-medium text-foreground truncate">{selected.name}</h3>
               </div>
-              <button onClick={() => setSelected(null)}><X className="w-4 h-4 text-muted-foreground" /></button>
+              <button onClick={() => setSelected(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50" /></button>
             </div>
 
-            <div className="flex gap-1 mb-4 border-b border-border">
+            {/* Tabs */}
+            <div className="flex gap-0 mb-3 border-b border-border/50">
               {["Overview", "Schedule", "History", "Sharing"].map((t, i) => (
-                <button key={t} className={`text-[10px] px-2.5 py-2 font-medium border-b-2 ${i === 0 ? "border-primary text-primary" : "border-transparent text-muted-foreground"}`}>{t}</button>
+                <button key={t} className={`text-[10px] px-2 py-1.5 border-b-2 transition-colors ${i === 0 ? "border-primary text-primary font-medium" : "border-transparent text-muted-foreground/60 hover:text-foreground"}`}>{t}</button>
               ))}
             </div>
 
             <div className="space-y-3">
               <div>
-                <h4 className="text-xs font-semibold mb-1">Report Summary</h4>
-                <p className="text-[10px] text-muted-foreground">Comprehensive coverage analysis across furnishers, products, and bureaus.</p>
+                <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">Report summary</h4>
+                <p className="text-[10.5px] text-muted-foreground/70 leading-relaxed">Comprehensive coverage analysis across furnishers, products, and bureaus.</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-[10px]">
-                {[["Total Furnishers", "2,847"], ["Verified Furnishers", "1,842 (64.7%)"], ["Bureau Coverage", "98.1%"], ["Products", "7,312"], ["Active Tradelines", "24.6M"], ["Data Sources", "5"]].map(([k, v]) => (
-                  <div key={k} className="flex justify-between"><span className="text-muted-foreground">{k}</span><span className="font-medium">{v}</span></div>
-                ))}
-              </div>
-
-              <div className="pt-3 border-t border-border">
-                <h4 className="text-xs font-semibold mb-2">Included Sections</h4>
-                {["Executive Summary", "Furnisher Coverage Analysis", "Bureau Coverage Map", "Product Coverage Breakdown", "Tradeline Volume Trends", "Data Quality Overview", "Key Insights & Recommendations"].map((s) => (
-                  <div key={s} className="flex items-center gap-1.5 py-0.5">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                    <span className="text-[10px]">{s}</span>
+              <div className="grid grid-cols-2 gap-y-1.5 gap-x-3">
+                {[["Total furnishers", "2,847"], ["Verified furnishers", "1,842 (64.7%)"], ["Bureau coverage", "98.1%"], ["Products", "7,312"], ["Active tradelines", "24.6M"], ["Data sources", "5"]].map(([k, v]) => (
+                  <div key={k}>
+                    <p className="text-[9.5px] text-muted-foreground/60">{k}</p>
+                    <p className="text-[10.5px] font-medium text-foreground">{v}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="pt-3 border-t border-border">
-                <h4 className="text-xs font-semibold mb-2">Recipients (6)</h4>
+              <div className="pt-2.5 border-t border-border/40">
+                <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">Included sections</h4>
+                {["Executive summary", "Furnisher coverage analysis", "Bureau coverage map", "Product coverage breakdown", "Tradeline volume trends", "Data quality overview", "Key insights & recommendations"].map((s) => (
+                  <div key={s} className="flex items-center gap-1.5 py-0.5">
+                    <CheckCircle2 className="w-2.5 h-2.5 text-emerald-500 flex-shrink-0" />
+                    <span className="text-[10px] text-foreground/80">{s}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2.5 border-t border-border/40">
+                <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">Recipients (6)</h4>
                 {[["Alex Kim", "alex.kim@finintel.com", "Owner"], ["Jamie Moore", "jamie.moore@finintel.com", "Viewer"], ["Sarah Chen", "sarah.chen@finintel.com", "Viewer"]].map(([name, email, role]) => (
-                  <div key={name} className="flex items-center gap-2 py-1">
-                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[8px] font-bold text-white">
+                  <div key={name} className="flex items-center gap-2 py-0.5">
+                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-[7px] font-bold text-white flex-shrink-0">
                       {name.split(" ").map(w => w[0]).join("")}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[10px] font-medium">{name}</p>
-                      <p className="text-[9px] text-muted-foreground">{email}</p>
+                      <p className="text-[10px] font-medium text-foreground">{name}</p>
+                      <p className="text-[9px] text-muted-foreground/60">{email}</p>
                     </div>
-                    <span className="text-[9px] text-muted-foreground">{role}</span>
+                    <span className="text-[9px] text-muted-foreground/50">{role}</span>
                   </div>
                 ))}
-                <p className="text-[10px] text-primary">+3 more recipients</p>
+                <p className="text-[10px] text-primary/70 mt-1">+3 more recipients</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-[10px] pt-3 border-t border-border">
-                <div><span className="text-muted-foreground">Last Run</span><p className="font-medium">{selected.lastRun}</p></div>
-                <div><span className="text-muted-foreground">Next Run</span><p className="font-medium">Jun 30, 2025 9:00 AM</p></div>
-                <div><span className="text-muted-foreground">Status</span><p className="text-emerald-500 font-medium">● Completed</p></div>
+              <div className="grid grid-cols-2 gap-y-1.5 gap-x-3 pt-2.5 border-t border-border/40">
+                <div><p className="text-[9.5px] text-muted-foreground/60">Last run</p><p className="text-[10px] font-medium text-foreground tabular-nums">{selected.lastRun}</p></div>
+                <div><p className="text-[9.5px] text-muted-foreground/60">Next run</p><p className="text-[10px] font-medium text-foreground">Jun 30, 2025 9:00 AM</p></div>
+                <div><p className="text-[9.5px] text-muted-foreground/60">Status</p><p className="text-[10px] font-medium text-emerald-500">● Completed</p></div>
               </div>
 
-              <Button className="w-full bg-primary text-primary-foreground text-xs">Generate Report</Button>
-              <Button variant="outline" className="w-full text-xs">Open Report Builder</Button>
+              <button className="w-full bg-primary text-primary-foreground text-[11px] font-medium h-7 rounded-md flex items-center justify-center gap-1.5 hover:bg-primary/90 transition-colors">Generate report</button>
+              <button className="w-full border border-border/60 text-[11px] font-normal h-7 rounded-md flex items-center justify-center gap-1.5 hover:bg-muted/30 transition-colors text-foreground/70">Open report builder</button>
             </div>
           </div>
         </div>

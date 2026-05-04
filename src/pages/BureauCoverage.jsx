@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
-import { Building2, Globe, Shield, TrendingUp, ArrowUp, ArrowDown, Search, Filter, X, ArrowRight, ExternalLink, ChevronRight } from "lucide-react";
+import { Building2, Globe, Shield, TrendingUp, ArrowUp, ArrowDown, Search, Filter, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const bureauCards = [
   { name: "Experian", abbr: "EX", coverage: 98.7, change: 2.6 },
-  { name: "EQUIFAX", abbr: "EQ", coverage: 97.9, change: 2.1 },
+  { name: "Equifax", abbr: "EQ", coverage: 97.9, change: 2.1 },
   { name: "TransUnion", abbr: "TU", coverage: 98.3, change: 2.4 },
 ];
 
 const additionalBureaus = [
-  { name: "innovis", coverage: 93.6, change: 1.8 },
-  { name: "sbfe", coverage: 88.4, change: 1.6 },
-  { name: "Experian", label: "experian", coverage: 84.1, change: 1.3 },
+  { name: "Innovis", coverage: 93.6, change: 1.8 },
+  { name: "SBFE", coverage: 88.4, change: 1.6 },
+  { name: "Experian SB", coverage: 84.1, change: 1.3 },
 ];
 
 const furnisherCoverage = [
@@ -36,7 +35,6 @@ const coverageGaps = [
   { name: "Innovis", gap: "72.1%", level: "Medium" },
   { name: "Experian", gap: "98.5%", level: "Low" },
   { name: "Equifax", gap: "97.6%", level: "Low" },
-  { name: "TransUnion", gap: "98.0%", level: "Low" },
 ];
 
 export default function BureauCoverage() {
@@ -45,78 +43,73 @@ export default function BureauCoverage() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0">
-        <PageHeader title="Bureau Coverage" subtitle="Map where products and furnishers report across consumer and business bureaus.">
-          <Button variant="outline" size="sm" className="gap-1.5 text-xs">
+        <PageHeader title="Bureau coverage" subtitle="Map where products and furnishers report across consumer and business bureaus.">
+          <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">
             <Filter className="w-3 h-3" /> Filters
           </Button>
         </PageHeader>
 
-        <div className="grid grid-cols-5 gap-4 mb-6">
-          <StatCard label="Total Covered Furnishers" value="1,842" change={12.6} icon={Building2} />
-          <StatCard label="Consumer Bureau Coverage" value="98.1%" change={2.4} icon={Globe} />
-          <StatCard label="Business Bureau Coverage" value="86.7%" change={1.8} icon={Shield} />
-          <StatCard label="Verified Coverage Signals" value="24.6M" change={15.3} icon={TrendingUp} />
-          <div className="bg-card rounded-xl border border-border p-5">
-            <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Coverage Trend</span>
-            <p className="text-2xl font-bold text-foreground mt-3">Upward</p>
-            <p className="text-xs text-muted-foreground mt-1">Consistent improvement</p>
+        {/* Stats */}
+        <div className="grid grid-cols-5 gap-3 mb-6">
+          <StatCard label="Covered furnishers" value="1,842" change={12.6} />
+          <StatCard label="Consumer bureau cov." value="98.1%" change={2.4} />
+          <StatCard label="Business bureau cov." value="86.7%" change={1.8} />
+          <StatCard label="Verified cov. signals" value="24.6M" change={15.3} />
+          <div className="bg-card rounded-lg border border-border/60 px-4 py-3.5 flex flex-col gap-2 min-w-0">
+            <span className="text-[10px] font-medium tracking-[0.06em] uppercase text-muted-foreground/70 truncate">Coverage trend</span>
+            <p className="text-[22px] font-semibold text-foreground leading-none tracking-tight">Upward</p>
+            <p className="text-[10px] text-muted-foreground/60">Consistent improvement</p>
           </div>
         </div>
 
         {/* Heatmap + Bureau Comparison */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-card rounded-xl border border-border p-5">
-            <h3 className="text-sm font-semibold mb-1">U.S. Consumer Coverage Heatmap</h3>
-            <p className="text-xs text-muted-foreground mb-3">Coverage intensity represents % of active tradelines reported</p>
-            <div className="h-44 bg-muted/20 rounded-lg flex items-center justify-center relative overflow-hidden">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png"
-                alt="US Map"
-                className="w-full h-full object-contain opacity-15"
-              />
+        <div className="grid grid-cols-2 gap-4 mb-5">
+          <div className="bg-card rounded-lg border border-border/60 p-5">
+            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">U.S. consumer coverage heatmap</h3>
+            <p className="text-[10px] text-muted-foreground/60 mb-3">Coverage % of active tradelines reported by state</p>
+            <div className="h-40 bg-muted/20 rounded-lg flex items-center justify-center relative overflow-hidden">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png" alt="US Map" className="w-full h-full object-contain opacity-15" />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent" />
             </div>
-            <div className="flex gap-3 mt-3">
-              {["90%+", "70–90%", "50–70%", "30–50%", "Below 30%", "No Coverage"].map((l, i) => (
+            <div className="flex gap-3 mt-2 flex-wrap">
+              {["90%+", "70–90%", "50–70%", "30–50%", "Below 30%", "No data"].map((l, i) => (
                 <div key={l} className="flex items-center gap-1">
-                  <div className={`w-3 h-3 rounded-sm ${
-                    ["bg-primary", "bg-primary/70", "bg-primary/50", "bg-primary/30", "bg-primary/15", "bg-muted"][i]
-                  }`} />
-                  <span className="text-[9px] text-muted-foreground">{l}</span>
+                  <div className={`w-2.5 h-2.5 rounded-sm ${["bg-primary", "bg-primary/70", "bg-primary/50", "bg-primary/30", "bg-primary/15", "bg-muted"][i]}`} />
+                  <span className="text-[9.5px] text-muted-foreground">{l}</span>
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center justify-between mt-2.5">
               <div>
-                <span className="text-lg font-bold">98.1%</span>
-                <p className="text-[10px] text-muted-foreground">National Avg. Coverage</p>
+                <span className="text-[18px] font-semibold text-foreground leading-none">98.1%</span>
+                <p className="text-[10px] text-muted-foreground/60 mt-0.5">National avg. coverage</p>
               </div>
-              <button className="text-xs text-primary font-medium hover:underline">View state details →</button>
+              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View state details →</button>
             </div>
           </div>
 
           {/* Bureau Comparison */}
-          <div className="bg-card rounded-xl border border-border p-5">
+          <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold">Bureau Coverage Comparison</h3>
-              <button className="text-xs text-primary font-medium hover:underline">View all bureaus</button>
+              <h3 className="text-[11.5px] font-medium text-foreground">Bureau coverage comparison</h3>
+              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all bureaus</button>
             </div>
-            <p className="text-xs text-muted-foreground mb-4">% of active tradelines covered</p>
-            <div className="grid grid-cols-3 gap-3 mb-4">
+            <p className="text-[10px] text-muted-foreground/60 mb-3">% of active tradelines covered</p>
+            <div className="grid grid-cols-3 gap-2 mb-3">
               {bureauCards.map((b) => (
-                <div key={b.name} className="text-center p-3 bg-muted/30 rounded-lg">
-                  <p className="text-xs font-bold text-muted-foreground uppercase mb-1">{b.name}</p>
-                  <p className="text-xl font-bold text-foreground">{b.coverage}%</p>
-                  <p className="text-[10px] text-emerald-500">↑ {b.change}pts</p>
+                <div key={b.name} className="text-center p-2.5 bg-muted/30 rounded-lg">
+                  <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
+                  <p className="text-[18px] font-semibold text-foreground leading-none">{b.coverage}%</p>
+                  <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2">
               {additionalBureaus.map((b) => (
-                <div key={b.name} className="text-center p-3 bg-muted/20 rounded-lg">
-                  <p className="text-[10px] font-bold text-muted-foreground mb-1">{b.name}</p>
-                  <p className="text-base font-bold text-foreground">{b.coverage}%</p>
-                  <p className="text-[10px] text-emerald-500">↑ {b.change}pts</p>
+                <div key={b.name} className="text-center p-2.5 bg-muted/20 rounded-lg">
+                  <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
+                  <p className="text-[15px] font-semibold text-foreground leading-none">{b.coverage}%</p>
+                  <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
                 </div>
               ))}
             </div>
@@ -124,27 +117,25 @@ export default function BureauCoverage() {
         </div>
 
         {/* Furnisher Coverage Directory */}
-        <div className="bg-card rounded-xl border border-border overflow-hidden">
-          <div className="px-5 py-4 border-b border-border">
-            <h3 className="text-sm font-semibold mb-1">Furnisher Coverage Directory</h3>
-            <p className="text-xs text-muted-foreground">Explore coverage by furnisher, product, and bureau.</p>
-            <div className="flex items-center gap-3 mt-3">
-              <div className="relative flex-1 max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input placeholder="Search furnishers or products..." className="pl-9 h-8 text-xs" />
-              </div>
+        <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
+          <div className="px-4 py-3 border-b border-border/50">
+            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Furnisher coverage directory</h3>
+            <p className="text-[10px] text-muted-foreground/60 mb-2.5">Explore coverage by furnisher, product, and bureau.</p>
+            <div className="relative max-w-sm">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />
+              <Input placeholder="Search furnishers or products..." className="pl-8 h-7 text-[11px] border-border/60" />
             </div>
           </div>
           <table className="w-full">
             <thead>
-              <tr className="bg-muted/30 text-[10px] text-muted-foreground uppercase border-b border-border">
-                <th className="text-left px-4 py-2 font-medium">Furnisher</th>
-                <th className="text-left px-3 py-2 font-medium">Product</th>
-                <th className="text-left px-3 py-2 font-medium">Product Type</th>
-                <th className="text-left px-3 py-2 font-medium">Covered Bureaus</th>
-                <th className="text-left px-3 py-2 font-medium">Coverage %</th>
-                <th className="text-left px-3 py-2 font-medium">Confidence</th>
-                <th className="text-left px-3 py-2 font-medium">Trend</th>
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <th className="text-left px-4 py-2.5 font-medium">Furnisher</th>
+                <th className="text-left px-3 py-2.5 font-medium">Product</th>
+                <th className="text-left px-3 py-2.5 font-medium">Product type</th>
+                <th className="text-left px-3 py-2.5 font-medium">Covered bureaus</th>
+                <th className="text-left px-3 py-2.5 font-medium">Coverage %</th>
+                <th className="text-left px-3 py-2.5 font-medium">Confidence</th>
+                <th className="text-left px-3 py-2.5 font-medium">Trend</th>
               </tr>
             </thead>
             <tbody>
@@ -152,132 +143,121 @@ export default function BureauCoverage() {
                 <tr
                   key={f.name + f.product}
                   onClick={() => setSelectedFurnisher(f)}
-                  className={`border-b border-border/50 hover:bg-muted/20 cursor-pointer ${
-                    selectedFurnisher?.name === f.name ? "bg-primary/5" : ""
-                  }`}
+                  className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${selectedFurnisher?.name === f.name ? "bg-primary/5" : ""}`}
                 >
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2.5">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-[9px] font-bold text-primary">
-                        {f.abbr}
-                      </div>
-                      <span className="text-xs font-medium">{f.name}</span>
+                      <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center text-[8px] font-semibold text-primary">{f.abbr}</div>
+                      <span className="text-[11px] font-normal text-foreground">{f.name}</span>
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-xs text-foreground">{f.product}</td>
-                  <td className="px-3 py-3 text-xs text-foreground">{f.type}</td>
-                  <td className="px-3 py-3">
-                    <div className="flex gap-0.5">
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{f.product}</td>
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{f.type}</td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex gap-0.5 flex-wrap">
                       {f.bureaus.map((b) => (
                         <span key={b} className="text-[9px] font-medium bg-primary/10 text-primary px-1 py-0.5 rounded">{b}</span>
                       ))}
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-xs font-medium">{f.coverage}%</td>
-                  <td className="px-3 py-3">
-                    <span className={`text-xs ${f.confidence === "High" ? "text-emerald-500" : f.confidence === "Medium" ? "text-amber-500" : "text-destructive"}`}>
-                      {f.confidence}
-                    </span>
+                  <td className="px-3 py-2.5 text-[11px] font-normal text-foreground tabular-nums">{f.coverage}%</td>
+                  <td className="px-3 py-2.5">
+                    <span className={`text-[10px] font-medium ${f.confidence === "High" ? "text-emerald-500" : f.confidence === "Medium" ? "text-amber-500" : "text-destructive"}`}>{f.confidence}</span>
                   </td>
-                  <td className="px-3 py-3">
-                    {f.trend === "up" ? (
-                      <ArrowUp className="w-3.5 h-3.5 text-emerald-500" />
-                    ) : f.trend === "down" ? (
-                      <ArrowDown className="w-3.5 h-3.5 text-destructive" />
-                    ) : (
-                      <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" />
-                    )}
+                  <td className="px-3 py-2.5">
+                    {f.trend === "up" ? <ArrowUp className="w-3 h-3 text-emerald-500" /> : f.trend === "down" ? <ArrowDown className="w-3 h-3 text-destructive" /> : <ArrowRight className="w-3 h-3 text-muted-foreground/40" />}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="flex items-center justify-between px-4 py-3 border-t border-border">
-            <span className="text-xs text-muted-foreground">Showing 1 to 8 of 1,842 results</span>
+          <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
+            <span className="text-[10px] text-muted-foreground/60">Showing 1–8 of 1,842 results</span>
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5, "...", 231].map((p, i) => (
-                <button key={i} className={`w-7 h-7 text-xs rounded flex items-center justify-center ${p === 1 ? "bg-primary text-white" : "text-muted-foreground hover:bg-muted"}`}>{p}</button>
+                <button key={i} className={`w-6 h-6 text-[10px] rounded flex items-center justify-center ${p === 1 ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"}`}>{p}</button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Legend */}
-        <div className="flex items-center gap-4 mt-3 text-[10px] text-muted-foreground">
-          <span className="font-medium">Bureau Legend</span>
+        <div className="flex items-center gap-4 mt-3 text-[10px] text-muted-foreground/60 flex-wrap">
+          <span className="font-medium text-foreground/70">Bureau legend</span>
           {["EX Experian", "EQ Equifax", "TU TransUnion", "IN Innovis", "SB SBFE", "ESB Experian Small Business"].map((l) => (
             <span key={l}>{l}</span>
           ))}
-          <span>— Not Reported</span>
         </div>
       </div>
 
       {/* Right Panel */}
       {selectedFurnisher && (
-        <div className="w-[280px] flex-shrink-0">
-          <div className="bg-card rounded-xl border border-border p-5 sticky top-20">
+        <div className="w-[260px] flex-shrink-0">
+          <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold">Selected Furnisher</h3>
-              <button onClick={() => setSelectedFurnisher(null)}><X className="w-4 h-4 text-muted-foreground" /></button>
+              <div className="flex items-center gap-2">
+                <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
+                <h3 className="text-[11.5px] font-medium text-foreground">Selected furnisher</h3>
+              </div>
+              <button onClick={() => setSelectedFurnisher(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50" /></button>
             </div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">{selectedFurnisher.abbr}</div>
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-semibold text-primary flex-shrink-0">{selectedFurnisher.abbr}</div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-semibold">{selectedFurnisher.name}</span>
-                  <Badge className="bg-emerald-100 text-emerald-700 border-0 text-[10px] px-1.5 h-4">Verified</Badge>
+                  <span className="text-[11px] font-medium text-foreground">{selectedFurnisher.name}</span>
+                  <span className="text-[9px] font-medium bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded">Verified</span>
                 </div>
-                <p className="text-xs text-muted-foreground">{selectedFurnisher.type}</p>
+                <p className="text-[10px] text-muted-foreground/60 mt-0.5">{selectedFurnisher.type}</p>
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div>
-                <h4 className="text-xs font-semibold mb-2">Overall Coverage</h4>
+                <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-2">Overall coverage</h4>
                 <div className="flex items-center gap-3">
-                  <div className="relative w-16 h-16">
+                  <div className="relative w-14 h-14 flex-shrink-0">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
-                        <Pie data={[{ value: selectedFurnisher.coverage }, { value: 100 - selectedFurnisher.coverage }]} dataKey="value" cx="50%" cy="50%" innerRadius={22} outerRadius={30} startAngle={90} endAngle={-270}>
+                        <Pie data={[{ value: selectedFurnisher.coverage }, { value: 100 - selectedFurnisher.coverage }]} dataKey="value" cx="50%" cy="50%" innerRadius={18} outerRadius={26} startAngle={90} endAngle={-270}>
                           <Cell fill="#4F46E5" />
                           <Cell fill="#E5E7EB" />
                         </Pie>
                       </PieChart>
                     </ResponsiveContainer>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-xs font-bold">{selectedFurnisher.coverage}%</span>
+                      <span className="text-[10px] font-semibold">{selectedFurnisher.coverage}%</span>
                     </div>
                   </div>
                   <div>
-                    <Badge className="bg-emerald-100 text-emerald-700 border-0 text-[10px]">High Coverage</Badge>
-                    <p className="text-[10px] text-muted-foreground mt-1">↑ 2.1pts vs last 30 days</p>
+                    <span className="text-[9.5px] font-medium text-emerald-600 bg-emerald-500/10 px-1.5 py-0.5 rounded">High coverage</span>
+                    <p className="text-[10px] text-muted-foreground/60 mt-1.5">↑ 2.1pts vs 30d</p>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-border">
-                <h4 className="text-xs font-semibold mb-2">Top Coverage Gaps</h4>
+              <div className="pt-2.5 border-t border-border/40">
+                <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-2">Top coverage gaps</h4>
                 <div className="space-y-1.5">
-                  {coverageGaps.slice(0, 5).map((g) => (
+                  {coverageGaps.map((g) => (
                     <div key={g.name} className="flex items-center justify-between">
-                      <span className="text-[11px] text-foreground">{g.name}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-medium">{g.gap}</span>
-                        <Badge className={`text-[9px] h-4 px-1.5 border-0 ${
+                      <span className="text-[10.5px] text-foreground">{g.name}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10.5px] font-medium tabular-nums">{g.gap}</span>
+                        <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${
                           g.level === "High Impact" ? "bg-destructive/10 text-destructive" :
-                          g.level === "Medium" ? "bg-amber-100 text-amber-700" :
+                          g.level === "Medium" ? "bg-amber-500/10 text-amber-600" :
                           "bg-muted text-muted-foreground"
-                        }`}>{g.level}</Badge>
+                        }`}>{g.level}</span>
                       </div>
                     </div>
                   ))}
                 </div>
-                <button className="text-[10px] text-primary font-medium hover:underline mt-2">View all gaps →</button>
+                <button className="text-[10px] text-primary/70 hover:text-primary transition-colors mt-2 flex items-center gap-1">View all gaps <ArrowRight className="w-2.5 h-2.5" /></button>
               </div>
 
-              <Button className="w-full bg-primary text-primary-foreground text-xs">
-                View Furnisher Profile <ArrowRight className="w-3 h-3 ml-1" />
-              </Button>
+              <button className="w-full bg-primary text-primary-foreground text-[11px] font-medium h-7 rounded-md flex items-center justify-center gap-1.5 hover:bg-primary/90 transition-colors mt-1">
+                View furnisher profile <ArrowRight className="w-3 h-3" />
+              </button>
             </div>
           </div>
         </div>
