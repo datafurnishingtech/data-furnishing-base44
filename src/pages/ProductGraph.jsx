@@ -5,6 +5,7 @@ import { Link2, Package, Globe, Network, Filter, ArrowRight } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 
 const relationships = [
   { rank: 1, furnisher: "Synchrony Bank", product: "Credit Card", bureau: "TransUnion", strength: "High", confidence: "96%", lastActive: "May 31, 2025" },
@@ -176,10 +177,8 @@ export default function ProductGraph() {
             </div>
             <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View details</button>
           </div>
-          <div className="h-24 bg-muted/20 rounded-lg flex items-center justify-center overflow-hidden">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png" alt="US Map" className="w-full h-full object-contain opacity-15" />
-          </div>
-          <div className="text-center mt-2.5">
+          <USCoverageHeatmap />
+          <div className="text-center mt-1">
             <p className="text-[10px] text-muted-foreground/60">U.S. coverage</p>
             <p className="text-[18px] font-semibold text-foreground leading-none mt-0.5">98.1%</p>
             <p className="text-[10px] text-emerald-500 mt-0.5">↑ 2.4% vs 30d</p>

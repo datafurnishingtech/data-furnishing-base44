@@ -5,6 +5,7 @@ import { Building2, Globe, Shield, TrendingUp, ArrowUp, ArrowDown, Search, Filte
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 
 const bureauCards = [
   { name: "Experian", abbr: "EX", coverage: 98.7, change: 2.6 },
@@ -66,19 +67,8 @@ export default function BureauCoverage() {
         <div className="grid grid-cols-2 gap-4 mb-5">
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">U.S. consumer coverage heatmap</h3>
-            <p className="text-[10px] text-muted-foreground/60 mb-3">Coverage % of active tradelines reported by state</p>
-            <div className="h-40 bg-muted/20 rounded-lg flex items-center justify-center relative overflow-hidden">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png" alt="US Map" className="w-full h-full object-contain opacity-15" />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent" />
-            </div>
-            <div className="flex gap-3 mt-2 flex-wrap">
-              {["90%+", "70–90%", "50–70%", "30–50%", "Below 30%", "No data"].map((l, i) => (
-                <div key={l} className="flex items-center gap-1">
-                  <div className={`w-2.5 h-2.5 rounded-sm ${["bg-primary", "bg-primary/70", "bg-primary/50", "bg-primary/30", "bg-primary/15", "bg-muted"][i]}`} />
-                  <span className="text-[9.5px] text-muted-foreground">{l}</span>
-                </div>
-              ))}
-            </div>
+            <p className="text-[10px] text-muted-foreground/60 mb-3">Coverage % of active tradelines reported by state — hover for detail</p>
+            <USCoverageHeatmap />
             <div className="flex items-center justify-between mt-2.5">
               <div>
                 <span className="text-[18px] font-semibold text-foreground leading-none">98.1%</span>
