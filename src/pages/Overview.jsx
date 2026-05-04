@@ -2,6 +2,7 @@ import React from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Building2, TrendingUp, Globe, Package, ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 import { Badge } from "@/components/ui/badge";
 import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area } from "recharts";
 
@@ -65,47 +66,29 @@ export default function Overview() {
         />
 
         {/* Stats */}
-        <div className="grid grid-cols-5 gap-4 mb-6">
-          <StatCard label="Furnishers" value="2,847" change={12.5} icon={Building2} />
-          <StatCard label="Tradelines" value="24.6M" change={11.8} icon={TrendingUp} />
-          <StatCard label="Bureau Coverage" value="98.1%" change={2.4} icon={Globe} />
-          <StatCard label="Products" value="7,312" change={15.1} icon={Package} />
-          <StatCard label="Verified Sources" value="1,842" change={10.3} icon={ShieldCheck} />
+        <div className="grid grid-cols-5 gap-3 mb-6">
+          <StatCard label="Furnishers" value="2,847" change={12.5} />
+          <StatCard label="Tradelines" value="24.6M" change={11.8} />
+          <StatCard label="Bur. Coverage" value="98.1%" change={2.4} />
+          <StatCard label="Products" value="7,312" change={15.1} />
+          <StatCard label="Verified Srcs." value="1,842" change={10.3} />
         </div>
 
         {/* Heatmap + Top Furnishers */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {/* Heatmap placeholder */}
+          {/* Heatmap */}
           <div className="bg-card rounded-lg border border-border/60 p-5">
-            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Bureau Coverage Heatmap</h3>
-            <p className="text-[10px] text-muted-foreground/60 mb-3">Distribution by state</p>
-            <div className="h-48 bg-muted/30 rounded-lg flex items-center justify-center relative overflow-hidden">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png"
-                alt="US Map"
-                className="w-full h-full object-contain opacity-20"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent" />
-            </div>
-            <div className="flex items-center justify-between mt-3">
-              <div className="flex gap-3">
-                {["High", "Medium", "Low", "Minimal", "No Coverage"].map((l, i) => (
-                  <div key={l} className="flex items-center gap-1">
-                    <div className={`w-3 h-3 rounded-sm ${
-                      ["bg-primary", "bg-primary/60", "bg-primary/30", "bg-primary/15", "bg-muted"][i]
-                    }`} />
-                    <span className="text-[10px] text-muted-foreground">{l}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center justify-between mb-3">
               <div>
-                <span className="text-[18px] font-semibold text-emerald-500">98.1%</span>
-                <p className="text-[10px] text-muted-foreground/60">Overall Coverage</p>
+                <h3 className="text-[11.5px] font-medium text-foreground">Bureau Coverage Heatmap</h3>
+                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Coverage % by state — hover for detail</p>
               </div>
-              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View details</button>
+              <div className="text-right">
+                <span className="text-[18px] font-semibold text-emerald-500 leading-none">98.1%</span>
+                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Overall</p>
+              </div>
             </div>
+            <USCoverageHeatmap />
           </div>
 
           {/* Top Furnishers */}
