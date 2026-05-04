@@ -40,7 +40,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 py-3 px-2.5 space-y-px overflow-y-auto">
         {navItems.map((item) => {
           const isActive =
             item.path === "/"
@@ -50,18 +50,18 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[12px] font-medium transition-colors ${
+              className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11.5px] font-normal tracking-wide transition-colors ${
                 isActive
-                  ? "bg-primary text-white"
-                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-white"
+                  ? "bg-white/10 text-white font-medium"
+                  : "text-sidebar-foreground/50 hover:bg-white/5 hover:text-sidebar-foreground/90"
               }`}
             >
-              <item.icon className="w-[15px] h-[15px] flex-shrink-0" />
+              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "opacity-100" : "opacity-50"}`} />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge && (
-                <Badge className="bg-primary/30 text-white border-0 text-[9px] px-1 py-0 h-4 min-w-[16px] flex items-center justify-center">
+                <span className="text-[9px] font-medium bg-primary/40 text-white/80 rounded px-1.5 py-0.5 leading-none">
                   {item.badge}
-                </Badge>
+                </span>
               )}
             </Link>
           );

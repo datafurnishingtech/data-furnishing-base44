@@ -76,9 +76,9 @@ export default function Overview() {
         {/* Heatmap + Top Furnishers */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           {/* Heatmap placeholder */}
-          <div className="bg-card rounded-xl border border-border p-5">
-            <h3 className="text-[11px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Bureau Coverage Heatmap</h3>
-            <p className="text-[10px] text-muted-foreground mb-3">Distribution of Data Furnishing by State</p>
+          <div className="bg-card rounded-lg border border-border/60 p-5">
+            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Bureau Coverage Heatmap</h3>
+            <p className="text-[10px] text-muted-foreground/60 mb-3">Distribution by state</p>
             <div className="h-48 bg-muted/30 rounded-lg flex items-center justify-center relative overflow-hidden">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png"
@@ -101,39 +101,39 @@ export default function Overview() {
             </div>
             <div className="flex items-center justify-between mt-3">
               <div>
-                <span className="text-lg font-bold text-emerald-500">98.1%</span>
-                <p className="text-[10px] text-muted-foreground">Overall Coverage</p>
+                <span className="text-[18px] font-semibold text-emerald-500">98.1%</span>
+                <p className="text-[10px] text-muted-foreground/60">Overall Coverage</p>
               </div>
-              <button className="text-xs text-primary font-medium hover:underline">View Coverage Details</button>
+              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View details</button>
             </div>
           </div>
 
           {/* Top Furnishers */}
-          <div className="bg-card rounded-xl border border-border p-5">
+          <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Top Furnishers by Tradeline Volume</h3>
-              <button className="text-[10px] text-primary font-medium hover:underline">View all</button>
+              <h3 className="text-[11.5px] font-medium text-foreground">Top Furnishers by Volume</h3>
+              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="text-[9px] text-muted-foreground border-b border-border uppercase tracking-wide">
-                  <th className="text-left pb-1.5 font-medium">&nbsp;</th>
-                  <th className="text-left pb-1.5 font-medium">Furnisher</th>
-                  <th className="text-right pb-1.5 font-medium">Tradelines</th>
+                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                  <th className="text-left pb-2 font-medium">#</th>
+                  <th className="text-left pb-2 font-medium">Furnisher</th>
+                  <th className="text-right pb-2 font-medium">Tradelines</th>
                 </tr>
               </thead>
               <tbody>
                 {topFurnishers.map((f) => (
-                  <tr key={f.rank} className="border-b border-border/50 last:border-0">
-                    <td className="py-2 text-[11px] text-muted-foreground w-8">{f.rank}</td>
-                    <td className="py-2 text-[11px] font-medium text-foreground">{f.name}</td>
-                    <td className="py-2 text-[11px] text-foreground text-right">{f.tradelines}</td>
+                  <tr key={f.rank} className="border-b border-border/30 last:border-0">
+                    <td className="py-2 text-[10px] text-muted-foreground/50 w-6 tabular-nums">{f.rank}</td>
+                    <td className="py-2 text-[11px] font-normal text-foreground">{f.name}</td>
+                    <td className="py-2 text-[11px] text-foreground/80 text-right tabular-nums">{f.tradelines}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <button className="flex items-center gap-1 text-xs text-primary font-medium hover:underline mt-3">
-              View all furnishers <ArrowRight className="w-3 h-3" />
+            <button className="flex items-center gap-1 text-[10px] text-primary/70 hover:text-primary transition-colors mt-3">
+              View all furnishers <ArrowRight className="w-2.5 h-2.5" />
             </button>
           </div>
         </div>
@@ -141,29 +141,29 @@ export default function Overview() {
         {/* Alerts + Product Mix + Watchlist */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {/* Recent Alerts */}
-          <div className="bg-card rounded-xl border border-border p-5">
+          <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Recent Alerts</h3>
-              <button className="text-[10px] text-primary font-medium hover:underline">View all</button>
+              <h3 className="text-[11.5px] font-medium text-foreground">Recent Alerts</h3>
+              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {recentAlerts.map((a, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${a.color}`} />
+                <div key={i} className="flex items-start gap-2.5">
+                  <div className={`w-1 h-1 rounded-full mt-2 flex-shrink-0 ${a.color}`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[11px] font-medium text-foreground">{a.title}</p>
-                    <p className="text-[10px] text-muted-foreground">{a.desc}</p>
+                    <p className="text-[11px] font-normal text-foreground leading-snug">{a.title}</p>
+                    <p className="text-[10px] text-muted-foreground/70 mt-0.5">{a.desc}</p>
                   </div>
-                  <span className="text-[10px] text-muted-foreground whitespace-nowrap">{a.time}</span>
+                  <span className="text-[9.5px] text-muted-foreground/50 whitespace-nowrap mt-0.5">{a.time}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Product Mix */}
-          <div className="bg-card rounded-xl border border-border p-5">
-            <h3 className="text-[11px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Product Mix</h3>
-            <p className="text-[10px] text-muted-foreground mb-3">Distribution by Category</p>
+          <div className="bg-card rounded-lg border border-border/60 p-5">
+            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Product Mix</h3>
+            <p className="text-[10px] text-muted-foreground/70 mb-3">Distribution by category</p>
             <div className="flex items-center gap-4">
               <div className="w-28 h-28">
                 <ResponsiveContainer width="100%" height="100%">
@@ -190,28 +190,28 @@ export default function Overview() {
           </div>
 
           {/* Watchlist Snapshot */}
-          <div className="bg-card rounded-xl border border-border p-5">
+          <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Watchlist Snapshot</h3>
-              <button className="text-[10px] text-primary font-medium hover:underline">View all</button>
+              <h3 className="text-[11.5px] font-medium text-foreground">Watchlist Snapshot</h3>
+              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="text-[9px] text-muted-foreground border-b border-border uppercase tracking-wide">
-                  <th className="text-left pb-1.5 font-medium">Watchlist</th>
-                  <th className="text-right pb-1.5 font-medium">Items</th>
+                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                  <th className="text-left pb-2 font-medium">Watchlist</th>
+                  <th className="text-right pb-2 font-medium">Items</th>
                 </tr>
               </thead>
               <tbody>
                 {watchlistData.map((w) => (
-                  <tr key={w.name} className="border-b border-border/50 last:border-0">
-                    <td className="py-1.5 text-[11px] text-foreground">{w.name}</td>
-                    <td className="py-1.5 text-[11px] text-foreground text-right">{w.items}</td>
+                  <tr key={w.name} className="border-b border-border/30 last:border-0">
+                    <td className="py-1.5 text-[11px] font-normal text-foreground">{w.name}</td>
+                    <td className="py-1.5 text-[11px] text-foreground/80 text-right tabular-nums">{w.items}</td>
                   </tr>
                 ))}
-                <tr className="font-semibold">
-                  <td className="py-1.5 text-[11px] text-primary">Total Items</td>
-                  <td className="py-1.5 text-[11px] text-primary text-right">74</td>
+                <tr>
+                  <td className="pt-2 text-[10.5px] font-medium text-primary/80">Total</td>
+                  <td className="pt-2 text-[10.5px] font-medium text-primary/80 text-right tabular-nums">74</td>
                 </tr>
               </tbody>
             </table>
@@ -219,29 +219,29 @@ export default function Overview() {
         </div>
 
         {/* Recent Trade Activity */}
-        <div className="bg-card rounded-xl border border-border p-5">
-          <h3 className="text-[11px] font-semibold text-foreground mb-3 uppercase tracking-wide">Recent Trade Activity</h3>
+        <div className="bg-card rounded-lg border border-border/60 p-5">
+          <h3 className="text-[11.5px] font-medium text-foreground mb-3">Recent Trade Activity</h3>
           <table className="w-full">
             <thead>
-              <tr className="text-[9px] text-muted-foreground border-b border-border uppercase tracking-wide">
-                <th className="text-left pb-1.5 font-medium">Trade ID</th>
-                <th className="text-left pb-1.5 font-medium">Furnisher</th>
-                <th className="text-left pb-1.5 font-medium">Product</th>
-                <th className="text-left pb-1.5 font-medium">Bureau</th>
-                <th className="text-left pb-1.5 font-medium">Reported On</th>
-                <th className="text-left pb-1.5 font-medium">Record Status</th>
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <th className="text-left pb-2 font-medium">Trade ID</th>
+                <th className="text-left pb-2 font-medium">Furnisher</th>
+                <th className="text-left pb-2 font-medium">Product</th>
+                <th className="text-left pb-2 font-medium">Bureau</th>
+                <th className="text-left pb-2 font-medium">Reported On</th>
+                <th className="text-left pb-2 font-medium">Status</th>
               </tr>
             </thead>
             <tbody>
               {tradeActivity.map((t) => (
-                <tr key={t.id} className="border-b border-border/50 last:border-0 hover:bg-muted/30 cursor-pointer">
-                  <td className="py-2 text-[10px] text-muted-foreground font-mono">{t.id}</td>
-                  <td className="py-2 text-[11px] font-medium text-foreground">{t.furnisher}</td>
-                  <td className="py-2 text-[11px] text-foreground">{t.product}</td>
-                  <td className="py-2 text-[11px] text-foreground">{t.bureau}</td>
-                  <td className="py-2 text-[10px] text-muted-foreground">{t.date}</td>
+                <tr key={t.id} className="border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors">
+                  <td className="py-2 text-[10px] text-muted-foreground/60 font-mono tabular-nums">{t.id}</td>
+                  <td className="py-2 text-[11px] font-normal text-foreground">{t.furnisher}</td>
+                  <td className="py-2 text-[11px] text-foreground/70">{t.product}</td>
+                  <td className="py-2 text-[11px] text-foreground/70">{t.bureau}</td>
+                  <td className="py-2 text-[10px] text-muted-foreground/60 tabular-nums">{t.date}</td>
                   <td className="py-2">
-                    <span className={`inline-flex items-center gap-1 text-[10px] ${
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-medium ${
                       t.status === "Verified" ? "text-emerald-500" : "text-amber-500"
                     }`}>
                       <CheckCircle2 className="w-2.5 h-2.5" />
@@ -252,24 +252,24 @@ export default function Overview() {
               ))}
             </tbody>
           </table>
-          <button className="flex items-center gap-1 text-xs text-primary font-medium hover:underline mt-3 ml-auto">
-            View all trade activity <ArrowRight className="w-3 h-3" />
+          <button className="flex items-center gap-1 text-[10px] text-primary/70 hover:text-primary transition-colors mt-3 ml-auto">
+            View all trade activity <ArrowRight className="w-2.5 h-2.5" />
           </button>
         </div>
       </div>
 
       {/* Right Insights Panel */}
       <div className="w-[260px] flex-shrink-0 space-y-4">
-        <div className="bg-card rounded-xl border border-border p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-1 h-3.5 bg-primary rounded-full" />
-            <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Insights</h3>
+        <div className="bg-card rounded-lg border border-border/60 p-4">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
+            <h3 className="text-[11.5px] font-medium text-foreground">Insights</h3>
           </div>
 
           {/* Coverage Summary */}
           <div className="mb-4">
-            <h4 className="text-[10px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Coverage Summary</h4>
-            <p className="text-[10px] text-muted-foreground mb-2">Bureau coverage above industry average.</p>
+            <h4 className="text-[10px] font-medium text-muted-foreground/70 mb-0.5 uppercase tracking-[0.06em]">Coverage</h4>
+            <p className="text-[10px] text-muted-foreground/60 mb-2">Above industry average.</p>
             <div className="flex items-center justify-center">
               <div className="relative w-24 h-24">
                 <ResponsiveContainer width="100%" height="100%">
@@ -281,18 +281,18 @@ export default function Overview() {
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-lg font-bold text-foreground">98.1%</span>
+                  <span className="text-[14px] font-semibold text-foreground">98.1%</span>
                 </div>
               </div>
             </div>
-            <p className="text-center text-xs text-muted-foreground mt-1">Total Coverage</p>
-            <p className="text-center text-[10px] text-emerald-500">↑ 2.4% vs last 30 days</p>
+            <p className="text-center text-[10px] text-muted-foreground/60 mt-1">Total Coverage</p>
+            <p className="text-center text-[10px] text-emerald-500/80">↑ 2.4% vs last 30 days</p>
           </div>
 
           {/* Trend Spotlight */}
           <div className="mb-4">
-            <h4 className="text-[10px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Trend Spotlight</h4>
-            <p className="text-[10px] text-muted-foreground mb-2">Tradelines up 11.8% vs Apr 2025.</p>
+            <h4 className="text-[10px] font-medium text-muted-foreground/70 mb-0.5 uppercase tracking-[0.06em]">Trend</h4>
+            <p className="text-[10px] text-muted-foreground/60 mb-2">Tradelines up 11.8% vs Apr 2025.</p>
             <div className="h-12">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={trendData}>
@@ -304,10 +304,10 @@ export default function Overview() {
 
           {/* Data Quality */}
           <div className="mb-4">
-            <h4 className="text-[10px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Data Quality</h4>
-            <p className="text-[10px] text-muted-foreground mb-2">High reliability from verified sources.</p>
-            <p className="text-lg font-bold text-foreground">98.7%</p>
-            <p className="text-[10px] text-muted-foreground">Verified Data</p>
+            <h4 className="text-[10px] font-medium text-muted-foreground/70 mb-0.5 uppercase tracking-[0.06em]">Data Quality</h4>
+            <p className="text-[10px] text-muted-foreground/60 mb-2">High reliability from verified sources.</p>
+            <p className="text-[18px] font-semibold text-foreground leading-none">98.7%</p>
+            <p className="text-[10px] text-muted-foreground/60 mt-0.5">Verified data</p>
             <div className="w-full h-1.5 bg-muted rounded-full mt-1.5">
               <div className="h-full bg-primary rounded-full" style={{ width: "98.7%" }} />
             </div>
@@ -315,20 +315,20 @@ export default function Overview() {
 
           {/* Recent Activity */}
           <div>
-            <h4 className="text-[10px] font-semibold text-foreground mb-2 uppercase tracking-wide">Recent Activity</h4>
+            <h4 className="text-[10px] font-medium text-muted-foreground/70 mb-2 uppercase tracking-[0.06em]">Activity</h4>
             <div className="space-y-2.5">
               {recentActivity.map((a, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="text-xs mt-0.5">{a.icon}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[11px] font-medium text-foreground">{a.title}</p>
-                    <p className="text-[10px] text-muted-foreground">{a.desc}</p>
-                  </div>
-                  <span className="text-[10px] text-muted-foreground whitespace-nowrap">{a.time}</span>
+                    <p className="text-[11px] font-normal text-foreground">{a.title}</p>
+                    <p className="text-[10px] text-muted-foreground/60">{a.desc}</p>
+                    </div>
+                    <span className="text-[9.5px] text-muted-foreground/50 whitespace-nowrap">{a.time}</span>
                 </div>
               ))}
             </div>
-            <button className="flex items-center gap-1 text-[10px] text-primary font-medium hover:underline mt-2">
+            <button className="flex items-center gap-1 text-[10px] text-primary/70 hover:text-primary transition-colors mt-2">
               View all activity <ArrowRight className="w-2.5 h-2.5" />
             </button>
           </div>
