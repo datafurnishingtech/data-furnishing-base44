@@ -4,32 +4,32 @@ import { TrendingUp, TrendingDown } from "lucide-react";
 export default function StatCard({ label, value, change, changeLabel, icon: Icon, iconColor }) {
   const isPositive = change >= 0;
   return (
-    <div className="bg-card rounded-xl border border-border p-5">
-      <div className="flex items-center gap-2 mb-3">
+    <div className="bg-card rounded-xl border border-border px-4 py-3.5">
+      <div className="flex items-center gap-1.5 mb-2">
         {Icon && (
-          <Icon className={`w-4 h-4 ${iconColor || "text-primary"}`} />
+          <Icon className={`w-3.5 h-3.5 ${iconColor || "text-primary"}`} />
         )}
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
           {label}
         </span>
       </div>
-      <p className="text-2xl font-bold text-foreground">{value}</p>
+      <p className="text-xl font-bold text-foreground leading-none">{value}</p>
       {change !== undefined && (
-        <div className="flex items-center gap-1 mt-2">
+        <div className="flex items-center gap-1 mt-1.5">
           {isPositive ? (
             <TrendingUp className="w-3 h-3 text-emerald-500" />
           ) : (
             <TrendingDown className="w-3 h-3 text-destructive" />
           )}
           <span
-            className={`text-xs font-medium ${
+            className={`text-[10px] font-medium ${
               isPositive ? "text-emerald-500" : "text-destructive"
             }`}
           >
-            {isPositive ? "↑" : "↓"} {Math.abs(change)}%
+            {isPositive ? "+" : ""}{Math.abs(change)}%
           </span>
-          <span className="text-xs text-muted-foreground">
-            {changeLabel || "vs last 30 days"}
+          <span className="text-[10px] text-muted-foreground">
+            {changeLabel || "vs 30d"}
           </span>
         </div>
       )}

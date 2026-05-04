@@ -4,29 +4,29 @@ import { Input } from "@/components/ui/input";
 
 export default function TopBar() {
   return (
-    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-40">
+    <header className="h-12 bg-card border-b border-border flex items-center justify-between px-5 sticky top-0 z-40">
       {/* Search */}
-      <div className="relative w-full max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+      <div className="relative w-full max-w-sm">
+        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
         <Input
-          placeholder="Search furnishers, products, or trade data..."
-          className="pl-9 pr-16 h-10 bg-muted/50 border-border text-sm"
+          placeholder="Search furnishers, products, trade data..."
+          className="pl-8 pr-12 h-8 bg-muted/50 border-border text-xs"
         />
-        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted-foreground bg-background border border-border rounded px-1.5 py-0.5">
+        <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground bg-background border border-border rounded px-1 py-0.5">
           ⌘K
         </kbd>
       </div>
 
       {/* Right actions */}
-      <div className="flex items-center gap-3 ml-4">
-        <button className="relative p-2 rounded-lg hover:bg-muted transition-colors">
-          <Bell className="w-[18px] h-[18px] text-muted-foreground" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full" />
+      <div className="flex items-center gap-2 ml-4">
+        <button className="relative p-1.5 rounded-md hover:bg-muted transition-colors">
+          <Bell className="w-4 h-4 text-muted-foreground" />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-destructive rounded-full" />
         </button>
-        <button className="p-2 rounded-lg hover:bg-muted transition-colors">
-          <HelpCircle className="w-[18px] h-[18px] text-muted-foreground" />
+        <button className="p-1.5 rounded-md hover:bg-muted transition-colors">
+          <HelpCircle className="w-4 h-4 text-muted-foreground" />
         </button>
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-semibold text-primary-foreground">
+        <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-semibold text-primary-foreground">
           AK
         </div>
       </div>

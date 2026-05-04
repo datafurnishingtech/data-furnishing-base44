@@ -11,11 +11,11 @@ export default function AppLayout() {
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
       <div
         className={`transition-all duration-300 ${
-          collapsed ? "ml-[72px]" : "ml-[220px]"
+          collapsed ? "ml-[64px]" : "ml-[210px]"
         }`}
       >
         <TopBar />
-        <main className="p-6">
+        <main className="p-5">
           <Outlet />
         </main>
       </div>

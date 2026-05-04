@@ -34,27 +34,28 @@ export default function Sidebar({ collapsed, onToggle }) {
   return (
     <aside
       className={`fixed left-0 top-0 h-screen bg-sidebar text-sidebar-foreground flex flex-col z-50 transition-all duration-300 ${
-        collapsed ? "w-[72px]" : "w-[220px]"
+        collapsed ? "w-[64px]" : "w-[210px]"
       }`}
     >
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-4 h-16 border-b border-sidebar-border">
-        <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <path d="M14 2v10h10" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" />
-            <path d="M14 2v10H4" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" />
-            <path d="M14 12v14" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" />
-          </svg>
-        </div>
-        {!collapsed && (
-          <span className="font-bold text-base text-white whitespace-nowrap">
-            Data Furnishing
-          </span>
+      <div className="flex items-center px-3 h-14 border-b border-sidebar-border">
+        {collapsed ? (
+          <img
+            src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/eba179282_MainSignature-Negative-02.png"
+            alt="Data Furnishing"
+            className="w-7 h-7 object-contain"
+          />
+        ) : (
+          <img
+            src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/eba179282_MainSignature-Negative-02.png"
+            alt="Data Furnishing"
+            className="h-6 w-auto object-contain"
+          />
         )}
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto">
         {navItems.map((item) => {
           const isActive =
             item.path === "/"
@@ -64,18 +65,18 @@ export default function Sidebar({ collapsed, onToggle }) {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[12px] font-medium transition-colors ${
                 isActive
                   ? "bg-primary text-white"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-white"
+                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-white"
               }`}
             >
-              <item.icon className="w-[18px] h-[18px] flex-shrink-0" />
+              <item.icon className="w-[15px] h-[15px] flex-shrink-0" />
               {!collapsed && (
                 <span className="flex-1 truncate">{item.label}</span>
               )}
               {!collapsed && item.badge && (
-                <Badge className="bg-primary/30 text-white border-0 text-[10px] px-1.5 py-0 h-5 min-w-[20px] flex items-center justify-center">
+                <Badge className="bg-primary/30 text-white border-0 text-[9px] px-1 py-0 h-4 min-w-[16px] flex items-center justify-center">
                   {item.badge}
                 </Badge>
               )}
@@ -85,15 +86,15 @@ export default function Sidebar({ collapsed, onToggle }) {
       </nav>
 
       {/* User */}
-      <div className="border-t border-sidebar-border p-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-semibold text-white flex-shrink-0">
+      <div className="border-t border-sidebar-border p-2.5">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[9px] font-semibold text-white flex-shrink-0">
             AK
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">Alex Kim</p>
-              <p className="text-xs text-sidebar-foreground/60 truncate">Data Analyst</p>
+              <p className="text-[11px] font-medium text-white truncate">Alex Kim</p>
+              <p className="text-[10px] text-sidebar-foreground/50 truncate">Data Analyst</p>
             </div>
           )}
         </div>
@@ -102,13 +103,13 @@ export default function Sidebar({ collapsed, onToggle }) {
       {/* Collapse toggle */}
       <button
         onClick={onToggle}
-        className="border-t border-sidebar-border p-3 flex items-center gap-2.5 text-sm text-sidebar-foreground/60 hover:text-white transition-colors"
+        className="border-t border-sidebar-border px-2.5 py-2 flex items-center gap-2 text-[11px] text-sidebar-foreground/50 hover:text-white transition-colors"
       >
         {collapsed ? (
-          <ChevronRight className="w-4 h-4 mx-auto" />
+          <ChevronRight className="w-3.5 h-3.5 mx-auto" />
         ) : (
           <>
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-3.5 h-3.5" />
             <span>Collapse</span>
           </>
         )}

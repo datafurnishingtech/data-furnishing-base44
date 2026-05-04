@@ -77,8 +77,8 @@ export default function Overview() {
         <div className="grid grid-cols-2 gap-4 mb-6">
           {/* Heatmap placeholder */}
           <div className="bg-card rounded-xl border border-border p-5">
-            <h3 className="text-sm font-semibold text-foreground mb-1">Bureau Coverage Heatmap</h3>
-            <p className="text-xs text-muted-foreground mb-4">Distribution of Data Furnishing by State</p>
+            <h3 className="text-[11px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Bureau Coverage Heatmap</h3>
+            <p className="text-[10px] text-muted-foreground mb-3">Distribution of Data Furnishing by State</p>
             <div className="h-48 bg-muted/30 rounded-lg flex items-center justify-center relative overflow-hidden">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Blank_US_Map_%28states_only%29.svg/1200px-Blank_US_Map_%28states_only%29.svg.png"
@@ -110,24 +110,24 @@ export default function Overview() {
 
           {/* Top Furnishers */}
           <div className="bg-card rounded-xl border border-border p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-foreground">Top Furnishers by Tradeline Volume</h3>
-              <button className="text-xs text-primary font-medium hover:underline">View all</button>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Top Furnishers by Tradeline Volume</h3>
+              <button className="text-[10px] text-primary font-medium hover:underline">View all</button>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="text-xs text-muted-foreground border-b border-border">
-                  <th className="text-left pb-2 font-medium">&nbsp;</th>
-                  <th className="text-left pb-2 font-medium">FURNISHER</th>
-                  <th className="text-right pb-2 font-medium">TRADELINES</th>
+                <tr className="text-[9px] text-muted-foreground border-b border-border uppercase tracking-wide">
+                  <th className="text-left pb-1.5 font-medium">&nbsp;</th>
+                  <th className="text-left pb-1.5 font-medium">Furnisher</th>
+                  <th className="text-right pb-1.5 font-medium">Tradelines</th>
                 </tr>
               </thead>
               <tbody>
                 {topFurnishers.map((f) => (
                   <tr key={f.rank} className="border-b border-border/50 last:border-0">
-                    <td className="py-3 text-sm text-muted-foreground w-8">{f.rank}</td>
-                    <td className="py-3 text-sm font-medium text-foreground">{f.name}</td>
-                    <td className="py-3 text-sm text-foreground text-right">{f.tradelines}</td>
+                    <td className="py-2 text-[11px] text-muted-foreground w-8">{f.rank}</td>
+                    <td className="py-2 text-[11px] font-medium text-foreground">{f.name}</td>
+                    <td className="py-2 text-[11px] text-foreground text-right">{f.tradelines}</td>
                   </tr>
                 ))}
               </tbody>
@@ -142,17 +142,17 @@ export default function Overview() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {/* Recent Alerts */}
           <div className="bg-card rounded-xl border border-border p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-foreground">Recent Alerts</h3>
-              <button className="text-xs text-primary font-medium hover:underline">View all</button>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Recent Alerts</h3>
+              <button className="text-[10px] text-primary font-medium hover:underline">View all</button>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {recentAlerts.map((a, i) => (
-                <div key={i} className="flex items-start gap-2.5">
-                  <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${a.color}`} />
+                <div key={i} className="flex items-start gap-2">
+                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${a.color}`} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{a.title}</p>
-                    <p className="text-xs text-muted-foreground">{a.desc}</p>
+                    <p className="text-[11px] font-medium text-foreground">{a.title}</p>
+                    <p className="text-[10px] text-muted-foreground">{a.desc}</p>
                   </div>
                   <span className="text-[10px] text-muted-foreground whitespace-nowrap">{a.time}</span>
                 </div>
@@ -162,8 +162,8 @@ export default function Overview() {
 
           {/* Product Mix */}
           <div className="bg-card rounded-xl border border-border p-5">
-            <h3 className="text-sm font-semibold text-foreground mb-1">Product Mix</h3>
-            <p className="text-xs text-muted-foreground mb-3">Distribution by Category</p>
+            <h3 className="text-[11px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Product Mix</h3>
+            <p className="text-[10px] text-muted-foreground mb-3">Distribution by Category</p>
             <div className="flex items-center gap-4">
               <div className="w-28 h-28">
                 <ResponsiveContainer width="100%" height="100%">
@@ -176,42 +176,42 @@ export default function Overview() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 {productMix.map((p) => (
-                  <div key={p.name} className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full" style={{ background: p.color }} />
-                    <span className="text-xs text-foreground">{p.name}</span>
-                    <span className="text-xs text-muted-foreground ml-auto">{p.value}%</span>
+                  <div key={p.name} className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: p.color }} />
+                    <span className="text-[10px] text-foreground">{p.name}</span>
+                    <span className="text-[10px] text-muted-foreground ml-auto">{p.value}%</span>
                   </div>
                 ))}
               </div>
             </div>
-            <p className="text-xs text-muted-foreground mt-3">Total Products 7,312</p>
+            <p className="text-[10px] text-muted-foreground mt-2">Total Products 7,312</p>
           </div>
 
           {/* Watchlist Snapshot */}
           <div className="bg-card rounded-xl border border-border p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-foreground">Watchlist Snapshot</h3>
-              <button className="text-xs text-primary font-medium hover:underline">View all</button>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Watchlist Snapshot</h3>
+              <button className="text-[10px] text-primary font-medium hover:underline">View all</button>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="text-[10px] text-muted-foreground border-b border-border uppercase">
-                  <th className="text-left pb-2 font-medium">Watchlist</th>
-                  <th className="text-right pb-2 font-medium">Items</th>
+                <tr className="text-[9px] text-muted-foreground border-b border-border uppercase tracking-wide">
+                  <th className="text-left pb-1.5 font-medium">Watchlist</th>
+                  <th className="text-right pb-1.5 font-medium">Items</th>
                 </tr>
               </thead>
               <tbody>
                 {watchlistData.map((w) => (
                   <tr key={w.name} className="border-b border-border/50 last:border-0">
-                    <td className="py-2 text-xs text-foreground">{w.name}</td>
-                    <td className="py-2 text-xs text-foreground text-right">{w.items}</td>
+                    <td className="py-1.5 text-[11px] text-foreground">{w.name}</td>
+                    <td className="py-1.5 text-[11px] text-foreground text-right">{w.items}</td>
                   </tr>
                 ))}
                 <tr className="font-semibold">
-                  <td className="py-2 text-xs text-primary">Total Items</td>
-                  <td className="py-2 text-xs text-primary text-right">74</td>
+                  <td className="py-1.5 text-[11px] text-primary">Total Items</td>
+                  <td className="py-1.5 text-[11px] text-primary text-right">74</td>
                 </tr>
               </tbody>
             </table>
@@ -220,31 +220,31 @@ export default function Overview() {
 
         {/* Recent Trade Activity */}
         <div className="bg-card rounded-xl border border-border p-5">
-          <h3 className="text-sm font-semibold text-foreground mb-4">Recent Trade Activity</h3>
+          <h3 className="text-[11px] font-semibold text-foreground mb-3 uppercase tracking-wide">Recent Trade Activity</h3>
           <table className="w-full">
             <thead>
-              <tr className="text-[10px] text-muted-foreground border-b border-border uppercase">
-                <th className="text-left pb-2 font-medium">Trade ID</th>
-                <th className="text-left pb-2 font-medium">Furnisher</th>
-                <th className="text-left pb-2 font-medium">Product</th>
-                <th className="text-left pb-2 font-medium">Bureau</th>
-                <th className="text-left pb-2 font-medium">Reported On</th>
-                <th className="text-left pb-2 font-medium">Record Status</th>
+              <tr className="text-[9px] text-muted-foreground border-b border-border uppercase tracking-wide">
+                <th className="text-left pb-1.5 font-medium">Trade ID</th>
+                <th className="text-left pb-1.5 font-medium">Furnisher</th>
+                <th className="text-left pb-1.5 font-medium">Product</th>
+                <th className="text-left pb-1.5 font-medium">Bureau</th>
+                <th className="text-left pb-1.5 font-medium">Reported On</th>
+                <th className="text-left pb-1.5 font-medium">Record Status</th>
               </tr>
             </thead>
             <tbody>
               {tradeActivity.map((t) => (
                 <tr key={t.id} className="border-b border-border/50 last:border-0 hover:bg-muted/30 cursor-pointer">
-                  <td className="py-3 text-xs text-muted-foreground">{t.id}</td>
-                  <td className="py-3 text-xs font-medium text-foreground">{t.furnisher}</td>
-                  <td className="py-3 text-xs text-foreground">{t.product}</td>
-                  <td className="py-3 text-xs text-foreground">{t.bureau}</td>
-                  <td className="py-3 text-xs text-foreground">{t.date}</td>
-                  <td className="py-3">
-                    <span className={`inline-flex items-center gap-1 text-xs ${
+                  <td className="py-2 text-[10px] text-muted-foreground font-mono">{t.id}</td>
+                  <td className="py-2 text-[11px] font-medium text-foreground">{t.furnisher}</td>
+                  <td className="py-2 text-[11px] text-foreground">{t.product}</td>
+                  <td className="py-2 text-[11px] text-foreground">{t.bureau}</td>
+                  <td className="py-2 text-[10px] text-muted-foreground">{t.date}</td>
+                  <td className="py-2">
+                    <span className={`inline-flex items-center gap-1 text-[10px] ${
                       t.status === "Verified" ? "text-emerald-500" : "text-amber-500"
                     }`}>
-                      <CheckCircle2 className="w-3 h-3" />
+                      <CheckCircle2 className="w-2.5 h-2.5" />
                       {t.status}
                     </span>
                   </td>
@@ -262,14 +262,14 @@ export default function Overview() {
       <div className="w-[260px] flex-shrink-0 space-y-4">
         <div className="bg-card rounded-xl border border-border p-4">
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-1 h-4 bg-primary rounded-full" />
-            <h3 className="text-sm font-semibold text-foreground">Insights</h3>
+            <div className="w-1 h-3.5 bg-primary rounded-full" />
+            <h3 className="text-[11px] font-semibold text-foreground uppercase tracking-wide">Insights</h3>
           </div>
 
           {/* Coverage Summary */}
           <div className="mb-4">
-            <h4 className="text-xs font-semibold text-foreground mb-1">Coverage Summary</h4>
-            <p className="text-[10px] text-muted-foreground mb-3">Your bureau coverage is above industry average.</p>
+            <h4 className="text-[10px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Coverage Summary</h4>
+            <p className="text-[10px] text-muted-foreground mb-2">Bureau coverage above industry average.</p>
             <div className="flex items-center justify-center">
               <div className="relative w-24 h-24">
                 <ResponsiveContainer width="100%" height="100%">
@@ -291,8 +291,8 @@ export default function Overview() {
 
           {/* Trend Spotlight */}
           <div className="mb-4">
-            <h4 className="text-xs font-semibold text-foreground mb-1">Trend Spotlight</h4>
-            <p className="text-[10px] text-muted-foreground mb-2">Tradelines volumes increased 11.8% compared to Apr 1 – Apr 30, 2025.</p>
+            <h4 className="text-[10px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Trend Spotlight</h4>
+            <p className="text-[10px] text-muted-foreground mb-2">Tradelines up 11.8% vs Apr 2025.</p>
             <div className="h-12">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={trendData}>
@@ -304,9 +304,9 @@ export default function Overview() {
 
           {/* Data Quality */}
           <div className="mb-4">
-            <h4 className="text-xs font-semibold text-foreground mb-1">Data Quality</h4>
-            <p className="text-[10px] text-muted-foreground mb-2">Verified sources are contributing to high data reliability.</p>
-            <p className="text-xl font-bold text-foreground">98.7%</p>
+            <h4 className="text-[10px] font-semibold text-foreground mb-0.5 uppercase tracking-wide">Data Quality</h4>
+            <p className="text-[10px] text-muted-foreground mb-2">High reliability from verified sources.</p>
+            <p className="text-lg font-bold text-foreground">98.7%</p>
             <p className="text-[10px] text-muted-foreground">Verified Data</p>
             <div className="w-full h-1.5 bg-muted rounded-full mt-1.5">
               <div className="h-full bg-primary rounded-full" style={{ width: "98.7%" }} />
@@ -315,7 +315,7 @@ export default function Overview() {
 
           {/* Recent Activity */}
           <div>
-            <h4 className="text-xs font-semibold text-foreground mb-2">Recent Activity</h4>
+            <h4 className="text-[10px] font-semibold text-foreground mb-2 uppercase tracking-wide">Recent Activity</h4>
             <div className="space-y-2.5">
               {recentActivity.map((a, i) => (
                 <div key={i} className="flex items-start gap-2">
