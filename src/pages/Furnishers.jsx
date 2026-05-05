@@ -30,12 +30,12 @@ export default function Furnishers() {
     queryFn: () => base44.entities.Product.list("-created_date", 500),
   });
 
-  // Select first company once loaded
+  // Select first direct company once loaded
   useEffect(() => {
-    if (companies.length > 0 && !selected) {
-      setSelected(companies[0]);
+    if (directCompanies.length > 0 && !selected && activeTab === "furnishers") {
+      setSelected(directCompanies[0]);
     }
-  }, [companies]);
+  }, [directCompanies]);
 
   // AU tradeline providers are companies of type "tradeline_provider"
   const auCompanies = useMemo(() => {
@@ -47,8 +47,13 @@ export default function Furnishers() {
     return products.filter((p) => auIds.has(p.company_id));
   }, [auCompanies, products]);
 
+  // Direct furnishers excludes AU tradeline providers
+  const directCompanies = useMemo(() => {
+    return companies.filter((c) => c.company_type !== "tradeline_provider");
+  }, [companies]);
+
   const filtered = useMemo(() => {
-    return companies.filter((c) => {
+    return directCompanies.filter((c) => {
       const matchSearch =
         !search ||
         c.company_name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -58,7 +63,7 @@ export default function Furnishers() {
       const matchVerification = verificationFilter === "all" || c.verification_status === verificationFilter;
       return matchSearch && matchType && matchVerification;
     });
-  }, [companies, search, typeFilter, verificationFilter]);
+  }, [directCompanies, search, typeFilter, verificationFilter]);
 
   const paginated = useMemo(() => {
     const start = (page - 1) * PAGE_SIZE;
@@ -67,9 +72,9 @@ export default function Furnishers() {
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  const verifiedCount = companies.filter((c) => c.verification_status === "verified").length;
-  const avgConfidence = companies.length
-    ? Math.round(companies.reduce((sum, c) => sum + (c.confidence_score || 0), 0) / companies.length)
+  const verifiedCount = directCompanies.filter((c) => c.verification_status === "verified").length;
+  const avgConfidence = directCompanies.length
+    ? Math.round(directCompanies.reduce((sum, c) => sum + (c.confidence_score || 0), 0) / directCompanies.length)
     : 0;
 
   const selectedProductCount = selected
@@ -114,7 +119,7 @@ export default function Furnishers() {
               )}
               {tab.id === "furnishers" && (
                 <span className="ml-1.5 text-[9px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded font-normal">
-                  {companies.length}
+                  {directCompanies.length}
                 </span>
               )}
             </button>
@@ -123,7 +128,7 @@ export default function Furnishers() {
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-3 mb-6">
-          <StatCard label="Total furnishers" value={isLoading ? "—" : companies.length.toLocaleString()} change={12.5} />
+          <StatCard label="Total furnishers" value={isLoading ? "—" : directCompanies.length.toLocaleString()} change={12.5} />
           <StatCard label="Verified furnishers" value={isLoading ? "—" : verifiedCount.toLocaleString()} change={10.3} />
           <StatCard label="Total products" value={isLoading ? "—" : products.length.toLocaleString()} change={8.7} />
           <div className="bg-card rounded-lg border border-border/60 px-4 py-3.5 flex flex-col gap-2 min-w-0">
