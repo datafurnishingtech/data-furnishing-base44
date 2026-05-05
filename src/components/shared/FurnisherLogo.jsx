@@ -19,11 +19,19 @@ const OVERRIDES = {
   "transunion.com": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/TransUnion_logo.svg/512px-TransUnion_logo.svg.png",
 };
 
-const logoSources = (domain) => {
+const logoSources = (domain, fallbackName) => {
   const sources = [];
   if (OVERRIDES[domain]) sources.push(OVERRIDES[domain]);
-  sources.push(`https://logo.clearbit.com/${domain}`);
-  sources.push(`https://www.google.com/s2/favicons?domain=https://${domain}&sz=128`);
+  if (domain) {
+    sources.push(`https://logo.clearbit.com/${domain}`);
+    sources.push(`https://www.google.com/s2/favicons?domain=https://${domain}&sz=128`);
+  }
+  // Fallback: try company name as domain if no domain provided
+  if (!domain && fallbackName) {
+    const nameDomain = fallbackName.toLowerCase().replace(/\s+/g, "");
+    sources.push(`https://logo.clearbit.com/${nameDomain}`);
+    sources.push(`https://www.google.com/s2/favicons?domain=https://${nameDomain}&sz=128`);
+  }
   return sources;
 };
 
@@ -31,7 +39,7 @@ export default function FurnisherLogo({ domain, name, size = "sm" }) {
   const [srcIndex, setSrcIndex] = useState(0);
   const dim = size === "lg" ? "w-10 h-10" : size === "md" ? "w-8 h-8" : "w-7 h-7";
   const textSize = size === "lg" ? "text-[11px]" : "text-[9px]";
-  const sources = logoSources(domain);
+  const sources = logoSources(domain, name);
 
   if (srcIndex < sources.length) {
     return (
