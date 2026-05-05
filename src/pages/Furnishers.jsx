@@ -5,6 +5,8 @@ import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import FurnisherTable from "@/components/furnishers/FurnisherTable";
 import AUTradelinesTable from "@/components/furnishers/AUTradelinesTable";
+import AUVendorTable from "@/components/furnishers/AUVendorTable";
+import AUVendorDetailPanel from "@/components/furnishers/AUVendorDetailPanel";
 import FurnisherDetailPanel from "@/components/furnishers/FurnisherDetailPanel";
 import FurnisherFilters from "@/components/furnishers/FurnisherFilters";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
@@ -177,7 +179,7 @@ export default function Furnishers() {
             <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : activeTab === "au" ? (
-          <AUTradelinesTable
+          <AUVendorTable
             companies={auCompanies}
             products={auProducts}
             selected={selected}
@@ -230,11 +232,19 @@ export default function Furnishers() {
       </div>
 
       {/* Detail Panel */}
-      <FurnisherDetailPanel
-        company={selected}
-        productCount={selectedProductCount}
-        onClose={() => setSelected(null)}
-      />
+      {activeTab === "au" ? (
+        <AUVendorDetailPanel
+          company={selected}
+          products={auProducts}
+          onClose={() => setSelected(null)}
+        />
+      ) : (
+        <FurnisherDetailPanel
+          company={selected}
+          productCount={selectedProductCount}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </div>
   );
 }
