@@ -34,16 +34,18 @@ export default function Furnishers() {
   }, [companies]);
 
   const filtered = useMemo(() => {
-    return companies.filter((c) => {
-      const matchSearch =
-        !search ||
-        c.company_name?.toLowerCase().includes(search.toLowerCase()) ||
-        c.short_description?.toLowerCase().includes(search.toLowerCase()) ||
-        c.legal_name?.toLowerCase().includes(search.toLowerCase());
-      const matchType = typeFilter === "all" || c.company_type === typeFilter;
-      const matchVerification = verificationFilter === "all" || c.verification_status === verificationFilter;
-      return matchSearch && matchType && matchVerification;
-    });
+    return companies
+      .filter((c) => {
+        const matchSearch =
+          !search ||
+          c.company_name?.toLowerCase().includes(search.toLowerCase()) ||
+          c.short_description?.toLowerCase().includes(search.toLowerCase()) ||
+          c.legal_name?.toLowerCase().includes(search.toLowerCase());
+        const matchType = typeFilter === "all" || c.company_type === typeFilter;
+        const matchVerification = verificationFilter === "all" || c.verification_status === verificationFilter;
+        return matchSearch && matchType && matchVerification;
+      })
+      .sort((a, b) => (b.confidence_score || 0) - (a.confidence_score || 0));
   }, [companies, search, typeFilter, verificationFilter]);
 
   const paginated = useMemo(() => {
