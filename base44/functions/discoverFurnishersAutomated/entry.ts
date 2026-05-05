@@ -168,6 +168,16 @@ Deno.serve(async (req) => {
       }
     }
 
+    // 6. Enrich newly created companies with website, HQ, and descriptions
+    if (created.length > 0) {
+      try {
+        await base44.asServiceRole.functions.invoke('populateMissingFurnisherData', {});
+        await base44.asServiceRole.functions.invoke('populateMissingProfileSummaries', {});
+      } catch (err) {
+        errors.push({ step: 'enrichment', error: err.message });
+      }
+    }
+
     return Response.json({
       timestamp: new Date().toISOString(),
       summary: {
