@@ -31,11 +31,11 @@ export default function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-[210px] bg-sidebar text-sidebar-foreground flex flex-col z-50">
       {/* Logo */}
-      <div className="flex items-center px-2.5 h-14 border-b border-sidebar-border">
+      <div className="flex items-center gap-2.5 px-2.5 h-14 border-b border-sidebar-border">
         <img
           src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/eba179282_MainSignature-Negative-02.png"
           alt="Data Furnishing"
-          className="h-4 w-auto object-contain"
+          className="h-[14px] w-auto object-contain flex-shrink-0"
         />
       </div>
 
