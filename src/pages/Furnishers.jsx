@@ -183,7 +183,6 @@ export default function Furnishers() {
       {/* Detail Panel */}
       <FurnisherDetailPanel
         company={selected}
-        productCount={selectedProductCount}
         onClose={() => setSelected(null)}
       />
     </div>
