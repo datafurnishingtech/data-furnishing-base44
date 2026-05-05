@@ -10,7 +10,6 @@ import {
   Eye,
   FileText,
   Settings,
-  FlaskConical,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -23,7 +22,6 @@ const navItems = [
   { label: "Alerts", icon: Bell, path: "/alerts", badge: 12 },
   { label: "Watchlists", icon: Eye, path: "/watchlists" },
   { label: "Reports", icon: FileText, path: "/reports" },
-  { label: "Research Pipeline", icon: FlaskConical, path: "/research" },
   { label: "Settings", icon: Settings, path: "/settings" },
 ];
 
