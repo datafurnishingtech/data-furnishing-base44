@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const SEGMENTS = [
   {
     label: "Traditional Banking",
-    icon: "🏦",
     types: [
       { value: "bank", label: "National / Regional Bank" },
       { value: "credit_union", label: "Credit Union" },
@@ -15,7 +14,6 @@ const SEGMENTS = [
   },
   {
     label: "Card Issuers",
-    icon: "💳",
     types: [
       { value: "direct_furnisher", label: "Private Label / Co-Brand" },
       { value: "tradeline_provider", label: "General Purpose Issuer" },
@@ -23,7 +21,6 @@ const SEGMENTS = [
   },
   {
     label: "Installment Lenders",
-    icon: "🚗",
     types: [
       { value: "auto_lender", label: "Auto Lender" },
       { value: "mortgage_lender", label: "Mortgage Lender" },
@@ -34,14 +31,12 @@ const SEGMENTS = [
   },
   {
     label: "Credit Builders",
-    icon: "🏗️",
     types: [
       { value: "credit_builder", label: "Credit Builder" },
     ],
   },
   {
     label: "Business Credit",
-    icon: "🏢",
     types: [
       { value: "business_credit_vendor", label: "Business Credit Vendor" },
       { value: "bnpl_pos_finance", label: "BNPL / POS Finance" },
@@ -49,7 +44,6 @@ const SEGMENTS = [
   },
   {
     label: "Alternative Data",
-    icon: "🏠",
     types: [
       { value: "rent_reporting", label: "Rent Reporting" },
       { value: "specialty_reporting_company", label: "Specialty Reporting" },
@@ -58,7 +52,6 @@ const SEGMENTS = [
   },
   {
     label: "Infrastructure & Data",
-    icon: "🔧",
     types: [
       { value: "data_infrastructure", label: "Data Infrastructure" },
       { value: "bureau", label: "Bureau" },
@@ -117,7 +110,6 @@ function TypePopover({ value, onChange }) {
           {SEGMENTS.map((seg) => (
             <div key={seg.label}>
               <div className="flex items-center gap-1.5 px-3 py-1 mt-1">
-                <span className="text-[11px]">{seg.icon}</span>
                 <span className="text-[9.5px] font-semibold uppercase tracking-[0.07em] text-muted-foreground/60">{seg.label}</span>
               </div>
               {seg.types.map((t) => (
