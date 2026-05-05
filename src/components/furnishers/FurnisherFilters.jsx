@@ -6,12 +6,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 const COMPANY_TYPES = [
   { value: "all", label: "All Types" },
+  { value: "bank", label: "Bank" },
+  { value: "credit_union", label: "Credit Union" },
   { value: "credit_builder", label: "Credit Builder" },
+  { value: "fintech_lender", label: "Fintech Lender" },
+  { value: "mortgage_lender", label: "Mortgage Lender" },
+  { value: "student_loan_servicer", label: "Student Loan Servicer" },
+  { value: "auto_lender", label: "Auto Lender" },
   { value: "rent_reporting", label: "Rent Reporting" },
   { value: "business_credit_vendor", label: "Business Vendor" },
   { value: "commercial_lender", label: "Commercial Lender" },
   { value: "direct_furnisher", label: "Direct Furnisher" },
-  { value: "auto_lender", label: "Auto Lender" },
   { value: "bnpl_pos_finance", label: "BNPL / POS" },
   { value: "specialty_reporting_company", label: "Specialty Reporting" },
   { value: "data_infrastructure", label: "Data Infrastructure" },
