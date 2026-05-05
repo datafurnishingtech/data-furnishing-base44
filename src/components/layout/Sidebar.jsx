@@ -31,12 +31,13 @@ export default function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-[210px] bg-sidebar text-sidebar-foreground flex flex-col z-50">
       {/* Logo */}
-      <div className="flex items-center px-3 h-14 border-b border-sidebar-border">
+      <div className="flex flex-col items-center justify-center h-14 border-b border-sidebar-border">
         <img
           src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/eba179282_MainSignature-Negative-02.png"
           alt="Data Furnishing"
           className="h-4 w-auto object-contain"
         />
+        <p className="text-[9px] text-sidebar-foreground/60 mt-1 font-medium tracking-wide">Registry</p>
       </div>
 
       {/* Nav */}
