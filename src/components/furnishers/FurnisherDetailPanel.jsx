@@ -104,22 +104,19 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
 
         {/* Interactive Tabs */}
         <div className="flex gap-0 mb-4 border-b border-border/50">
-          {["Overview", "Products", "Coverage", "Activity"].map((tab, i) => {
-            const tabKey = ["overview", "products", "coverage", "activity"][i];
-            return (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tabKey)}
-                className={`text-[10.5px] px-2.5 py-1.5 border-b-2 transition-colors ${
-                  activeTab === tabKey
-                    ? "border-primary text-primary font-medium"
-                    : "border-transparent text-muted-foreground/60 hover:text-foreground"
-                }`}
-              >
-                {tab}
-              </button>
-            );
-          })}
+          {[{ label: "Over.", key: "overview" }, { label: "Prod.", key: "products" }, { label: "Cover.", key: "coverage" }, { label: "Act.", key: "activity" }].map(({ label, key }) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`text-[10px] px-1.5 py-1.5 border-b-2 transition-colors ${
+                activeTab === key
+                  ? "border-primary text-primary font-medium"
+                  : "border-transparent text-muted-foreground/60 hover:text-foreground"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* Tab Content */}
