@@ -103,20 +103,22 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
         </div>
 
         {/* Interactive Tabs */}
-        <div className="flex flex-wrap gap-0 mb-4 border-b border-border/50">
-          {[{ label: "Overview", key: "overview" }, { label: "Products", key: "products" }, { label: "Coverage", key: "coverage" }, { label: "Activity", key: "activity" }].map(({ label, key }) => (
-            <button
-              key={key}
-              onClick={() => setActiveTab(key)}
-              className={`text-[10.5px] px-2.5 py-1.5 border-b-2 transition-colors ${
-                activeTab === key
-                  ? "border-primary text-primary font-medium"
-                  : "border-transparent text-muted-foreground/60 hover:text-foreground"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="overflow-x-auto mb-4 border-b border-border/50">
+          <div className="flex gap-0 whitespace-nowrap">
+            {[{ label: "Overview", key: "overview" }, { label: "Products", key: "products" }, { label: "Coverage", key: "coverage" }, { label: "Activity", key: "activity" }].map(({ label, key }) => (
+              <button
+                key={key}
+                onClick={() => setActiveTab(key)}
+                className={`text-[10.5px] px-2.5 py-1.5 border-b-2 transition-colors flex-shrink-0 ${
+                  activeTab === key
+                    ? "border-primary text-primary font-medium"
+                    : "border-transparent text-muted-foreground/60 hover:text-foreground"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Tab Content */}
