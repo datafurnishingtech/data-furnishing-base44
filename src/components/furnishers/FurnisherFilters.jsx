@@ -1,27 +1,78 @@
-import React from "react";
-import { Filter, Search } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Search, ChevronDown, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const COMPANY_TYPES = [
-  { value: "all", label: "All Types" },
-  { value: "bank", label: "Bank" },
-  { value: "credit_union", label: "Credit Union" },
-  { value: "credit_builder", label: "Credit Builder" },
-  { value: "fintech_lender", label: "Fintech Lender" },
-  { value: "mortgage_lender", label: "Mortgage Lender" },
-  { value: "student_loan_servicer", label: "Student Loan Servicer" },
-  { value: "auto_lender", label: "Auto Lender" },
-  { value: "rent_reporting", label: "Rent Reporting" },
-  { value: "business_credit_vendor", label: "Business Vendor" },
-  { value: "commercial_lender", label: "Commercial Lender" },
-  { value: "direct_furnisher", label: "Direct Furnisher" },
-  { value: "bnpl_pos_finance", label: "BNPL / POS" },
-  { value: "specialty_reporting_company", label: "Specialty Reporting" },
-  { value: "data_infrastructure", label: "Data Infrastructure" },
-  { value: "bureau", label: "Bureau" },
+const SEGMENTS = [
+  {
+    label: "Traditional Banking",
+    icon: "🏦",
+    types: [
+      { value: "bank", label: "National / Regional Bank" },
+      { value: "credit_union", label: "Credit Union" },
+    ],
+  },
+  {
+    label: "Card Issuers",
+    icon: "💳",
+    types: [
+      { value: "direct_furnisher", label: "Private Label / Co-Brand" },
+      { value: "tradeline_provider", label: "General Purpose Issuer" },
+    ],
+  },
+  {
+    label: "Installment Lenders",
+    icon: "🚗",
+    types: [
+      { value: "auto_lender", label: "Auto Lender" },
+      { value: "mortgage_lender", label: "Mortgage Lender" },
+      { value: "student_loan_servicer", label: "Student Loan Servicer" },
+      { value: "fintech_lender", label: "Personal / Fintech Lender" },
+      { value: "commercial_lender", label: "Commercial Lender" },
+    ],
+  },
+  {
+    label: "Credit Builders",
+    icon: "🏗️",
+    types: [
+      { value: "credit_builder", label: "Credit Builder" },
+    ],
+  },
+  {
+    label: "Business Credit",
+    icon: "🏢",
+    types: [
+      { value: "business_credit_vendor", label: "Business Credit Vendor" },
+      { value: "bnpl_pos_finance", label: "BNPL / POS Finance" },
+    ],
+  },
+  {
+    label: "Alternative Data",
+    icon: "🏠",
+    types: [
+      { value: "rent_reporting", label: "Rent Reporting" },
+      { value: "specialty_reporting_company", label: "Specialty Reporting" },
+      { value: "reporting_intermediary", label: "Reporting Intermediary" },
+    ],
+  },
+  {
+    label: "Infrastructure & Data",
+    icon: "🔧",
+    types: [
+      { value: "data_infrastructure", label: "Data Infrastructure" },
+      { value: "bureau", label: "Bureau" },
+    ],
+  },
 ];
+
+const ALL_TYPES = SEGMENTS.flatMap((s) => s.types);
+
+function getLabel(value) {
+  if (value === "all") return "All Types";
+  const found = ALL_TYPES.find((t) => t.value === value);
+  return found ? found.label : value;
+}
 
 const VERIFICATION_OPTIONS = [
   { value: "all", label: "All Statuses" },
@@ -30,20 +81,68 @@ const VERIFICATION_OPTIONS = [
   { value: "unverified", label: "Unverified" },
 ];
 
+function TypePopover({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="flex items-center gap-1.5 h-7 px-2.5 rounded-md border border-border/60 text-[11px] text-muted-foreground bg-transparent hover:bg-muted/30 transition-colors"
+      >
+        <span>{getLabel(value)}</span>
+        <ChevronDown className="w-3 h-3 opacity-50" />
+      </button>
+
+      {open && (
+        <div className="absolute top-full left-0 mt-1 w-56 bg-popover border border-border/60 rounded-lg shadow-lg z-50 py-1 max-h-80 overflow-y-auto">
+          <button
+            onClick={() => { onChange("all"); setOpen(false); }}
+            className="w-full flex items-center justify-between px-3 py-1.5 text-[11px] hover:bg-muted/40 transition-colors"
+          >
+            <span className="font-medium text-foreground">All Types</span>
+            {value === "all" && <Check className="w-3 h-3 text-primary" />}
+          </button>
+          <div className="h-px bg-border/50 my-1" />
+
+          {SEGMENTS.map((seg) => (
+            <div key={seg.label}>
+              <div className="flex items-center gap-1.5 px-3 py-1 mt-1">
+                <span className="text-[11px]">{seg.icon}</span>
+                <span className="text-[9.5px] font-semibold uppercase tracking-[0.07em] text-muted-foreground/60">{seg.label}</span>
+              </div>
+              {seg.types.map((t) => (
+                <button
+                  key={t.value}
+                  onClick={() => { onChange(t.value); setOpen(false); }}
+                  className="w-full flex items-center justify-between px-3 pl-7 py-1.5 text-[11px] hover:bg-muted/40 transition-colors"
+                >
+                  <span className={value === t.value ? "text-primary font-medium" : "text-foreground/80"}>{t.label}</span>
+                  {value === t.value && <Check className="w-3 h-3 text-primary" />}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function FurnisherFilters({ search, onSearch, typeFilter, onTypeFilter, verificationFilter, onVerificationFilter, onClear, totalCount }) {
   return (
     <div className="space-y-3 mb-4">
       <div className="flex flex-wrap items-center gap-2">
-        <Select value={typeFilter} onValueChange={onTypeFilter}>
-          <SelectTrigger className="w-auto min-w-[140px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
-            <SelectValue placeholder="Company Type" />
-          </SelectTrigger>
-          <SelectContent>
-            {COMPANY_TYPES.map((t) => (
-              <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <TypePopover value={typeFilter} onChange={onTypeFilter} />
 
         <Select value={verificationFilter} onValueChange={onVerificationFilter}>
           <SelectTrigger className="w-auto min-w-[140px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
