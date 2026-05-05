@@ -27,17 +27,19 @@ Deno.serve(async (req) => {
       const cfpbCompanies = new Set();
       bureauMatches.forEach(match => {
         const cleaned = match.replace(/<[^>]*>/g, '').trim();
-        if (cleaned) cfpbCompanies.add(cleaned);
+        if (cleaned && cleaned.length > 2) cfpbCompanies.add(cleaned);
       });
 
       // Add discovered CFPB companies
       for (const name of Array.from(cfpbCompanies).slice(0, 10)) {
-        discoveries.push({
-          source: 'CFPB',
-          name,
-          company_type: 'bureau',
-          confidence_score: 85,
-        });
+        if (name && typeof name === 'string') {
+          discoveries.push({
+            source: 'CFPB',
+            name,
+            company_type: 'bureau',
+            confidence_score: 85,
+          });
+        }
       }
     } catch (err) {
       errors.push({ source: 'CFPB', error: err.message });
@@ -121,6 +123,7 @@ Deno.serve(async (req) => {
     const duplicates = [];
 
     for (const discovery of discoveries) {
+      if (!discovery.name) continue;
       const normalizedName = discovery.name.toLowerCase().trim();
       
       if (seen.has(normalizedName)) {
