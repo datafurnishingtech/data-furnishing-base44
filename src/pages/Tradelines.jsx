@@ -2,22 +2,23 @@ import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { TrendingUp, ShieldCheck, Package, Globe, Search, Filter, Star, X, ChevronRight, ArrowRight } from "lucide-react";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 
 const tradelines = [
-  { name: "Synchrony Bank Credit Card", furnisher: "Synchrony Bank", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 92, frequency: "Weekly", lastReported: "May 31, 2025", starred: true },
-  { name: "Capital One Quicksilver", furnisher: "Capital One", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 88, frequency: "Weekly", lastReported: "May 31, 2025" },
-  { name: "American Express Gold Card", furnisher: "American Express", type: "Charge Card", bureaus: ["TU", "EQ", "EX"], impactScore: 87, frequency: "Weekly", lastReported: "May 31, 2025" },
-  { name: "Citi Double Cash Card", furnisher: "Citi", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 86, frequency: "Weekly", lastReported: "May 31, 2025" },
-  { name: "Barclays Aviator Card", furnisher: "Barclays", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 82, frequency: "Weekly", lastReported: "May 31, 2025" },
-  { name: "Auto Loan – Prime", furnisher: "Ally Financial", type: "Auto Loan", bureaus: ["TU", "EQ", "EX"], impactScore: 81, frequency: "Monthly", lastReported: "May 30, 2025" },
-  { name: "Personal Loan", furnisher: "LendingClub", type: "Personal Loan", bureaus: ["TU", "EQ"], impactScore: 78, frequency: "Monthly", lastReported: "May 30, 2025" },
-  { name: "Mortgage – Fixed 30yr", furnisher: "Quicken Loans", type: "Mortgage", bureaus: ["TU", "EQ", "EX"], impactScore: 76, frequency: "Monthly", lastReported: "May 30, 2025" },
-  { name: "Best Buy Credit Card", furnisher: "Citibank (Retail)", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 74, frequency: "Monthly", lastReported: "May 30, 2025" },
-  { name: "Student Loan", furnisher: "Nelnet", type: "Student Loan", bureaus: ["TU", "EQ", "EX"], impactScore: 72, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Synchrony Bank Credit Card", furnisher: "Synchrony Bank", domain: "synchrony.com", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 92, frequency: "Weekly", lastReported: "May 31, 2025", starred: true },
+  { name: "Capital One Quicksilver", furnisher: "Capital One", domain: "capitalone.com", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 88, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "American Express Gold Card", furnisher: "American Express", domain: "americanexpress.com", type: "Charge Card", bureaus: ["TU", "EQ", "EX"], impactScore: 87, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "Citi Double Cash Card", furnisher: "Citi", domain: "citibank.com", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 86, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "Barclays Aviator Card", furnisher: "Barclays", domain: "barclays.co.uk", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 82, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "Auto Loan – Prime", furnisher: "Ally Financial", domain: "ally.com", type: "Auto Loan", bureaus: ["TU", "EQ", "EX"], impactScore: 81, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Personal Loan", furnisher: "LendingClub", domain: "lendingclub.com", type: "Personal Loan", bureaus: ["TU", "EQ"], impactScore: 78, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Mortgage – Fixed 30yr", furnisher: "Quicken Loans", domain: "quickenloans.com", type: "Mortgage", bureaus: ["TU", "EQ", "EX"], impactScore: 76, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Best Buy Credit Card", furnisher: "Citibank (Retail)", domain: "citibank.com", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 74, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Student Loan", furnisher: "Nelnet", domain: "nelnet.com", type: "Student Loan", bureaus: ["TU", "EQ", "EX"], impactScore: 72, frequency: "Monthly", lastReported: "May 30, 2025" },
 ];
 
 const distributionData = [
@@ -106,7 +107,12 @@ export default function Tradelines() {
                     <Star className={`w-3 h-3 ${t.starred ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20"}`} />
                   </td>
                   <td className="px-3 py-2.5 text-[11px] font-normal text-foreground">{t.name}</td>
-                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{t.furnisher}</td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <FurnisherLogo domain={t.domain} name={t.furnisher} size="sm" />
+                      <span className="text-[11px] text-foreground/70">{t.furnisher}</span>
+                    </div>
+                  </td>
                   <td className="px-3 py-2.5 text-[11px] text-foreground/70">{t.type}</td>
                   <td className="px-3 py-2.5">
                     <div className="flex gap-1">

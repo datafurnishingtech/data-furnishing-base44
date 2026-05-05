@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Eye, Building2, Package, Shield, TrendingUp, Search, Filter, Star, MoreVertical, ArrowRight, Plus } from "lucide-react";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,11 +23,11 @@ const riskColors = { High: "bg-destructive/10 text-destructive", Medium: "bg-amb
 const typeColors = { Furnisher: "bg-primary/10 text-primary", Product: "bg-emerald-500/10 text-emerald-600", Coverage: "bg-amber-500/10 text-amber-600", Competitive: "bg-purple-500/10 text-purple-700" };
 
 const recentChanges = [
-  { furnisher: "Synchrony Bank", change: "Coverage improved to 98%", time: "2h ago" },
-  { furnisher: "Wells Fargo", change: "Verification expired", time: "4h ago" },
-  { furnisher: "Discover Financial", change: "New product detected", time: "8h ago" },
-  { furnisher: "Capital One", change: "Coverage improved to 95%", time: "8h ago" },
-  { furnisher: "Citibank (Retail)", change: "Coverage declined to 72%", time: "1d ago" },
+  { furnisher: "Synchrony Bank", domain: "synchrony.com", change: "Coverage improved to 98%", time: "2h ago" },
+  { furnisher: "Wells Fargo", domain: "wellsfargo.com", change: "Verification expired", time: "4h ago" },
+  { furnisher: "Discover Financial", domain: "discover.com", change: "New product detected", time: "8h ago" },
+  { furnisher: "Capital One", domain: "capitalone.com", change: "Coverage improved to 95%", time: "8h ago" },
+  { furnisher: "Citibank (Retail)", domain: "citibank.com", change: "Coverage declined to 72%", time: "1d ago" },
 ];
 
 const healthData = [
@@ -208,7 +209,7 @@ export default function Watchlists() {
                 </div>
                 {recentChanges.map((c) => (
                   <div key={c.furnisher} className="flex items-start gap-2 py-1">
-                    <div className="w-1 h-1 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                    <FurnisherLogo domain={c.domain} name={c.furnisher} size="sm" />
                     <div className="flex-1 min-w-0">
                       <span className="text-[10.5px] font-medium text-foreground">{c.furnisher}</span>
                       <span className="text-[10px] text-muted-foreground/60"> · {c.change}</span>

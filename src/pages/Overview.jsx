@@ -51,9 +51,9 @@ const trendData = [
 ];
 
 const recentActivity = [
-  { title: "New furnisher onboarded", desc: "Brightway Financial", time: "2h ago", icon: "🟢" },
-  { title: "Coverage threshold alert", desc: "American Express", time: "5h ago", icon: "🟡" },
-  { title: "Data quality issue resolved", desc: "Midland Credit Management", time: "1d ago", icon: "🔴" },
+  { title: "New furnisher onboarded", desc: "Brightway Financial", time: "2h ago", color: "bg-emerald-500" },
+  { title: "Coverage threshold alert", desc: "American Express", time: "5h ago", color: "bg-amber-400" },
+  { title: "Data quality issue resolved", desc: "Midland Credit Management", time: "1d ago", color: "bg-destructive" },
 ];
 
 export default function Overview() {
@@ -313,7 +313,7 @@ export default function Overview() {
             <div className="space-y-2.5">
               {recentActivity.map((a, i) => (
                 <div key={i} className="flex items-start gap-2">
-                  <span className="text-xs mt-0.5">{a.icon}</span>
+                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${a.color}`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-[11px] font-normal text-foreground">{a.title}</p>
                     <p className="text-[10px] text-muted-foreground/60">{a.desc}</p>

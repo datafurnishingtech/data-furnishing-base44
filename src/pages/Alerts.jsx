@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Bell, AlertTriangle, Globe, ShieldCheck, CheckCircle2, Search, Filter, X, MoreVertical, Settings, ArrowRight } from "lucide-react";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -188,7 +189,7 @@ export default function Alerts() {
               <div className="pt-2.5 border-t border-border/40">
                 <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-2">Affected furnisher</h4>
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-[9px] font-semibold text-primary">BF</div>
+                  <FurnisherLogo domain="brightwayfinancial.com" name={selected.desc} size="sm" />
                   <div>
                     <p className="text-[11px] font-normal text-foreground">{selected.desc}</p>
                     <p className="text-[10px] text-muted-foreground/60">brightwayfinancial.com</p>
