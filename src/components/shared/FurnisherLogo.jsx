@@ -45,10 +45,12 @@ export default function FurnisherLogo({ domain, name, size = "sm" }) {
     return (
       <div className={`${dim} rounded-md overflow-hidden bg-white border border-border/40 flex items-center justify-center flex-shrink-0`}>
         <img
+          key={srcIndex}
           src={sources[srcIndex]}
           alt={name}
           className="w-full h-full object-contain p-0.5"
           onError={() => setSrcIndex((i) => i + 1)}
+          loading="lazy"
         />
       </div>
     );
