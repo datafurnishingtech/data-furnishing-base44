@@ -1,47 +1,24 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
-import { ShieldCheck, Search, Filter, Star, X, ChevronRight, ArrowRight } from "lucide-react";
+import { TrendingUp, ShieldCheck, Package, Globe, Search, Filter, Star, X, ChevronRight, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 
-const PRODUCT_TYPE_LABELS = {
-  credit_builder_loan: "Credit Builder Loan",
-  secured_card: "Secured Card",
-  charge_card: "Charge Card",
-  revolving_line: "Revolving Line",
-  installment_account: "Installment",
-  rent_reporting: "Rent Reporting",
-  utility_reporting: "Utility Reporting",
-  subscription_reporting: "Subscription",
-  business_tradeline: "Business Tradeline",
-  net_terms: "Net Terms",
-  vendor_credit: "Vendor Credit",
-  fleet_card: "Fleet Card",
-  commercial_loan: "Commercial Loan",
-  business_credit_card: "Business Credit Card",
-  auto_loan: "Auto Loan",
-  auto_lease: "Auto Lease",
-  bnpl: "BNPL",
-  pos_financing: "POS Financing",
-  lease_to_own: "Lease to Own",
-  specialty_data: "Specialty Data",
-  bureau_data: "Bureau Data",
-  api_infrastructure: "API Infrastructure",
-  other: "Other",
-};
-
-const FREQUENCY_LABELS = {
-  monthly: "Monthly",
-  weekly: "Weekly",
-  real_time: "Real-time",
-  unknown: "—",
-  other: "Other",
-};
+const tradelines = [
+  { name: "Synchrony Bank Credit Card", furnisher: "Synchrony Bank", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 92, frequency: "Weekly", lastReported: "May 31, 2025", starred: true },
+  { name: "Capital One Quicksilver", furnisher: "Capital One", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 88, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "American Express Gold Card", furnisher: "American Express", type: "Charge Card", bureaus: ["TU", "EQ", "EX"], impactScore: 87, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "Citi Double Cash Card", furnisher: "Citi", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 86, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "Barclays Aviator Card", furnisher: "Barclays", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 82, frequency: "Weekly", lastReported: "May 31, 2025" },
+  { name: "Auto Loan – Prime", furnisher: "Ally Financial", type: "Auto Loan", bureaus: ["TU", "EQ", "EX"], impactScore: 81, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Personal Loan", furnisher: "LendingClub", type: "Personal Loan", bureaus: ["TU", "EQ"], impactScore: 78, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Mortgage – Fixed 30yr", furnisher: "Quicken Loans", type: "Mortgage", bureaus: ["TU", "EQ", "EX"], impactScore: 76, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Best Buy Credit Card", furnisher: "Citibank (Retail)", type: "Credit Card", bureaus: ["TU", "EQ", "EX"], impactScore: 74, frequency: "Monthly", lastReported: "May 30, 2025" },
+  { name: "Student Loan", furnisher: "Nelnet", type: "Student Loan", bureaus: ["TU", "EQ", "EX"], impactScore: 72, frequency: "Monthly", lastReported: "May 30, 2025" },
+];
 
 const distributionData = [
   { range: "0–20", value: 900000 },
@@ -59,61 +36,8 @@ const impactPieData = [
   { name: "Other factors", value: 10, color: "#DDD6FE" },
 ];
 
-const PAGE_SIZE = 20;
-
 export default function Tradelines() {
-  const [selected, setSelected] = useState(null);
-  const [search, setSearch] = useState("");
-  const [typeFilter, setTypeFilter] = useState("all");
-  const [frequencyFilter, setFrequencyFilter] = useState("all");
-  const [page, setPage] = useState(1);
-
-  const { data: products = [], isLoading: loadingProducts } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => base44.entities.Product.list("-created_date", 500),
-  });
-
-  const { data: companies = [] } = useQuery({
-    queryKey: ["companies-map"],
-    queryFn: () => base44.entities.Company.list("-created_date", 500),
-  });
-
-  // Build a company lookup map
-  const companyMap = useMemo(() => {
-    const map = {};
-    companies.forEach((c) => { map[c.id] = c; });
-    return map;
-  }, [companies]);
-
-  const filtered = useMemo(() => {
-    return products.filter((p) => {
-      const company = companyMap[p.company_id];
-      const companyName = company?.company_name || "";
-      const matchSearch =
-        !search ||
-        p.product_name?.toLowerCase().includes(search.toLowerCase()) ||
-        companyName.toLowerCase().includes(search.toLowerCase());
-      const matchType = typeFilter === "all" || p.product_type === typeFilter;
-      const matchFreq = frequencyFilter === "all" || p.reporting_frequency === frequencyFilter;
-      return matchSearch && matchType && matchFreq;
-    });
-  }, [products, companyMap, search, typeFilter, frequencyFilter]);
-
-  const paginated = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return filtered.slice(start, start + PAGE_SIZE);
-  }, [filtered, page]);
-
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
-
-  const verifiedCount = products.filter((p) => p.status === "verified").length;
-
-  // Auto-select first on load
-  React.useEffect(() => {
-    if (products.length > 0 && !selected) setSelected(products[0]);
-  }, [products]);
-
-  const selectedCompany = selected ? companyMap[selected.company_id] : null;
+  const [selected, setSelected] = useState(tradelines[0]);
 
   return (
     <div className="flex gap-6">
@@ -122,9 +46,9 @@ export default function Tradelines() {
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-3 mb-6">
-          <StatCard label="Total products" value={loadingProducts ? "—" : products.length.toLocaleString()} change={11.8} />
-          <StatCard label="Verified products" value={loadingProducts ? "—" : verifiedCount.toLocaleString()} change={15.1} />
-          <StatCard label="Furnishers represented" value={loadingProducts ? "—" : new Set(products.map((p) => p.company_id).filter(Boolean)).size.toLocaleString()} change={8.3} />
+          <StatCard label="Total tradelines" value="24.6M" change={11.8} />
+          <StatCard label="High-impact tradelines" value="8.2M" change={13.6} />
+          <StatCard label="Verified products" value="7,312" change={15.1} />
           <StatCard label="Coverage consistency" value="98.1%" change={2.4} />
         </div>
 
@@ -132,135 +56,92 @@ export default function Tradelines() {
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <div className="relative flex-1 max-w-xs">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />
-            <Input
-              placeholder="Search by product or furnisher..."
-              className="pl-8 h-7 text-[11px] border-border/60"
-              value={search}
-              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-            />
+            <Input placeholder="Search by product or furnisher..." className="pl-8 h-7 text-[11px] border-border/60" />
           </div>
-          <Select value={typeFilter} onValueChange={(v) => { setTypeFilter(v); setPage(1); }}>
-            <SelectTrigger className="w-auto min-w-[130px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
-              <SelectValue placeholder="Product type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All types</SelectItem>
-              {Object.entries(PRODUCT_TYPE_LABELS).map(([k, v]) => (
-                <SelectItem key={k} value={k}>{v}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={frequencyFilter} onValueChange={(v) => { setFrequencyFilter(v); setPage(1); }}>
-            <SelectTrigger className="w-auto min-w-[130px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
-              <SelectValue placeholder="Reporting frequency" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All frequencies</SelectItem>
-              <SelectItem value="monthly">Monthly</SelectItem>
-              <SelectItem value="weekly">Weekly</SelectItem>
-              <SelectItem value="real_time">Real-time</SelectItem>
-            </SelectContent>
-          </Select>
-          <button
-            className="text-[11px] text-muted-foreground/60 hover:text-foreground"
-            onClick={() => { setSearch(""); setTypeFilter("all"); setFrequencyFilter("all"); setPage(1); }}
-          >
-            Clear filters
-          </button>
+          {["Product type", "Bureau", "Impact score", "Reporting frequency"].map((f) => (
+            <Select key={f}>
+              <SelectTrigger className="w-auto min-w-[100px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
+                <SelectValue placeholder={f} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+              </SelectContent>
+            </Select>
+          ))}
+          <button className="text-[11px] text-muted-foreground/60 hover:text-foreground">Clear filters</button>
+          <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">
+            <Filter className="w-3 h-3" /> Filters
+          </Button>
         </div>
 
         {/* Table */}
         <div className="bg-card rounded-lg border border-border/60 overflow-hidden mb-5">
           <div className="px-4 py-2.5 border-b border-border/50">
-            <h3 className="text-[11.5px] font-medium text-foreground">
-              Products <span className="text-muted-foreground/50 font-normal">({filtered.length.toLocaleString()})</span>
-            </h3>
+            <h3 className="text-[11.5px] font-medium text-foreground">Tradelines <span className="text-muted-foreground/50 font-normal">(24,621,831)</span></h3>
           </div>
-          {loadingProducts ? (
-            <div className="flex items-center justify-center py-16">
-              <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
-            <table className="w-full">
-              <thead>
-                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
-                  <th className="text-left px-4 py-2.5 font-medium">Product name</th>
-                  <th className="text-left px-3 py-2.5 font-medium">Furnisher</th>
-                  <th className="text-left px-3 py-2.5 font-medium">Type</th>
-                  <th className="text-left px-3 py-2.5 font-medium">Frequency</th>
-                  <th className="text-left px-3 py-2.5 font-medium">Audience</th>
-                  <th className="text-left px-3 py-2.5 font-medium">Status</th>
-                  <th className="w-8"></th>
+          <table className="w-full">
+            <thead>
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <th className="w-8 px-3 py-2.5"></th>
+                <th className="text-left px-3 py-2.5 font-medium">Product name</th>
+                <th className="text-left px-3 py-2.5 font-medium">Furnisher</th>
+                <th className="text-left px-3 py-2.5 font-medium">Type</th>
+                <th className="text-left px-3 py-2.5 font-medium">Bureaus</th>
+                <th className="text-left px-3 py-2.5 font-medium">Impact score</th>
+                <th className="text-left px-3 py-2.5 font-medium">Frequency</th>
+                <th className="text-left px-3 py-2.5 font-medium">Last reported</th>
+                <th className="w-8"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {tradelines.map((t) => (
+                <tr
+                  key={t.name}
+                  onClick={() => setSelected(t)}
+                  className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${
+                    selected?.name === t.name ? "bg-primary/5" : ""
+                  }`}
+                >
+                  <td className="px-3 py-2.5">
+                    <Star className={`w-3 h-3 ${t.starred ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20"}`} />
+                  </td>
+                  <td className="px-3 py-2.5 text-[11px] font-normal text-foreground">{t.name}</td>
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{t.furnisher}</td>
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{t.type}</td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex gap-1">
+                      {t.bureaus.map((b) => (
+                        <span key={b} className="text-[9.5px] font-medium bg-primary/10 text-primary px-1.5 py-0.5 rounded">{b}</span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="px-3 py-2.5">
+                    <span className={`inline-flex items-center justify-center w-8 h-5 rounded text-[10px] font-semibold text-white ${
+                      t.impactScore >= 85 ? "bg-primary" : t.impactScore >= 75 ? "bg-primary/70" : "bg-primary/40"
+                    }`}>
+                      {t.impactScore}
+                    </span>
+                  </td>
+                  <td className="px-3 py-2.5 text-[11px] text-foreground/70">{t.frequency}</td>
+                  <td className="px-3 py-2.5 text-[10px] text-muted-foreground/60 tabular-nums">{t.lastReported}</td>
+                  <td className="px-2"><ChevronRight className="w-3 h-3 text-muted-foreground/30" /></td>
                 </tr>
-              </thead>
-              <tbody>
-                {paginated.map((p) => {
-                  const company = companyMap[p.company_id];
-                  return (
-                    <tr
-                      key={p.id}
-                      onClick={() => setSelected(p)}
-                      className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${
-                        selected?.id === p.id ? "bg-primary/5" : ""
-                      }`}
-                    >
-                      <td className="px-4 py-2.5 text-[11px] font-normal text-foreground max-w-[200px] truncate">
-                        {p.product_name}
-                      </td>
-                      <td className="px-3 py-2.5 text-[11px] text-foreground/70">
-                        {company?.company_name || "—"}
-                      </td>
-                      <td className="px-3 py-2.5 text-[11px] text-foreground/70">
-                        {PRODUCT_TYPE_LABELS[p.product_type] || p.product_type}
-                      </td>
-                      <td className="px-3 py-2.5 text-[11px] text-foreground/70">
-                        {FREQUENCY_LABELS[p.reporting_frequency] || "—"}
-                      </td>
-                      <td className="px-3 py-2.5 text-[11px] text-foreground/70 capitalize">
-                        {p.consumer_or_business || "—"}
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className={`text-[9.5px] font-medium px-1.5 py-0.5 rounded ${
-                          p.status === "verified"
-                            ? "bg-emerald-500/10 text-emerald-600"
-                            : p.status === "pending_review"
-                            ? "bg-amber-500/10 text-amber-600"
-                            : "bg-muted text-muted-foreground"
-                        }`}>
-                          {p.status || "draft"}
-                        </span>
-                      </td>
-                      <td className="px-2"><ChevronRight className="w-3 h-3 text-muted-foreground/30" /></td>
-                    </tr>
-                  );
-                })}
-                {paginated.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="px-4 py-10 text-center text-[11px] text-muted-foreground/60">
-                      No products match your filters.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          )}
+              ))}
+            </tbody>
+          </table>
           <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
-            <span className="text-[10px] text-muted-foreground/60">
-              Showing {filtered.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length}
-            </span>
+            <span className="text-[10px] text-muted-foreground/60">Showing 1–10 of 24,621,831</span>
             <div className="flex items-center gap-1">
-              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map((p) => (
+              {[1, 2, 3, 4, 5, "..."].map((p, i) => (
                 <button
-                  key={p}
-                  onClick={() => setPage(p)}
-                  className={`w-6 h-6 text-[10px] rounded flex items-center justify-center ${
-                    p === page ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"
+                  key={i}
+                  className={`min-w-[24px] h-6 text-[10px] rounded flex items-center justify-center px-1 ${
+                    p === 1 ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"
                   }`}
                 >
                   {p}
                 </button>
               ))}
-              {totalPages > 5 && <span className="text-[10px] text-muted-foreground/40">...</span>}
             </div>
           </div>
         </div>
@@ -272,6 +153,14 @@ export default function Tradelines() {
               <h3 className="text-[11.5px] font-medium text-foreground">Impact score distribution</h3>
               <p className="text-[10px] text-muted-foreground/60 mt-0.5">Tradelines by score range</p>
             </div>
+            <Select>
+              <SelectTrigger className="w-[120px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
+                <SelectValue placeholder="Impact score" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="impact">Impact score</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
@@ -295,34 +184,43 @@ export default function Tradelines() {
         <div className="w-[260px] flex-shrink-0">
           <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 min-w-0">
-                <div className="w-0.5 h-3.5 bg-primary/60 rounded-full flex-shrink-0" />
-                <h3 className="text-[11.5px] font-medium text-foreground truncate">{selected.product_name}</h3>
+              <div className="flex items-center gap-2">
+                <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
+                <h3 className="text-[11.5px] font-medium text-foreground truncate">{selected.name}</h3>
               </div>
-              <button onClick={() => setSelected(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50 flex-shrink-0" /></button>
+              <button onClick={() => setSelected(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50" /></button>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex gap-0 mb-4 border-b border-border/50">
+              {["Overview", "Trend", "Bureaus", "Comparables"].map((t, i) => (
+                <button
+                  key={t}
+                  className={`text-[10.5px] px-2 py-1.5 border-b-2 transition-colors ${
+                    i === 0 ? "border-primary text-primary font-medium" : "border-transparent text-muted-foreground/60 hover:text-foreground"
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
             </div>
 
             <div className="space-y-3">
-              {/* Donut */}
+              {/* Impact Score */}
               <div>
                 <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-2">Impact score</h4>
                 <div className="flex items-center gap-3">
                   <div className="relative w-16 h-16 flex-shrink-0">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
-                        <Pie
-                          data={[{ value: selected.confidence_score || 50 }, { value: 100 - (selected.confidence_score || 50) }]}
-                          dataKey="value" cx="50%" cy="50%" innerRadius={22} outerRadius={30} startAngle={90} endAngle={-270}
-                        >
+                        <Pie data={[{ value: selected.impactScore }, { value: 100 - selected.impactScore }]} dataKey="value" cx="50%" cy="50%" innerRadius={22} outerRadius={30} startAngle={90} endAngle={-270}>
                           <Cell fill="#4F46E5" />
                           <Cell fill="#E5E7EB" />
                         </Pie>
                       </PieChart>
                     </ResponsiveContainer>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-[14px] font-semibold text-foreground leading-none">
-                        {selected.confidence_score || "—"}
-                      </span>
+                      <span className="text-[14px] font-semibold text-foreground leading-none">{selected.impactScore}</span>
                     </div>
                   </div>
                   <div className="space-y-1 flex-1">
@@ -335,6 +233,21 @@ export default function Tradelines() {
                     ))}
                   </div>
                 </div>
+                <p className="text-[10px] text-muted-foreground/60 mt-1.5">97th percentile vs all products</p>
+              </div>
+
+              {/* Top Use Cases */}
+              <div className="pt-2.5 border-t border-border/40">
+                <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">Top use cases</h4>
+                {["Prime credit file building", "High-limit credit profile support", "Utilization optimization", "New to credit strengthening"].map((c) => (
+                  <div key={c} className="flex items-center gap-2 py-0.5">
+                    <div className="w-1 h-1 rounded-full bg-emerald-500 flex-shrink-0" />
+                    <span className="text-[10.5px] text-foreground/80">{c}</span>
+                  </div>
+                ))}
+                <button className="text-[10px] text-primary/70 hover:text-primary transition-colors mt-1.5 flex items-center gap-1">
+                  View all use cases <ArrowRight className="w-2.5 h-2.5" />
+                </button>
               </div>
 
               {/* Key Attributes */}
@@ -342,56 +255,30 @@ export default function Tradelines() {
                 <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-2">Key attributes</h4>
                 <div className="space-y-1.5">
                   {[
-                    ["Furnisher", selectedCompany?.company_name || "—"],
-                    ["Product type", PRODUCT_TYPE_LABELS[selected.product_type] || selected.product_type],
-                    ["Reporting frequency", FREQUENCY_LABELS[selected.reporting_frequency] || "—"],
-                    ["Audience", selected.consumer_or_business || "—"],
-                    ["Monthly cost", selected.monthly_cost != null ? `$${selected.monthly_cost}` : "—"],
-                    ["Setup fee", selected.setup_fee != null ? `$${selected.setup_fee}` : "—"],
+                    ["Furnisher", selected.furnisher],
+                    ["Product type", selected.type],
+                    ["Bureaus reported", selected.bureaus.join(", ")],
+                    ["Reporting frequency", selected.frequency],
+                    ["Typical account age", "2+ years"],
+                    ["Min. credit limit", "$500"],
+                    ["Average limit", "$6,200"],
                   ].map(([k, v]) => (
                     <div key={k} className="flex justify-between gap-2">
                       <span className="text-[10px] text-muted-foreground/60">{k}</span>
-                      <span className="text-[10px] font-medium text-foreground text-right capitalize">{v}</span>
+                      <span className="text-[10px] font-medium text-foreground text-right">{v}</span>
                     </div>
                   ))}
                   <div className="flex justify-between gap-2">
-                    <span className="text-[10px] text-muted-foreground/60">Status</span>
-                    <span className={`text-[10px] font-medium flex items-center gap-1 ${
-                      selected.status === "verified" ? "text-emerald-500" : "text-muted-foreground"
-                    }`}>
-                      {selected.status === "verified" && <ShieldCheck className="w-2.5 h-2.5" />}
-                      {selected.status || "draft"}
+                    <span className="text-[10px] text-muted-foreground/60">Verification status</span>
+                    <span className="text-[10px] text-emerald-500 font-medium flex items-center gap-1">
+                      <ShieldCheck className="w-2.5 h-2.5" /> Verified
                     </span>
                   </div>
                 </div>
+                <button className="text-[10px] text-primary/70 hover:text-primary transition-colors mt-2 flex items-center gap-1">
+                  View product profile <ArrowRight className="w-2.5 h-2.5" />
+                </button>
               </div>
-
-              {/* Description */}
-              {selected.description && (
-                <div className="pt-2.5 border-t border-border/40">
-                  <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">Description</h4>
-                  <p className="text-[10.5px] text-muted-foreground/80 leading-relaxed line-clamp-4">{selected.description}</p>
-                </div>
-              )}
-
-              {selectedCompany && (
-                <div className="pt-2.5 border-t border-border/40">
-                  <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">Furnisher</h4>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-[10.5px] font-medium text-foreground">{selectedCompany.company_name}</p>
-                      {selectedCompany.headquarters_location && (
-                        <p className="text-[10px] text-muted-foreground/60">{selectedCompany.headquarters_location}</p>
-                      )}
-                    </div>
-                    {selectedCompany.verification_status === "verified" && (
-                      <span className="text-[9px] font-medium bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded flex-shrink-0">
-                        Verified
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>

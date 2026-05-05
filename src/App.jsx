@@ -16,7 +16,6 @@ import Alerts from './pages/Alerts';
 import Watchlists from './pages/Watchlists';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
-import SeedImport from './pages/SeedImport';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -50,7 +49,6 @@ const AuthenticatedApp = () => {
         <Route path="/watchlists" element={<Watchlists />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/seed-import" element={<SeedImport />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
