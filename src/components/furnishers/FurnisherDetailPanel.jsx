@@ -92,14 +92,9 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
               <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">
                 Profile summary
               </h4>
-              <div className="flex gap-2.5 items-start">
-                <div className="flex-shrink-0">
-                  <FurnisherLogo domain={domain} name={company.company_name} size="md" />
-                </div>
-                <p className="text-[10.5px] text-muted-foreground/80 leading-relaxed flex-1">
-                  {company.short_description || company.long_description}
-                </p>
-              </div>
+              <p className="text-[10.5px] text-muted-foreground/80 leading-relaxed">
+                {company.short_description || company.long_description}
+              </p>
             </div>
           )}
 
