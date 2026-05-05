@@ -87,13 +87,13 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
         </div>
 
         <div className="space-y-3">
-          {company.short_description && (
+          {(company.short_description || company.long_description) && (
             <div>
               <h4 className="text-[10px] font-medium text-muted-foreground/70 uppercase tracking-[0.06em] mb-1.5">
                 Profile summary
               </h4>
               <p className="text-[10.5px] text-muted-foreground/80 leading-relaxed">
-                {company.short_description}
+                {company.short_description || company.long_description}
               </p>
             </div>
           )}
