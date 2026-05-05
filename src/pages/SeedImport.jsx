@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertCircle, Play, Eye, Loader2 } from "lucide-react";
+import { CheckCircle2, Play, Eye, Loader2, Sparkles } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
 
 export default function SeedImport() {
@@ -10,6 +10,8 @@ export default function SeedImport() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [ran, setRan] = useState(false);
+  const [enriching, setEnriching] = useState(false);
+  const [enrichResult, setEnrichResult] = useState(null);
 
   async function handlePreview() {
     setLoading(true);
@@ -17,6 +19,23 @@ export default function SeedImport() {
     const res = await base44.functions.invoke("bulkSeedFurnishers", { dry_run: true });
     setPreview(res.data);
     setLoading(false);
+  }
+
+  async function handleEnrichAll() {
+    setEnriching(true);
+    setEnrichResult(null);
+    let totalEnriched = 0;
+    let offset = 0;
+    const BATCH = 10;
+    while (true) {
+      const res = await base44.functions.invoke("enrichSeedFurnishers", { batch_size: BATCH, offset });
+      const d = res.data;
+      totalEnriched += d.enriched || 0;
+      if (!d.remaining || d.remaining === 0 || d.enriched === 0) break;
+      offset += BATCH;
+    }
+    setEnrichResult({ totalEnriched });
+    setEnriching(false);
   }
 
   async function handleRun() {
@@ -62,7 +81,23 @@ export default function SeedImport() {
             {loading && ran ? <Loader2 className="w-3 h-3 animate-spin" /> : <Play className="w-3 h-3" />}
             {ran ? "Import complete" : "Run import"}
           </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 text-[11px] h-7"
+            onClick={handleEnrichAll}
+            disabled={enriching}
+          >
+            {enriching ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+            {enriching ? "Enriching…" : "Enrich all (LLM)"}
+          </Button>
         </div>
+        {enrichResult && (
+          <div className="mt-3 flex items-center gap-2 text-[11px] text-emerald-600">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            Enriched {enrichResult.totalEnriched} companies with logo, HQ, legal name & description.
+          </div>
+        )}
       </div>
 
       {/* Preview results */}
