@@ -4,15 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import FurnisherTable from "@/components/furnishers/FurnisherTable";
-import AUTradelinesTable from "@/components/furnishers/AUTradelinesTable";
-import AUVendorTable from "@/components/furnishers/AUVendorTable";
-import AUVendorDetailPanel from "@/components/furnishers/AUVendorDetailPanel";
 import FurnisherDetailPanel from "@/components/furnishers/FurnisherDetailPanel";
 import FurnisherFilters from "@/components/furnishers/FurnisherFilters";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export default function Furnishers() {
-  const [activeTab, setActiveTab] = useState("furnishers");
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -26,34 +22,19 @@ export default function Furnishers() {
   });
 
   const { data: products = [] } = useQuery({
-    queryKey: ["products-all"],
+    queryKey: ["products-count"],
     queryFn: () => base44.entities.Product.list("-created_date", 500),
   });
 
-  // Select first direct company once loaded
+  // Select first company once loaded
   useEffect(() => {
-    if (directCompanies.length > 0 && !selected && activeTab === "furnishers") {
-      setSelected(directCompanies[0]);
+    if (companies.length > 0 && !selected) {
+      setSelected(companies[0]);
     }
-  }, [directCompanies]);
-
-  // AU tradeline providers are companies of type "tradeline_provider"
-  const auCompanies = useMemo(() => {
-    return companies.filter((c) => c.company_type === "tradeline_provider");
-  }, [companies]);
-
-  const auProducts = useMemo(() => {
-    const auIds = new Set(auCompanies.map((c) => c.id));
-    return products.filter((p) => auIds.has(p.company_id));
-  }, [auCompanies, products]);
-
-  // Direct furnishers excludes AU tradeline providers
-  const directCompanies = useMemo(() => {
-    return companies.filter((c) => c.company_type !== "tradeline_provider");
   }, [companies]);
 
   const filtered = useMemo(() => {
-    return directCompanies.filter((c) => {
+    return companies.filter((c) => {
       const matchSearch =
         !search ||
         c.company_name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -63,7 +44,7 @@ export default function Furnishers() {
       const matchVerification = verificationFilter === "all" || c.verification_status === verificationFilter;
       return matchSearch && matchType && matchVerification;
     });
-  }, [directCompanies, search, typeFilter, verificationFilter]);
+  }, [companies, search, typeFilter, verificationFilter]);
 
   const paginated = useMemo(() => {
     const start = (page - 1) * PAGE_SIZE;
@@ -72,9 +53,9 @@ export default function Furnishers() {
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  const verifiedCount = directCompanies.filter((c) => c.verification_status === "verified").length;
-  const avgConfidence = directCompanies.length
-    ? Math.round(directCompanies.reduce((sum, c) => sum + (c.confidence_score || 0), 0) / directCompanies.length)
+  const verifiedCount = companies.filter((c) => c.verification_status === "verified").length;
+  const avgConfidence = companies.length
+    ? Math.round(companies.reduce((sum, c) => sum + (c.confidence_score || 0), 0) / companies.length)
     : 0;
 
   const selectedProductCount = selected
@@ -96,39 +77,9 @@ export default function Furnishers() {
           subtitle="Discover, profile, and compare verified furnishers across the credit ecosystem."
         />
 
-        {/* Segment Tabs */}
-        <div className="flex gap-0 mb-5 border-b border-border/50">
-          {[
-            { id: "furnishers", label: "Direct Furnishers" },
-            { id: "au", label: "AU Tradelines" },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => { setActiveTab(tab.id); setSelected(null); setPage(1); }}
-              className={`text-[11.5px] px-4 py-2 border-b-2 transition-colors font-medium ${
-                activeTab === tab.id
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground/60 hover:text-foreground"
-              }`}
-            >
-              {tab.label}
-              {tab.id === "au" && (
-                <span className="ml-1.5 text-[9px] bg-primary/10 text-primary px-1.5 py-0.5 rounded font-normal">
-                  {auCompanies.length}
-                </span>
-              )}
-              {tab.id === "furnishers" && (
-                <span className="ml-1.5 text-[9px] bg-muted text-muted-foreground px-1.5 py-0.5 rounded font-normal">
-                  {directCompanies.length}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-
         {/* Stats */}
         <div className="grid grid-cols-4 gap-3 mb-6">
-          <StatCard label="Total furnishers" value={isLoading ? "—" : directCompanies.length.toLocaleString()} change={12.5} />
+          <StatCard label="Total furnishers" value={isLoading ? "—" : companies.length.toLocaleString()} change={12.5} />
           <StatCard label="Verified furnishers" value={isLoading ? "—" : verifiedCount.toLocaleString()} change={10.3} />
           <StatCard label="Total products" value={isLoading ? "—" : products.length.toLocaleString()} change={8.7} />
           <div className="bg-card rounded-lg border border-border/60 px-4 py-3.5 flex flex-col gap-2 min-w-0">
@@ -166,8 +117,8 @@ export default function Furnishers() {
           </div>
         </div>
 
-        {/* Filters — only for Direct Furnishers tab */}
-        {activeTab === "furnishers" && <FurnisherFilters
+        {/* Filters */}
+        <FurnisherFilters
           search={search}
           onSearch={(v) => { setSearch(v); setPage(1); }}
           typeFilter={typeFilter}
@@ -176,20 +127,13 @@ export default function Furnishers() {
           onVerificationFilter={(v) => { setVerificationFilter(v); setPage(1); }}
           onClear={handleClear}
           totalCount={filtered.length}
-        />}
+        />
 
         {/* Table */}
         {isLoading ? (
           <div className="bg-card rounded-lg border border-border/60 p-12 flex items-center justify-center">
             <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
-        ) : activeTab === "au" ? (
-          <AUVendorTable
-            companies={auCompanies}
-            products={auProducts}
-            selected={selected}
-            onSelect={setSelected}
-          />
         ) : paginated.length === 0 ? (
           <div className="bg-card rounded-lg border border-border/60 p-12 text-center">
             <p className="text-[12px] text-muted-foreground">No furnishers match your filters.</p>
@@ -237,19 +181,11 @@ export default function Furnishers() {
       </div>
 
       {/* Detail Panel */}
-      {activeTab === "au" ? (
-        <AUVendorDetailPanel
-          company={selected}
-          products={auProducts}
-          onClose={() => setSelected(null)}
-        />
-      ) : (
-        <FurnisherDetailPanel
-          company={selected}
-          productCount={selectedProductCount}
-          onClose={() => setSelected(null)}
-        />
-      )}
+      <FurnisherDetailPanel
+        company={selected}
+        productCount={selectedProductCount}
+        onClose={() => setSelected(null)}
+      />
     </div>
   );
 }
