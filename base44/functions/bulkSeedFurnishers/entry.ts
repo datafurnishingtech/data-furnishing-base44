@@ -175,22 +175,28 @@ Deno.serve(async (req) => {
 
   const results = { created: [], skipped: [], errors: [] };
 
-  for (const company of batch) {
-    // Check for existing company to avoid duplicates
-    const existing = await base44.asServiceRole.entities.Company.filter({ company_name: company.company_name });
-    if (existing && existing.length > 0) {
-      results.skipped.push(company.company_name);
-      continue;
-    }
+  // Fetch all existing companies in one call to avoid N+1 timeout
+  const existingCompanies = await base44.asServiceRole.entities.Company.list('-created_date', 500);
+  const existingNames = new Set(existingCompanies.map(c => c.company_name?.toLowerCase().trim()));
 
-    const saved = await base44.asServiceRole.entities.Company.create({
-      ...company,
-      status: 'pending_review',
-      verification_status: 'unverified',
-      confidence_score: 30, // low baseline — needs research enrichment
-      source_notes: 'Seeded from Obvious Tradeline Furnishers seed map v1',
-    });
-    results.created.push({ id: saved.id, name: saved.company_name });
+  // Create all non-duplicate companies in parallel (chunked to avoid rate limits)
+  const toCreate = batch.filter(c => !existingNames.has(c.company_name?.toLowerCase().trim()));
+  const toSkip = batch.filter(c => existingNames.has(c.company_name?.toLowerCase().trim()));
+  results.skipped = toSkip.map(c => c.company_name);
+
+  const CHUNK = 10;
+  for (let i = 0; i < toCreate.length; i += CHUNK) {
+    const chunk = toCreate.slice(i, i + CHUNK);
+    const saved = await Promise.all(chunk.map(company =>
+      base44.asServiceRole.entities.Company.create({
+        ...company,
+        status: 'pending_review',
+        verification_status: 'unverified',
+        confidence_score: 30,
+        source_notes: 'Seeded from Obvious Tradeline Furnishers seed map v1',
+      })
+    ));
+    for (const s of saved) results.created.push({ id: s.id, name: s.company_name });
   }
 
   return Response.json({
