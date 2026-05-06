@@ -16,7 +16,7 @@ export default function StatCard({ label, value, change, changeLabel, icon: Icon
       <span className="text-[10px] font-medium tracking-[0.06em] uppercase text-muted-foreground/70 truncate whitespace-nowrap">
         {label}
       </span>
-      <p className="text-[22px] font-semibold text-foreground leading-none tracking-tight truncate" title={scaled && typeof value === 'number' ? value.toLocaleString() : undefined}>
+      <p className="text-[17px] font-semibold text-foreground leading-none tracking-tight truncate" title={scaled && typeof value === 'number' ? value.toLocaleString() : undefined}>
         {displayValue}
       </p>
       {change !== undefined && (
