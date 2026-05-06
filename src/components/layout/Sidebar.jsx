@@ -50,7 +50,7 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11.5px] font-normal tracking-wide transition-colors ${
+              className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11px] font-normal tracking-normal transition-colors ${
                 isActive
                   ? "bg-white/10 text-white font-medium"
                   : "text-sidebar-foreground/50 hover:bg-white/5 hover:text-sidebar-foreground/90"
