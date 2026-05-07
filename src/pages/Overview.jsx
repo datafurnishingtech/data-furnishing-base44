@@ -85,7 +85,7 @@ export default function Overview() {
                 <p className="text-[10px] text-muted-foreground/60 mt-0.5">Coverage % by state — hover for detail</p>
               </div>
               <div className="text-right">
-                <span className="text-[18px] font-semibold text-emerald-500 leading-none">98.1%</span>
+                <span className="text-[14px] font-medium text-emerald-500 leading-none">98.1%</span>
                 <p className="text-[10px] text-muted-foreground/60 mt-0.5">Overall</p>
               </div>
             </div>
@@ -300,7 +300,7 @@ export default function Overview() {
           <div className="mb-4">
             <h4 className="text-[10px] font-medium text-muted-foreground/70 mb-0.5 uppercase tracking-[0.06em]">Data Quality</h4>
             <p className="text-[10px] text-muted-foreground/60 mb-2">High reliability from verified sources.</p>
-            <p className="text-[18px] font-semibold text-foreground leading-none">98.7%</p>
+            <p className="text-[14px] font-medium text-foreground leading-none">98.7%</p>
             <p className="text-[10px] text-muted-foreground/60 mt-0.5">Verified data</p>
             <div className="w-full h-1.5 bg-muted rounded-full mt-1.5">
               <div className="h-full bg-primary rounded-full" style={{ width: "98.7%" }} />

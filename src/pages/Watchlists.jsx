@@ -148,7 +148,7 @@ export default function Watchlists() {
           <div className="grid grid-cols-5 gap-4">
             {healthData.map((h) => (
               <div key={h.label} className="text-center">
-                <p className="text-[18px] font-semibold text-foreground leading-none">{h.value}</p>
+                <p className="text-[14px] font-medium text-foreground leading-none">{h.value}</p>
                 <p className="text-[10px] text-muted-foreground/60 mt-1">{h.label}</p>
                 <p className="text-[10px] text-emerald-500 mt-0.5">↑ {h.change}%</p>
               </div>

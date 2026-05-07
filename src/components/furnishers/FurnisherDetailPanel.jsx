@@ -169,7 +169,7 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
                   Data confidence
                 </h4>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-[18px] font-semibold text-foreground leading-none">
+                  <span className="text-[14px] font-medium text-foreground leading-none">
                     {company.confidence_score}
                   </span>
                   <span className={`text-[9.5px] font-medium px-1.5 py-0.5 rounded ${
@@ -198,7 +198,7 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
               </h4>
               <div className="flex gap-4">
                 <div className="text-center">
-                  <p className="text-[16px] font-semibold text-foreground leading-none">{productCount}</p>
+                  <p className="text-[14px] font-medium text-foreground leading-none">{productCount}</p>
                   <p className="text-[9.5px] text-muted-foreground/60 mt-0.5">Total</p>
                 </div>
               </div>
