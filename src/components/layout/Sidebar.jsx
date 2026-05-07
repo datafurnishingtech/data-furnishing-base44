@@ -33,7 +33,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="flex items-center px-3 h-14 border-b border-sidebar-border">
         <img
-          src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/25a279a9d_MainSignature.png"
+          src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/eba179282_MainSignature-Negative-02.png"
           alt="Data Furnishing"
           className="h-4 w-auto object-contain"
         />
@@ -52,14 +52,14 @@ export default function Sidebar() {
               to={item.path}
               className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11px] font-normal tracking-normal transition-colors ${
                 isActive
-                  ? "bg-primary/8 text-primary font-medium"
-                  : "text-sidebar-foreground/50 hover:bg-muted hover:text-sidebar-foreground/90"
+                  ? "bg-white/10 text-white font-medium"
+                  : "text-sidebar-foreground/50 hover:bg-white/5 hover:text-sidebar-foreground/90"
               }`}
             >
-              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "text-primary opacity-100" : "opacity-40"}`} />
+              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "opacity-100" : "opacity-50"}`} />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge && (
-                <span className="text-[9px] font-medium bg-primary/10 text-primary rounded px-1.5 py-0.5 leading-none">
+                <span className="text-[9px] font-medium bg-primary/40 text-white/80 rounded px-1.5 py-0.5 leading-none">
                   {item.badge}
                 </span>
               )}
@@ -75,7 +75,7 @@ export default function Sidebar() {
             AK
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[11px] font-medium text-sidebar-foreground truncate">Alex Kim</p>
+            <p className="text-[11px] font-medium text-white truncate">Alex Kim</p>
             <p className="text-[10px] text-sidebar-foreground/50 truncate">Data Analyst</p>
           </div>
         </div>
