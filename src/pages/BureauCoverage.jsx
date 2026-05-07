@@ -59,7 +59,7 @@ export default function BureauCoverage() {
           <StatCard label="Verified cov. signals" value="24.6M" change={15.3} />
           <div className="bg-card rounded-lg border border-border/60 px-4 py-3.5 flex flex-col gap-2 min-w-0">
             <span className="text-[10px] font-medium tracking-[0.06em] uppercase text-muted-foreground/70 truncate">Coverage trend</span>
-            <p className="text-[22px] font-semibold text-foreground leading-none tracking-tight">Upward</p>
+            <p className="text-[14px] font-medium text-emerald-500 leading-none">Upward</p>
             <p className="text-[10px] text-muted-foreground/60">Consistent improvement</p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function BureauCoverage() {
             <USCoverageHeatmap />
             <div className="flex items-center justify-between mt-2.5">
               <div>
-                <span className="text-[18px] font-semibold text-foreground leading-none">98.1%</span>
+                <span className="text-[14px] font-medium text-foreground leading-none">98.1%</span>
                 <p className="text-[10px] text-muted-foreground/60 mt-0.5">National avg. coverage</p>
               </div>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View state details →</button>
@@ -90,7 +90,7 @@ export default function BureauCoverage() {
               {bureauCards.map((b) => (
                 <div key={b.name} className="text-center p-2.5 bg-muted/30 rounded-lg">
                   <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
-                  <p className="text-[18px] font-semibold text-foreground leading-none">{b.coverage}%</p>
+                  <p className="text-[14px] font-medium text-foreground leading-none">{b.coverage}%</p>
                   <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
                 </div>
               ))}
@@ -99,7 +99,7 @@ export default function BureauCoverage() {
               {additionalBureaus.map((b) => (
                 <div key={b.name} className="text-center p-2.5 bg-muted/20 rounded-lg">
                   <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
-                  <p className="text-[15px] font-semibold text-foreground leading-none">{b.coverage}%</p>
+                  <p className="text-[14px] font-medium text-foreground leading-none">{b.coverage}%</p>
                   <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
                 </div>
               ))}
