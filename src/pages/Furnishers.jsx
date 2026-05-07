@@ -112,7 +112,7 @@ export default function Furnishers() {
                 </div>
               </div>
               <div>
-                <p className="text-[17px] font-semibold text-foreground leading-none tracking-tight">{avgConfidence}</p>
+                <p className="text-[14px] font-medium text-foreground leading-none tracking-tight">{avgConfidence}</p>
                 <p className="text-[10px] text-emerald-500 mt-0.5">↑ avg. confidence</p>
               </div>
             </div>
