@@ -7,6 +7,9 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
 import AppLayout from './components/layout/AppLayout';
+import AuthLogin from './pages/AuthLogin';
+import AuthRegister from './pages/AuthRegister';
+import AuthForgotPassword from './pages/AuthForgotPassword';
 import Overview from './pages/Overview';
 import Furnishers from './pages/Furnishers';
 import Tradelines from './pages/Tradelines';
@@ -52,6 +55,9 @@ const AuthenticatedApp = () => {
         <Route path="/settings" element={<Settings />} />
 
       </Route>
+      <Route path="/auth-login" element={<AuthLogin />} />
+      <Route path="/auth-register" element={<AuthRegister />} />
+      <Route path="/auth-forgot" element={<AuthForgotPassword />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
