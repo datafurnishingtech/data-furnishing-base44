@@ -40,7 +40,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-3 px-2.5 space-y-px overflow-y-auto">
+      <nav className="flex-1 py-3 px-2.5 space-y-0.5 overflow-y-auto">
         {navItems.map((item) => {
           const isActive =
             item.path === "/"
@@ -50,16 +50,16 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11px] font-normal tracking-normal transition-colors ${
+              className={`flex items-center gap-2.5 px-2.5 py-2 rounded-md text-[12px] tracking-normal transition-colors ${
                 isActive
-                  ? "bg-primary/8 text-primary font-medium"
-                  : "text-sidebar-foreground/50 hover:bg-muted hover:text-sidebar-foreground/90"
+                  ? "bg-primary/10 text-primary font-semibold"
+                  : "text-sidebar-foreground/65 font-normal hover:bg-sidebar-accent hover:text-sidebar-foreground"
               }`}
             >
-              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "text-primary opacity-100" : "opacity-40"}`} />
+              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "text-primary" : "opacity-50"}`} />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge && (
-                <span className="text-[9px] font-medium bg-primary/10 text-primary rounded px-1.5 py-0.5 leading-none">
+                <span className="text-[9px] font-semibold bg-primary/10 text-primary rounded px-1.5 py-0.5 leading-none">
                   {item.badge}
                 </span>
               )}
@@ -71,12 +71,12 @@ export default function Sidebar() {
       {/* User */}
       <div className="border-t border-sidebar-border p-2.5">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[9px] font-semibold text-white flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-semibold text-white flex-shrink-0">
             AK
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[11px] font-medium text-sidebar-foreground truncate">Alex Kim</p>
-            <p className="text-[10px] text-sidebar-foreground/50 truncate">Data Analyst</p>
+            <p className="text-[12px] font-medium text-sidebar-foreground truncate">Alex Kim</p>
+            <p className="text-[11px] text-sidebar-foreground/60 truncate">Data Analyst</p>
           </div>
         </div>
       </div>

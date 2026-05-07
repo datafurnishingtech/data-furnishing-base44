@@ -13,10 +13,10 @@ export default function StatCard({ label, value, change, changeLabel, icon: Icon
   
   return (
     <div className="bg-card rounded-lg border border-border/60 px-4 py-3.5 flex flex-col gap-2 min-w-0">
-      <span className="text-[10px] font-medium tracking-[0.06em] uppercase text-muted-foreground/70 truncate whitespace-nowrap">
+      <span className="text-[10px] font-semibold tracking-[0.07em] uppercase text-muted-foreground/80 truncate whitespace-nowrap">
         {label}
       </span>
-      <p className="text-[14px] font-medium text-foreground leading-none tracking-tight truncate" title={scaled && typeof value === 'number' ? value.toLocaleString() : undefined}>
+      <p className="text-[14px] font-semibold text-foreground leading-none tracking-tight truncate" title={scaled && typeof value === 'number' ? value.toLocaleString() : undefined}>
         {displayValue}
       </p>
       {change !== undefined && (
@@ -26,10 +26,10 @@ export default function StatCard({ label, value, change, changeLabel, icon: Icon
           ) : (
             <TrendingDown className="w-3 h-3 text-destructive flex-shrink-0" />
           )}
-          <span className={`text-[10px] font-medium whitespace-nowrap ${isPositive ? "text-emerald-500" : "text-destructive"}`}>
+          <span className={`text-[10px] font-semibold whitespace-nowrap ${isPositive ? "text-emerald-500" : "text-destructive"}`}>
             {isPositive ? "+" : ""}{Math.abs(change)}%
           </span>
-          <span className="text-[10px] text-muted-foreground/60 whitespace-nowrap">
+          <span className="text-[10px] text-muted-foreground/70 whitespace-nowrap">
             {changeLabel || "vs 30d"}
           </span>
         </div>
