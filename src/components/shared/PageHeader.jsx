@@ -8,7 +8,7 @@ export default function PageHeader({ title, subtitle, children }) {
       <div>
         <h1 className="text-[15px] font-semibold text-foreground tracking-tight">{title}</h1>
         {subtitle && (
-          <p className="text-[12px] text-muted-foreground/80 mt-0.5 font-normal">{subtitle}</p>
+          <p className="text-[11px] text-muted-foreground/70 mt-0.5 font-normal">{subtitle}</p>
         )}
       </div>
       <div className="flex items-center gap-1.5">
