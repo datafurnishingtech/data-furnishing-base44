@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const BrandLogo = () => (
-  <div className="flex items-center gap-2.5">
-    <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="18" y1="2" x2="18" y2="34" stroke="hsl(var(--primary))" strokeWidth="4.5" strokeLinecap="round"/>
-      <line x1="2" y1="18" x2="34" y2="18" stroke="hsl(var(--primary))" strokeWidth="4.5" strokeLinecap="round"/>
-      <line x1="2" y1="9" x2="13" y2="9" stroke="hsl(var(--primary))" strokeWidth="4.5" strokeLinecap="round"/>
+  <div className="flex items-center gap-3">
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="18" y1="2" x2="18" y2="34" stroke="#7B00FF" strokeWidth="4.5" strokeLinecap="round"/>
+      <line x1="2" y1="18" x2="34" y2="18" stroke="#7B00FF" strokeWidth="4.5" strokeLinecap="round"/>
+      <line x1="2" y1="9" x2="13" y2="9" stroke="#7B00FF" strokeWidth="4.5" strokeLinecap="round"/>
     </svg>
-    <span className="text-[17px] font-semibold text-foreground tracking-tight">Data Furnishing</span>
+    <span className="text-[22px] font-bold text-foreground tracking-tight">Data Furnishing</span>
   </div>
 );
 
