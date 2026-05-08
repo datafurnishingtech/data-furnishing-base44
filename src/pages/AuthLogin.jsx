@@ -8,41 +8,78 @@ const BrandLogo = () => (
   <img src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/4859ca4a2_MainSignature.png" alt="Data Furnishing" className="h-6 w-auto" />
 );
 
+function FieldError({ message }) {
+  if (!message) return null;
+  return <p className="text-[11px] text-destructive mt-1">{message}</p>;
+}
+
 export default function AuthLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState("");
+
+  const validate = () => {
+    const e = {};
+    if (!email) e.email = "Email is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Enter a valid email address.";
+    if (!password) e.password = "Password is required.";
+    return e;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitError("");
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setErrors({});
     setLoading(true);
-    setTimeout(() => setLoading(false), 1500);
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitError("Invalid email or password. Please try again.");
+    }, 1500);
+  };
+
+  const handleChange = (field, value) => {
+    if (field === "email") setEmail(value);
+    if (field === "password") setPassword(value);
+    if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
+    if (submitError) setSubmitError("");
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-[420px]">
+      <div className="w-full max-w-[400px]">
         <div className="flex justify-center mb-10">
           <BrandLogo />
         </div>
 
-        <div className="mb-8 text-center">
-          <h1 className="text-[20px] font-semibold text-foreground tracking-tight">Welcome back</h1>
-          <p className="text-[13px] text-muted-foreground mt-1.5">Sign in to your account</p>
+        <div className="mb-7 text-center">
+          <h1 className="text-[19px] font-semibold text-foreground tracking-tight">Sign in</h1>
+          <p className="text-[12.5px] text-muted-foreground mt-1.5">Access your credit intelligence workspace</p>
         </div>
 
-        <div className="bg-card border border-border rounded-lg p-8 shadow-sm">
-          <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="bg-card border border-border rounded-lg p-7 shadow-sm">
+          {submitError && (
+            <div className="mb-4 px-3 py-2.5 rounded-md bg-destructive/8 border border-destructive/20 text-[12px] text-destructive">
+              {submitError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div>
               <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block">Email address</label>
               <Input
                 type="email"
                 placeholder="you@company.com"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="h-10 text-[13px]"
+                onChange={e => handleChange("email", e.target.value)}
+                className={`h-10 text-[13px] ${errors.email ? "border-destructive focus-visible:ring-destructive/30" : ""}`}
+                autoComplete="email"
               />
+              <FieldError message={errors.email} />
             </div>
 
             <div>
@@ -55,25 +92,28 @@ export default function AuthLogin() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  className="h-10 text-[13px] pr-10"
+                  onChange={e => handleChange("password", e.target.value)}
+                  className={`h-10 text-[13px] pr-10 ${errors.password ? "border-destructive focus-visible:ring-destructive/30" : ""}`}
+                  autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
+              <FieldError message={errors.password} />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pt-0.5">
               <input id="remember" type="checkbox" className="w-3.5 h-3.5 accent-primary rounded" />
-              <label htmlFor="remember" className="text-[12px] text-muted-foreground cursor-pointer">Keep me signed in</label>
+              <label htmlFor="remember" className="text-[12px] text-muted-foreground cursor-pointer select-none">Keep me signed in</label>
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full h-10 text-[13px] font-medium gap-2">
+            <Button type="submit" disabled={loading} className="w-full h-10 text-[13px] font-medium gap-2 mt-1">
               {loading ? (
                 <span className="flex items-center gap-2">
                   <span className="w-3.5 h-3.5 border-2 border-primary-foreground/40 border-t-primary-foreground rounded-full animate-spin" />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Mail, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -12,9 +12,13 @@ export default function AuthForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
+    if (!email) { setError("Email is required."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError("Enter a valid email address."); return; }
     setLoading(true);
     setTimeout(() => { setLoading(false); setSent(true); }, 1500);
   };
@@ -22,32 +26,33 @@ export default function AuthForgotPassword() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-[380px]">
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-10">
           <BrandLogo />
         </div>
 
         {!sent ? (
           <>
-            <div className="mb-6 text-center">
-              <h1 className="text-[20px] font-semibold text-foreground tracking-tight">Reset password</h1>
-              <p className="text-[13px] text-muted-foreground mt-1">We'll send a reset link to your email</p>
+            <div className="mb-7 text-center">
+              <h1 className="text-[19px] font-semibold text-foreground tracking-tight">Reset your password</h1>
+              <p className="text-[12.5px] text-muted-foreground mt-1.5">We'll send a reset link to your email</p>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-              <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="bg-card border border-border rounded-lg p-7 shadow-sm">
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 <div>
                   <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block">Email address</label>
                   <Input
                     type="email"
                     placeholder="you@company.com"
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    className="h-9 text-[13px]"
-                    required
+                    onChange={e => { setEmail(e.target.value); if (error) setError(""); }}
+                    className={`h-10 text-[13px] ${error ? "border-destructive focus-visible:ring-destructive/30" : ""}`}
+                    autoComplete="email"
                   />
+                  {error && <p className="text-[11px] text-destructive mt-1">{error}</p>}
                 </div>
 
-                <Button type="submit" disabled={loading} className="w-full h-9 text-[13px] font-medium gap-2">
+                <Button type="submit" disabled={loading} className="w-full h-10 text-[13px] font-medium gap-2">
                   {loading ? (
                     <span className="flex items-center gap-2">
                       <span className="w-3.5 h-3.5 border-2 border-primary-foreground/40 border-t-primary-foreground rounded-full animate-spin" />
@@ -68,16 +73,16 @@ export default function AuthForgotPassword() {
           </>
         ) : (
           <>
-            <div className="mb-6 text-center">
-              <h1 className="text-[20px] font-semibold text-foreground tracking-tight">Check your inbox</h1>
-              <p className="text-[13px] text-muted-foreground mt-1">Reset link sent</p>
+            <div className="mb-7 text-center">
+              <h1 className="text-[19px] font-semibold text-foreground tracking-tight">Check your inbox</h1>
+              <p className="text-[12.5px] text-muted-foreground mt-1.5">Reset link sent</p>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-6 shadow-sm text-center">
-              <div className="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
+            <div className="bg-card border border-border rounded-lg p-7 shadow-sm text-center">
+              <div className="w-11 h-11 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 className="w-5 h-5 text-success" />
               </div>
-              <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">We've sent a reset link to</p>
+              <p className="text-[13px] text-muted-foreground leading-relaxed mb-1">We sent a reset link to</p>
               <p className="text-[13px] font-medium text-foreground mb-5">{email}</p>
               <p className="text-[11px] text-muted-foreground/60 mb-5">
                 Didn't receive it?{" "}
@@ -92,7 +97,7 @@ export default function AuthForgotPassword() {
           </>
         )}
 
-        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2026 Data Furnishing</p>
+        <p className="text-center text-[10px] text-muted-foreground/40 mt-8">© 2026 Data Furnishing</p>
       </div>
     </div>
   );
