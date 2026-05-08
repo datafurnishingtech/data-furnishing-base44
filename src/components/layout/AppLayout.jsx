@@ -9,7 +9,7 @@ export default function AppLayout() {
     <div className="min-h-screen bg-background flex">
       <Sidebar />
       <div className="flex-1 ml-[210px] p-3 min-h-screen">
-        <div className="bg-card rounded-xl min-h-full flex flex-col">
+        <div className="bg-card rounded-xl min-h-full flex flex-col overflow-hidden">
           <TopBar />
           <main className="p-5 flex-1">
             <Outlet />
