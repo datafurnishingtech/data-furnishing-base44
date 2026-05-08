@@ -8,11 +8,13 @@ export default function AppLayout() {
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
-      <div className="ml-[210px]">
-        <TopBar />
-        <main className="p-5">
-          <Outlet />
-        </main>
+      <div className="ml-[210px] p-3">
+        <div className="bg-card rounded-xl shadow-sm overflow-hidden">
+          <TopBar />
+          <main className="p-6">
+            <Outlet />
+          </main>
+        </div>
         <IdleSessionWarning />
       </div>
     </div>
