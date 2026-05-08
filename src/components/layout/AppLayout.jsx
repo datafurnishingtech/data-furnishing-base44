@@ -6,16 +6,14 @@ import IdleSessionWarning from "@/components/auth/IdleSessionWarning";
 
 export default function AppLayout() {
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background">
       <Sidebar />
-      <div className="flex-1 ml-[210px] p-3 min-h-screen">
-        <div className="bg-card rounded-xl min-h-full flex flex-col overflow-hidden">
-          <TopBar />
-          <main className="p-5 flex-1">
-            <Outlet />
-          </main>
-          <IdleSessionWarning />
-        </div>
+      <div className="ml-[210px]">
+        <TopBar />
+        <main className="p-5">
+          <Outlet />
+        </main>
+        <IdleSessionWarning />
       </div>
     </div>
   );
