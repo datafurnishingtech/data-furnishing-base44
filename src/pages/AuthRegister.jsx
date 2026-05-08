@@ -5,14 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const BrandLogo = () => (
-  <div className="flex items-center gap-3">
-    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="18" y1="2" x2="18" y2="34" stroke="#7B00FF" strokeWidth="4.5" strokeLinecap="round"/>
-      <line x1="2" y1="18" x2="34" y2="18" stroke="#7B00FF" strokeWidth="4.5" strokeLinecap="round"/>
-      <line x1="2" y1="9" x2="13" y2="9" stroke="#7B00FF" strokeWidth="4.5" strokeLinecap="round"/>
-    </svg>
-    <span className="text-[22px] font-bold text-foreground tracking-tight">Data Furnishing</span>
-  </div>
+  <img src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/4859ca4a2_MainSignature.png" alt="Data Furnishing" className="h-8 w-auto" />
 );
 
 export default function AuthRegister() {
@@ -147,7 +140,7 @@ export default function AuthRegister() {
           <Link to="/auth-login" className="text-primary font-medium hover:text-primary/80 transition-colors">Sign in</Link>
         </p>
 
-        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2025 Data Furnishing</p>
+        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2026 Data Furnishing</p>
       </div>
     </div>
   );
