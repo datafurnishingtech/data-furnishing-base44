@@ -184,7 +184,7 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
                 </div>
                 <div className="w-full h-1 bg-muted rounded-full mt-2">
                   <div
-                    className="h-full bg-primary rounded-full"
+                    className="h-full bg-primary rounded-full transition-all duration-700 ease-out"
                     style={{ width: `${company.confidence_score}%` }}
                   />
                 </div>

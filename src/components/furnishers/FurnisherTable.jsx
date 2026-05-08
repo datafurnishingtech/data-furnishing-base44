@@ -72,7 +72,7 @@ export default function FurnisherTable({ companies, selected, onSelect }) {
                   <div className="flex items-center gap-1.5">
                     <div className="w-12 h-1 bg-muted rounded-full">
                       <div
-                        className="h-full bg-primary rounded-full"
+                        className="h-full bg-primary rounded-full transition-all duration-700 ease-out"
                         style={{ width: `${c.confidence_score}%` }}
                       />
                     </div>
