@@ -29,9 +29,9 @@ export default function Sidebar() {
   const location = useLocation();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50 border-r border-border">
+    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50">
       {/* Logo */}
-      <div className="flex items-center justify-center px-3 h-14 border-b border-border">
+      <div className="flex items-center justify-center px-3 h-14">
         <img
           src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/d566b6464_MainSignature.png"
           alt="Data Furnishing"
@@ -69,7 +69,7 @@ export default function Sidebar() {
       </nav>
 
       {/* User */}
-      <div className="border-t border-border p-2.5">
+      <div className="p-2.5">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[9px] font-semibold text-white flex-shrink-0">
             AK
