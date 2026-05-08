@@ -1,4 +1,5 @@
 import React from "react";
+import AnimatedBar from "@/components/shared/AnimatedBar";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Building2, TrendingUp, Globe, Package, ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
@@ -302,8 +303,8 @@ export default function Overview() {
             <p className="text-[10px] text-muted-foreground/60 mb-2">High reliability from verified sources.</p>
             <p className="text-[14px] font-medium text-foreground leading-none">98.7%</p>
             <p className="text-[10px] text-muted-foreground/60 mt-0.5">Verified data</p>
-            <div className="w-full h-1.5 bg-muted rounded-full mt-1.5">
-              <div className="h-full bg-primary rounded-full" style={{ width: "98.7%" }} />
+            <div className="w-full h-1.5 bg-muted rounded-full mt-1.5 overflow-hidden">
+              <AnimatedBar value={98.7} />
             </div>
           </div>
 
