@@ -21,19 +21,19 @@ export default function AuthLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
-      <div className="w-full max-w-[380px]">
-        <div className="flex justify-center mb-8">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-12">
+      <div className="w-full max-w-[420px]">
+        <div className="flex justify-center mb-10">
           <BrandLogo />
         </div>
 
-        <div className="mb-6 text-center">
+        <div className="mb-8 text-center">
           <h1 className="text-[20px] font-semibold text-foreground tracking-tight">Welcome back</h1>
-          <p className="text-[13px] text-muted-foreground mt-1">Sign in to your account</p>
+          <p className="text-[13px] text-muted-foreground mt-1.5">Sign in to your account</p>
         </div>
 
-        <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="bg-card border border-border rounded-lg p-8 shadow-sm">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block">Email address</label>
               <Input
@@ -41,7 +41,7 @@ export default function AuthLogin() {
                 placeholder="you@company.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="h-9 text-[13px]"
+                className="h-10 text-[13px]"
               />
             </div>
 
@@ -56,7 +56,7 @@ export default function AuthLogin() {
                   placeholder="••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="h-9 text-[13px] pr-10"
+                  className="h-10 text-[13px] pr-10"
                 />
                 <button
                   type="button"
@@ -73,7 +73,7 @@ export default function AuthLogin() {
               <label htmlFor="remember" className="text-[12px] text-muted-foreground cursor-pointer">Keep me signed in</label>
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full h-9 text-[13px] font-medium gap-2">
+            <Button type="submit" disabled={loading} className="w-full h-10 text-[13px] font-medium gap-2">
               {loading ? (
                 <span className="flex items-center gap-2">
                   <span className="w-3.5 h-3.5 border-2 border-primary-foreground/40 border-t-primary-foreground rounded-full animate-spin" />
@@ -85,7 +85,7 @@ export default function AuthLogin() {
             </Button>
           </form>
 
-          <div className="relative my-5">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-border" />
             </div>
@@ -94,7 +94,7 @@ export default function AuthLogin() {
             </div>
           </div>
 
-          <Button variant="outline" className="w-full h-9 text-[13px] font-medium gap-2">
+          <Button variant="outline" className="w-full h-10 text-[13px] font-medium gap-2">
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -105,7 +105,7 @@ export default function AuthLogin() {
           </Button>
         </div>
 
-        <p className="text-center text-[12px] text-muted-foreground mt-5">
+        <p className="text-center text-[12px] text-muted-foreground mt-7">
           Don't have an account?{" "}
           <Link to="/auth-register" className="text-primary font-medium hover:text-primary/80 transition-colors">Request access</Link>
         </p>
