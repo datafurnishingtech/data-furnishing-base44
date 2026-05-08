@@ -50,10 +50,10 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11px] font-normal tracking-normal transition-colors ${
+              className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11px] tracking-normal transition-colors ${
                 isActive
-                  ? "bg-primary/8 text-primary font-medium"
-                  : "text-foreground/40 hover:bg-muted hover:text-foreground/70"
+                  ? "bg-primary/8 text-primary font-semibold"
+                  : "text-foreground/50 font-medium hover:bg-muted hover:text-foreground/70"
               }`}
             >
               <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "text-primary" : "opacity-40"}`} />
