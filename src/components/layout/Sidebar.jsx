@@ -29,13 +29,13 @@ export default function Sidebar() {
   const location = useLocation();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-sidebar text-sidebar-foreground flex flex-col z-50">
+    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50 border-r border-border">
       {/* Logo */}
-      <div className="flex items-center px-3 h-14 border-b border-sidebar-border">
+      <div className="flex items-center px-3 h-14 border-b border-border">
         <img
-          src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/eba179282_MainSignature-Negative-02.png"
+          src="https://media.base44.com/images/public/69f90686411a7f6520cfe22a/d566b6464_MainSignature.png"
           alt="Data Furnishing"
-          className="h-4 w-auto object-contain"
+          className="h-5 w-auto object-contain"
         />
       </div>
 
@@ -52,14 +52,14 @@ export default function Sidebar() {
               to={item.path}
               className={`flex items-center gap-2.5 px-2.5 py-[7px] rounded-md text-[11px] font-normal tracking-normal transition-colors ${
                 isActive
-                  ? "bg-white/10 text-white font-medium"
-                  : "text-sidebar-foreground/50 hover:bg-white/5 hover:text-sidebar-foreground/90"
+                  ? "bg-primary/8 text-primary font-medium"
+                  : "text-foreground/40 hover:bg-muted hover:text-foreground/70"
               }`}
             >
-              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "opacity-100" : "opacity-50"}`} />
+              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "text-primary" : "opacity-40"}`} />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge && (
-                <span className="text-[9px] font-medium bg-primary/40 text-white/80 rounded px-1.5 py-0.5 leading-none">
+                <span className="text-[9px] font-medium bg-primary/10 text-primary rounded px-1.5 py-0.5 leading-none">
                   {item.badge}
                 </span>
               )}
@@ -69,14 +69,14 @@ export default function Sidebar() {
       </nav>
 
       {/* User */}
-      <div className="border-t border-sidebar-border p-2.5">
+      <div className="border-t border-border p-2.5">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[9px] font-semibold text-white flex-shrink-0">
             AK
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[11px] font-medium text-white truncate">Alex Kim</p>
-            <p className="text-[10px] text-sidebar-foreground/50 truncate">Data Analyst</p>
+            <p className="text-[11px] font-medium text-foreground truncate">Alex Kim</p>
+            <p className="text-[10px] text-foreground/40 truncate">Data Analyst</p>
           </div>
         </div>
       </div>
