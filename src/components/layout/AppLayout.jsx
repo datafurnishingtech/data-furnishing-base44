@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import IdleSessionWarning from "@/components/auth/IdleSessionWarning";
 
 export default function AppLayout() {
   return (
@@ -12,6 +13,7 @@ export default function AppLayout() {
         <main className="p-5">
           <Outlet />
         </main>
+        <IdleSessionWarning />
       </div>
     </div>
   );

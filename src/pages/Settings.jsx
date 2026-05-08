@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Building2, Users, Bell, Database, Link2, FileText, CheckCircle2, Save, Eye, EyeOff, Copy } from "lucide-react";
+import LogoutAllDevices from "@/components/auth/LogoutAllDevices";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -338,6 +339,9 @@ export default function Settings() {
           {["Test data connection", "Export workspace config", "View audit log", "Restore defaults"].map((a) => (
             <button key={a} className="w-full text-left text-[10.5px] text-foreground/70 hover:text-primary py-1 transition-colors">{a}</button>
           ))}
+          <div className="border-t border-border/40 mt-2 pt-2">
+            <LogoutAllDevices />
+          </div>
         </div>
 
         <button className="w-full bg-primary text-primary-foreground text-[11px] font-medium h-8 rounded-md flex items-center justify-center gap-1.5 hover:bg-primary/90 transition-colors">
