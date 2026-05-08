@@ -1,6 +1,7 @@
 import React from "react";
 import { CheckCircle2, Clock, MoreVertical } from "lucide-react";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
+import AnimatedBar from "@/components/shared/AnimatedBar";
 
 const COMPANY_TYPE_LABELS = {
   direct_furnisher: "Direct Furnisher",
@@ -70,11 +71,8 @@ export default function FurnisherTable({ companies, selected, onSelect }) {
               <td className="px-3 py-2.5">
                 {c.confidence_score != null ? (
                   <div className="flex items-center gap-1.5">
-                    <div className="w-12 h-1 bg-muted rounded-full">
-                      <div
-                        className="h-full bg-primary rounded-full transition-all duration-700 ease-out"
-                        style={{ width: `${c.confidence_score}%` }}
-                      />
+                    <div className="w-12 h-1 bg-muted rounded-full overflow-hidden">
+                      <AnimatedBar value={c.confidence_score} />
                     </div>
                     <span className="text-[10px] tabular-nums text-foreground/70">{c.confidence_score}</span>
                   </div>

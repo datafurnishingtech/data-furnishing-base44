@@ -3,6 +3,7 @@ import { X, ExternalLink, ArrowRight } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import ProductDataPoints from "./ProductDataPoints";
+import AnimatedBar from "@/components/shared/AnimatedBar";
 
 const COMPANY_TYPE_LABELS = {
   direct_furnisher: "Direct Furnisher",
@@ -182,11 +183,8 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
                     {company.confidence_score >= 90 ? "High" : company.confidence_score >= 75 ? "Medium" : "Low"}
                   </span>
                 </div>
-                <div className="w-full h-1 bg-muted rounded-full mt-2">
-                  <div
-                    className="h-full bg-primary rounded-full transition-all duration-700 ease-out"
-                    style={{ width: `${company.confidence_score}%` }}
-                  />
+                <div className="w-full h-1 bg-muted rounded-full mt-2 overflow-hidden">
+                  <AnimatedBar value={company.confidence_score} />
                 </div>
               </div>
             )}
