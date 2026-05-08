@@ -98,18 +98,6 @@ export default function AuthRegister() {
       <div className="w-full max-w-[400px]">
         <div className="flex justify-center mb-10"><BrandLogo /></div>
 
-        {/* Step indicator */}
-        <div className="flex items-center justify-center gap-2 mb-7">
-          {[1, 2].map((s) => (
-            <React.Fragment key={s}>
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-semibold transition-colors ${
-                step >= s ? "bg-primary text-white" : "bg-border text-muted-foreground"
-              }`}>{s}</div>
-              {s < 2 && <div className={`w-10 h-px ${step > s ? "bg-primary" : "bg-border"}`} />}
-            </React.Fragment>
-          ))}
-        </div>
-
         <div className="mb-7 text-center">
           {step === 1 ? (
             <>
