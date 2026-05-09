@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
-import { supabaseFetch } from "@/lib/supabase";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import FurnisherTable from "@/components/furnishers/FurnisherTable";
@@ -18,12 +18,12 @@ export default function Furnishers() {
 
   const { data: companies = [], isLoading } = useQuery({
     queryKey: ["companies"],
-    queryFn: () => supabaseFetch("companies", { order: "created_at.desc", limit: 500 }),
+    queryFn: () => base44.entities.Company.list("-created_date", 500),
   });
 
   const { data: products = [] } = useQuery({
     queryKey: ["products-count"],
-    queryFn: () => supabaseFetch("products", { order: "created_at.desc", limit: 500 }),
+    queryFn: () => base44.entities.Product.list("-created_date", 500),
   });
 
   // Select first company once loaded
