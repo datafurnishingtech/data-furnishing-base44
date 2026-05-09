@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { X, ExternalLink, ArrowRight } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { supabaseFetch } from "@/lib/supabase";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import ProductDataPoints from "./ProductDataPoints";
 import AnimatedBar from "@/components/shared/AnimatedBar";
@@ -29,7 +29,7 @@ const COMPANY_TYPE_LABELS = {
 export default function FurnisherDetailPanel({ company, productCount, onClose }) {
   const [activeTab, setActiveTab] = useState("overview");
   const [products, setProducts] = useState([]);
-  const [bureauCoverageMap, setBureauCoverageMap] = useState({});
+  const [bureauCoverageMap] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -42,20 +42,8 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
 
   const loadProducts = async () => {
     setLoading(true);
-    try {
-      const prods = await base44.entities.Product.filter({ company_id: company.id }, '-created_date', 100);
-      setProducts(prods);
-
-      // Fetch bureau coverage for each product
-      const coverageMap = {};
-      for (const prod of prods) {
-        const coverage = await base44.entities.ProductBureauCoverage.filter({ product_id: prod.id }, '-created_date', 50);
-        coverageMap[prod.id] = coverage;
-      }
-      setBureauCoverageMap(coverageMap);
-    } catch (error) {
-      console.error("Error loading products:", error);
-    }
+    const prods = await supabaseFetch("products", { filter: { company_id: company.id }, order: "created_at.desc", limit: 100 });
+    setProducts(prods);
     setLoading(false);
   };
 
