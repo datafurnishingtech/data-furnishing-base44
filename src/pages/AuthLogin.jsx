@@ -50,7 +50,7 @@ export default function AuthLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-[400px]">
         <div className="flex justify-center mb-10">
           <BrandLogo />
@@ -150,7 +150,7 @@ export default function AuthLogin() {
           <Link to="/auth-register" className="text-primary font-medium hover:text-primary/80 transition-colors">Request access</Link>
         </p>
 
-        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2026 Data Furnishing</p>
+        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2026 Data Furnishing Technologies, Inc.</p>
       </div>
     </div>
   );

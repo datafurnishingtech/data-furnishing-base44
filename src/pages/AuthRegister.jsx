@@ -69,7 +69,7 @@ export default function AuthRegister() {
 
   if (step === 3) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-[380px] text-center">
           <div className="flex justify-center mb-10"><BrandLogo /></div>
           <div className="mb-7">
@@ -87,14 +87,14 @@ export default function AuthRegister() {
               <Button variant="outline" size="sm" className="text-[12px] h-8">Back to sign in</Button>
             </Link>
           </div>
-          <p className="text-center text-[10px] text-muted-foreground/40 mt-8">© 2026 Data Furnishing</p>
+          <p className="text-center text-[10px] text-muted-foreground/40 mt-8">© 2026 Data Furnishing Technologies, Inc.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-[400px]">
         <div className="flex justify-center mb-10"><BrandLogo /></div>
 
@@ -226,7 +226,7 @@ export default function AuthRegister() {
           Already have an account?{" "}
           <Link to="/auth-login" className="text-primary font-medium hover:text-primary/80 transition-colors">Sign in</Link>
         </p>
-        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2026 Data Furnishing</p>
+        <p className="text-center text-[10px] text-muted-foreground/40 mt-6">© 2026 Data Furnishing Technologies, Inc.</p>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ export default function AuthForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-[380px]">
         <div className="flex justify-center mb-10">
           <BrandLogo />
@@ -97,7 +97,7 @@ export default function AuthForgotPassword() {
           </>
         )}
 
-        <p className="text-center text-[10px] text-muted-foreground/40 mt-8">© 2026 Data Furnishing</p>
+        <p className="text-center text-[10px] text-muted-foreground/40 mt-8">© 2026 Data Furnishing Technologies, Inc.</p>
       </div>
     </div>
   );
