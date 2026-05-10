@@ -37,14 +37,18 @@ export default function IdleSessionWarning() {
 
   useEffect(() => {
     const events = ["mousemove", "keydown", "mousedown", "touchstart", "scroll"];
-    events.forEach((e) => window.addEventListener(e, resetIdle, { passive: true }));
-    resetIdle();
+    
+    if (!showWarning) {
+      events.forEach((e) => window.addEventListener(e, resetIdle, { passive: true }));
+      resetIdle();
+    }
+    
     return () => {
       events.forEach((e) => window.removeEventListener(e, resetIdle));
       clearTimeout(idleTimer.current);
       clearInterval(countdownTimer.current);
     };
-  }, [resetIdle]);
+  }, [resetIdle, showWarning]);
 
   if (!showWarning) return null;
 
@@ -56,21 +60,21 @@ export default function IdleSessionWarning() {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-card border border-border rounded-lg shadow-xl p-6 w-[360px] max-w-[calc(100vw-2rem)]">
         <div className="flex items-start gap-3 mb-4">
-          <div className="w-9 h-9 rounded-full bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-            <Clock className="w-4.5 h-4.5 text-amber-500" />
+          <div className="w-9 h-9 rounded-full bg-warning/10 flex items-center justify-center flex-shrink-0">
+            <Clock className="w-4.5 h-4.5 text-warning" />
           </div>
           <div>
             <h3 className="text-[14px] font-semibold text-foreground">Session expiring soon</h3>
             <p className="text-[12px] text-muted-foreground mt-1">
               You've been inactive. For your security, your session will expire in{" "}
-              <span className="font-semibold text-amber-500">{timeStr}</span>.
+              <span className="font-semibold text-warning">{timeStr}</span>.
             </p>
           </div>
         </div>
 
         <div className="w-full bg-border rounded-full h-1 mb-5">
           <div
-            className="bg-amber-500 h-1 rounded-full transition-all duration-1000"
+            className="bg-warning h-1 rounded-full transition-all duration-1000"
             style={{ width: `${(countdown / 120) * 100}%` }}
           />
         </div>
