@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, ExternalLink } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const PRODUCT_TYPE_LABELS = {
   credit_builder_loan: "Credit Builder Loan",
@@ -34,66 +34,16 @@ const PRODUCT_TYPE_LABELS = {
 };
 
 const REPORTING_STATUS_LABELS = {
-  confirmed_reports: "Confirmed",
-  likely_reports: "Likely",
+  confirmed_reports: "Confirmed Reports",
+  likely_reports: "Likely Reports",
   does_not_report: "Does Not Report",
   unknown: "Unknown",
   delinquency_only: "Delinquency Only",
   optional_add_on: "Optional Add-on",
 };
 
-const CREDIT_CHECK_LABELS = {
-  hard_pull: "Hard Pull",
-  soft_pull: "Soft Pull",
-  no_check: "No Check",
-  unknown: "Unknown",
-};
-
-const CREDIT_SCORE_TIER_LABELS = {
-  none: "None Required",
-  poor: "Poor (300–579)",
-  fair: "Fair (580–669)",
-  good: "Good (670–739)",
-  very_good: "Very Good (740–799)",
-  excellent: "Excellent (800+)",
-  unknown: "Unknown",
-};
-
-const DataRow = ({ label, value }) => {
-  if (value == null || value === "" || value === false) return null;
-  return (
-    <div className="flex items-start justify-between gap-2">
-      <span className="text-muted-foreground/60 shrink-0">{label}</span>
-      <span className="text-foreground font-medium text-right">{value}</span>
-    </div>
-  );
-};
-
-const BoolBadge = ({ label, value }) => {
-  if (!value) return null;
-  return (
-    <span className="inline-flex items-center text-[9px] font-medium bg-primary/8 text-primary px-1.5 py-0.5 rounded">
-      {label}
-    </span>
-  );
-};
-
 export default function ProductDataPoints({ product, bureauCoverage }) {
   const [expanded, setExpanded] = useState(false);
-
-  const hasPricing = product.monthly_cost != null || product.setup_fee != null || product.annual_fee != null;
-  const hasLimits = product.reported_limit_min != null || product.reported_limit_max != null;
-
-  const requirementBadges = [
-    { label: "SSN", value: product.requires_ssn },
-    { label: "EIN", value: product.requires_ein },
-    { label: "Bank Link", value: product.requires_bank_connection },
-    { label: "Business Entity", value: product.requires_business_entity },
-    { label: "Personal Guarantee", value: product.requires_personal_guarantee },
-    { label: "Credit Check", value: product.requires_credit_check },
-    { label: "Landlord", value: product.requires_landlord_participation },
-    { label: "Prop. Manager", value: product.requires_property_manager },
-  ];
 
   return (
     <div className="space-y-2 border-t border-border/40 pt-2">
@@ -106,34 +56,63 @@ export default function ProductDataPoints({ product, bureauCoverage }) {
       </button>
 
       {expanded && (
-        <div className="pl-2 space-y-3 text-[10px]">
-
-          {/* Core Identity */}
-          <div className="space-y-1">
-            <DataRow label="Type" value={PRODUCT_TYPE_LABELS[product.product_type] || product.product_type} />
-            {product.consumer_or_business && product.consumer_or_business !== "unknown" && (
-              <DataRow label="Lane" value={product.consumer_or_business === "both" ? "Consumer & Business" : product.consumer_or_business.charAt(0).toUpperCase() + product.consumer_or_business.slice(1)} />
-            )}
-            {product.reporting_direct_or_indirect && product.reporting_direct_or_indirect !== "unknown" && (
-              <DataRow label="Reporting" value={product.reporting_direct_or_indirect.charAt(0).toUpperCase() + product.reporting_direct_or_indirect.slice(1)} />
-            )}
-            {product.reporting_frequency && product.reporting_frequency !== "unknown" && (
-              <DataRow label="Frequency" value={product.reporting_frequency.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase())} />
-            )}
+        <div className="pl-2 space-y-2 text-[10px]">
+          <div>
+            <p className="text-muted-foreground/60">Type</p>
+            <p className="text-foreground font-medium">{PRODUCT_TYPE_LABELS[product.product_type] || product.product_type}</p>
           </div>
 
-          {/* Description */}
+          {product.consumer_or_business && product.consumer_or_business !== "unknown" && (
+            <div>
+              <p className="text-muted-foreground/60">Target</p>
+              <p className="text-foreground font-medium capitalize">{product.consumer_or_business}</p>
+            </div>
+          )}
+
           {product.description && (
             <div>
-              <p className="text-muted-foreground/60 mb-0.5">Description</p>
+              <p className="text-muted-foreground/60">Description</p>
               <p className="text-foreground/80 leading-relaxed">{product.description}</p>
             </div>
           )}
 
-          {/* Bureau Coverage */}
+          {product.eligibility_summary && (
+            <div>
+              <p className="text-muted-foreground/60">Eligibility</p>
+              <p className="text-foreground/80 leading-relaxed">{product.eligibility_summary}</p>
+            </div>
+          )}
+
+          {(product.monthly_cost || product.setup_fee || product.annual_fee) && (
+            <div>
+              <p className="text-muted-foreground/60">Pricing</p>
+              <div className="space-y-0.5">
+                {product.monthly_cost != null && <p className="text-foreground">Monthly: ${product.monthly_cost}</p>}
+                {product.setup_fee != null && <p className="text-foreground">Setup: ${product.setup_fee}</p>}
+                {product.annual_fee != null && <p className="text-foreground">Annual: ${product.annual_fee}</p>}
+              </div>
+            </div>
+          )}
+
+          {product.reported_limit_min != null || product.reported_limit_max != null ? (
+            <div>
+              <p className="text-muted-foreground/60">Reported Limit</p>
+              <p className="text-foreground">
+                ${product.reported_limit_min?.toLocaleString() || "0"} - ${product.reported_limit_max?.toLocaleString() || "N/A"}
+              </p>
+            </div>
+          ) : null}
+
+          {product.reporting_frequency && product.reporting_frequency !== "unknown" && (
+            <div>
+              <p className="text-muted-foreground/60">Reporting Frequency</p>
+              <p className="text-foreground font-medium capitalize">{product.reporting_frequency}</p>
+            </div>
+          )}
+
           {bureauCoverage && bureauCoverage.length > 0 && (
             <div>
-              <p className="text-muted-foreground/60 mb-1">Bureaus Reported</p>
+              <p className="text-muted-foreground/60 mb-1">Bureau Coverage</p>
               <div className="space-y-1">
                 {bureauCoverage.map((cov) => (
                   <div key={cov.id} className="bg-muted/30 rounded px-2 py-1">
@@ -160,87 +139,16 @@ export default function ProductDataPoints({ product, bureauCoverage }) {
             </div>
           )}
 
-          {/* Credit & Approval */}
-          <div>
-            <p className="text-muted-foreground/60 mb-1">Approval Profile</p>
-            <div className="space-y-1">
-              {product.credit_check_type && product.credit_check_type !== "unknown" && (
-                <DataRow label="Credit Check" value={CREDIT_CHECK_LABELS[product.credit_check_type]} />
-              )}
-              {product.credit_score_tier_required && product.credit_score_tier_required !== "unknown" && (
-                <DataRow label="Score Tier" value={CREDIT_SCORE_TIER_LABELS[product.credit_score_tier_required]} />
-              )}
-              {product.minimum_credit_score_required != null && (
-                <DataRow label="Min. Score" value={product.minimum_credit_score_required} />
-              )}
-              {product.minimum_time_in_business_months != null && (
-                <DataRow label="Time in Business" value={`${product.minimum_time_in_business_months} mo.`} />
-              )}
-              {product.minimum_annual_revenue != null && (
-                <DataRow label="Min. Revenue" value={`$${product.minimum_annual_revenue.toLocaleString()}/yr`} />
-              )}
-              {product.minimum_account_age_months != null && (
-                <DataRow label="Min. Account Age" value={`${product.minimum_account_age_months} mo.`} />
-              )}
-            </div>
-          </div>
-
-          {/* Eligibility Summary */}
-          {product.eligibility_summary && (
+          {product.requires_credit_check || product.requires_ssn || product.requires_bank_connection ? (
             <div>
-              <p className="text-muted-foreground/60 mb-0.5">Eligibility Notes</p>
-              <p className="text-foreground/80 leading-relaxed">{product.eligibility_summary}</p>
-            </div>
-          )}
-
-          {/* Requirements Badges */}
-          {requirementBadges.some(b => b.value) && (
-            <div>
-              <p className="text-muted-foreground/60 mb-1">Requirements</p>
-              <div className="flex flex-wrap gap-1">
-                {requirementBadges.map(b => <BoolBadge key={b.label} label={b.label} value={b.value} />)}
+              <p className="text-muted-foreground/60 mb-0.5">Requirements</p>
+              <div className="space-y-0.5 text-foreground/80">
+                {product.requires_credit_check && <p>✓ Credit Check</p>}
+                {product.requires_ssn && <p>✓ SSN</p>}
+                {product.requires_bank_connection && <p>✓ Bank Connection</p>}
               </div>
             </div>
-          )}
-
-          {/* Pricing */}
-          {(hasPricing || product.pricing_summary || product.deposit_or_secured_amount != null) && (
-            <div>
-              <p className="text-muted-foreground/60 mb-1">Pricing & Fees</p>
-              <div className="space-y-1">
-                {product.monthly_cost != null && <DataRow label="Monthly" value={`$${product.monthly_cost}`} />}
-                {product.setup_fee != null && <DataRow label="Setup Fee" value={`$${product.setup_fee}`} />}
-                {product.annual_fee != null && <DataRow label="Annual Fee" value={`$${product.annual_fee}`} />}
-                {product.deposit_or_secured_amount != null && <DataRow label="Deposit / Secured" value={`$${product.deposit_or_secured_amount.toLocaleString()}`} />}
-                {product.pricing_summary && <p className="text-foreground/70 mt-0.5 leading-relaxed">{product.pricing_summary}</p>}
-              </div>
-            </div>
-          )}
-
-          {/* Limits */}
-          {hasLimits && (
-            <DataRow
-              label="Reported Limit"
-              value={`$${product.reported_limit_min?.toLocaleString() || "0"} – $${product.reported_limit_max?.toLocaleString() || "N/A"}`}
-            />
-          )}
-
-          {/* Source */}
-          {product.source_url && (
-            <a
-              href={product.source_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-primary/70 hover:text-primary transition-colors mt-1"
-            >
-              Source <ExternalLink className="w-2.5 h-2.5" />
-            </a>
-          )}
-
-          {product.last_verified_at && (
-            <p className="text-muted-foreground/50 text-[9px]">Verified: {product.last_verified_at}</p>
-          )}
-
+          ) : null}
         </div>
       )}
     </div>

@@ -97,66 +97,6 @@
     "account_type_reported": {
       "type": "string"
     },
-    "credit_check_type": {
-      "type": "string",
-      "enum": [
-        "hard_pull",
-        "soft_pull",
-        "no_check",
-        "unknown"
-      ],
-      "default": "unknown",
-      "description": "Type of credit inquiry performed during application"
-    },
-    "minimum_credit_score_required": {
-      "type": "number",
-      "description": "Minimum FICO or credit score required for approval"
-    },
-    "credit_score_tier_required": {
-      "type": "string",
-      "enum": [
-        "none",
-        "poor",
-        "fair",
-        "good",
-        "very_good",
-        "excellent",
-        "unknown"
-      ],
-      "default": "unknown",
-      "description": "Qualitative credit score tier required"
-    },
-    "requires_personal_guarantee": {
-      "type": "boolean",
-      "description": "Whether a personal guarantee is required"
-    },
-    "minimum_time_in_business_months": {
-      "type": "number",
-      "description": "Minimum months in business required for approval"
-    },
-    "minimum_annual_revenue": {
-      "type": "number",
-      "description": "Minimum annual revenue required for approval"
-    },
-    "deposit_or_secured_amount": {
-      "type": "number",
-      "description": "Required deposit or secured amount (if applicable)"
-    },
-    "minimum_account_age_months": {
-      "type": "number",
-      "description": "Minimum age of primary account or credit file required"
-    },
-    "reporting_direct_or_indirect": {
-      "type": "string",
-      "enum": [
-        "direct",
-        "indirect",
-        "both",
-        "unknown"
-      ],
-      "default": "unknown",
-      "description": "Whether the furnisher reports directly to bureaus or via an intermediary"
-    },
     "payment_required": {
       "type": "boolean"
     },
