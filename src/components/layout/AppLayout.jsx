@@ -15,7 +15,7 @@ export default function AppLayout() {
             <Outlet />
           </main>
         </div>
-        <IdleSessionWarning />
+        {/* <IdleSessionWarning /> */}
       </div>
     </div>
   );
