@@ -191,6 +191,48 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
         ))}
       </div>
 
+      {selectedState && (() => {
+        const filtered = typeFilter === "all"
+          ? allCompanies
+          : allCompanies.filter(c => c.company_type === typeFilter);
+        const stateCompanies = filtered.filter(c => {
+          const name = stateAbbrevToName[c.state] || c.state;
+          return name === selectedState.name;
+        });
+        const total = stateCompanies.length;
+        const verified = stateCompanies.filter(c => c.verification_status === "verified").length;
+        const types = [...new Set(stateCompanies.map(c => c.company_type).filter(Boolean))].length;
+        return (
+          <div className="mt-3 rounded-lg border border-border/60 bg-muted/30 px-3 py-2.5 flex items-center gap-4">
+            <div className="flex items-center gap-1.5 mr-1">
+              <div className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
+              <span className="text-[11px] font-semibold text-foreground">{selectedState.name}</span>
+            </div>
+            <div className="flex items-center gap-4 ml-auto">
+              <div className="text-center">
+                <p className="text-[14px] font-semibold text-foreground leading-none">{total}</p>
+                <p className="text-[9px] text-muted-foreground mt-0.5">Furnishers</p>
+              </div>
+              <div className="w-px h-6 bg-border/60" />
+              <div className="text-center">
+                <p className="text-[14px] font-semibold text-emerald-500 leading-none">{verified}</p>
+                <p className="text-[9px] text-muted-foreground mt-0.5">Verified</p>
+              </div>
+              <div className="w-px h-6 bg-border/60" />
+              <div className="text-center">
+                <p className="text-[14px] font-semibold text-foreground leading-none">{types}</p>
+                <p className="text-[9px] text-muted-foreground mt-0.5">Types</p>
+              </div>
+              <button
+                onClick={() => onStateSelect(null)}
+                className="ml-2 text-[9.5px] text-muted-foreground/60 hover:text-foreground transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
     </div>
   );
