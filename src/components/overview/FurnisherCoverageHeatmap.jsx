@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import { base44 } from "@/api/base44Client";
-import FurnisherTypePopover from "@/components/shared/FurnisherTypePopover";
 
 const fipsName = {
   "01": "Alabama", "02": "Alaska", "04": "Arizona", "05": "Arkansas",
@@ -51,14 +50,13 @@ function countToColor(count, maxCount) {
   return "#a5b4fc";
 }
 
-export default function FurnisherCoverageHeatmap() {
+export default function FurnisherCoverageHeatmap({ typeFilter = "all" }) {
   const [geoStates, setGeoStates] = useState([]);
   const [tooltip, setTooltip] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [allCompanies, setAllCompanies] = useState([]);
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
-  const [typeFilter, setTypeFilter] = useState("all");
   const svgRef = useRef(null);
 
   useEffect(() => {
@@ -125,9 +123,6 @@ export default function FurnisherCoverageHeatmap() {
 
   return (
     <div className="relative w-full select-none">
-      <div className="mb-2">
-        <FurnisherTypePopover value={typeFilter} onChange={setTypeFilter} />
-      </div>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}

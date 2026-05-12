@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import AnimatedBar from "@/components/shared/AnimatedBar";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Building2, TrendingUp, Globe, Package, ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import FurnisherCoverageHeatmap from "@/components/overview/FurnisherCoverageHeatmap";
+import FurnisherTypePopover from "@/components/shared/FurnisherTypePopover";
 import { Badge } from "@/components/ui/badge";
 import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area } from "recharts";
 
@@ -58,6 +59,7 @@ const recentActivity = [
 ];
 
 export default function Overview() {
+  const [typeFilter, setTypeFilter] = useState("all");
   return (
     <div className="flex gap-6">
       {/* Main content */}
@@ -85,11 +87,9 @@ export default function Overview() {
                 <h3 className="text-[11.5px] font-medium text-foreground">Furnisher Coverage Heatmap</h3>
                 <p className="text-[10px] text-muted-foreground/60 mt-0.5">Click any state to explore mapped furnishers</p>
               </div>
-              <span className="text-[9.5px] text-primary/60 font-medium bg-primary/5 px-2 py-1 rounded">
-                Discovery Tool
-              </span>
+              <FurnisherTypePopover value={typeFilter} onChange={setTypeFilter} />
             </div>
-            <FurnisherCoverageHeatmap />
+            <FurnisherCoverageHeatmap typeFilter={typeFilter} />
           </div>
 
           {/* Top Furnishers */}
