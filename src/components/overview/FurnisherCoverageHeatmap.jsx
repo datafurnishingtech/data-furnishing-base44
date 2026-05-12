@@ -56,6 +56,7 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
   const [allCompanies, setAllCompanies] = useState([]);
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
+  const [globalMaxCount, setGlobalMaxCount] = useState(1);
   const svgRef = useRef(null);
 
   useEffect(() => {
@@ -67,7 +68,17 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
   // Fetch all companies once
   useEffect(() => {
     base44.entities.Company.list('-updated_date', 500)
-      .then(companies => setAllCompanies(companies || []))
+      .then(companies => {
+        setAllCompanies(companies || []);
+        // Compute global max across ALL companies (no filter) for a stable color scale
+        const counts = {};
+        for (const c of (companies || [])) {
+          if (!c.state) continue;
+          const stateName = stateAbbrevToName[c.state] || c.state;
+          counts[stateName] = (counts[stateName] || 0) + 1;
+        }
+        setGlobalMaxCount(Math.max(...Object.values(counts), 1));
+      })
       .catch(() => {});
   }, []);
 
@@ -84,8 +95,8 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
       counts[stateName] = (counts[stateName] || 0) + 1;
     }
     setStateCounts(counts);
-    setMaxCount(Math.max(...Object.values(counts), 1));
-  }, [allCompanies, typeFilter]);
+    setMaxCount(globalMaxCount);
+  }, [allCompanies, typeFilter, globalMaxCount]);
 
   const projection = geoAlbersUsa().scale(780).translate([WIDTH / 2, HEIGHT / 2]);
   const pathGenerator = geoPath().projection(projection);
