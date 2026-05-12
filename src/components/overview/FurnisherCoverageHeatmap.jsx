@@ -143,7 +143,7 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
     return filtered.filter(c => {
       const name = stateAbbrevToName[c.state] || c.state;
       return name === selectedState.name;
-    }).slice(0, 5);
+    });
   })();
 
   return (
@@ -214,34 +214,36 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
               <X className="w-3 h-3" />
             </button>
           </div>
-          <table className="w-full">
-            <thead>
-              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
-                <th className="text-left pb-1.5 font-medium">Furnisher</th>
-                <th className="text-right pb-1.5 font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stateCompanies.map((c) => (
-                <tr key={c.id} className="border-b border-border/30 last:border-0">
-                  <td className="py-1.5">
-                    <div className="flex items-center gap-2">
-                      <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
-                      <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
-                    </div>
-                  </td>
-                  <td className="py-1.5 text-right">
-                    <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
-                      {c.verification_status === "verified" ? "Verified" : "Unverified"}
-                    </span>
-                  </td>
+          <div className="overflow-y-auto" style={{ maxHeight: 190 }}>
+            <table className="w-full">
+              <thead className="sticky top-0 bg-card">
+                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                  <th className="text-left pb-1.5 font-medium">Furnisher</th>
+                  <th className="text-right pb-1.5 font-medium">Status</th>
                 </tr>
-              ))}
-              {stateCompanies.length === 0 && (
-                <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {stateCompanies.map((c) => (
+                  <tr key={c.id} className="border-b border-border/30 last:border-0">
+                    <td className="py-1.5">
+                      <div className="flex items-center gap-2">
+                        <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
+                        <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
+                      </div>
+                    </td>
+                    <td className="py-1.5 text-right">
+                      <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
+                        {c.verification_status === "verified" ? "Verified" : "Unverified"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+                {stateCompanies.length === 0 && (
+                  <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
