@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import { base44 } from "@/api/base44Client";
-import StatePanelDrawer from "@/components/overview/StatePanelDrawer";
 
 const fipsName = {
   "01": "Alabama", "02": "Alaska", "04": "Arizona", "05": "Arkansas",
@@ -172,12 +171,7 @@ export default function FurnisherCoverageHeatmap() {
         ))}
       </div>
 
-      {selectedState && (
-        <StatePanelDrawer
-          state={selectedState}
-          onClose={() => setSelectedState(null)}
-        />
-      )}
+
     </div>
   );
 }
