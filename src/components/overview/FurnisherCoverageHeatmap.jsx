@@ -214,8 +214,9 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
               <X className="w-3 h-3" />
             </button>
           </div>
-          <div className="overflow-y-auto" style={{ maxHeight: 190 }}>
-            <table className="w-full">
+          <div className="relative">
+            <div className="overflow-y-auto" style={{ maxHeight: 190 }}>
+              <table className="w-full">
               <thead className="sticky top-0 bg-card">
                 <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                   <th className="text-left pb-1.5 font-medium">Furnisher</th>
@@ -242,7 +243,9 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
                   <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
                 )}
               </tbody>
-            </table>
+              </table>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-card to-transparent pointer-events-none" />
           </div>
         </div>
       )}
