@@ -80,10 +80,10 @@ export default function FurnisherTypePopover({ value, onChange }) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 h-7 px-2.5 rounded-md border border-border/60 text-[11px] text-muted-foreground bg-transparent hover:bg-muted/30 transition-colors"
+        className="flex items-center gap-1.5 h-7 px-2.5 rounded-md border border-border/60 text-[11px] text-muted-foreground bg-transparent hover:bg-muted/30 transition-colors w-[140px] justify-between"
       >
-        <span>{getTypeLabel(value)}</span>
-        <ChevronDown className="w-3 h-3 opacity-50" />
+        <span className="truncate flex-1 text-left">{getTypeLabel(value)}</span>
+        <ChevronDown className="w-3 h-3 opacity-50 flex-shrink-0" />
       </button>
 
       {open && (
