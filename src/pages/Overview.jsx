@@ -60,6 +60,12 @@ const recentActivity = [
 
 export default function Overview() {
   const [typeFilter, setTypeFilter] = useState("all");
+  const [selectedState, setSelectedState] = useState(null);
+
+  const handleTypeFilterChange = (val) => {
+    setTypeFilter(val);
+    setSelectedState(null);
+  };
   return (
     <div className="flex gap-6">
       {/* Main content */}
@@ -87,9 +93,9 @@ export default function Overview() {
                 <h3 className="text-[11.5px] font-medium text-foreground">Furnisher Coverage Heatmap</h3>
                 <p className="text-[10px] text-muted-foreground/60 mt-0.5">Click any state to explore mapped furnishers</p>
               </div>
-              <FurnisherTypePopover value={typeFilter} onChange={setTypeFilter} />
+              <FurnisherTypePopover value={typeFilter} onChange={handleTypeFilterChange} />
             </div>
-            <FurnisherCoverageHeatmap typeFilter={typeFilter} />
+            <FurnisherCoverageHeatmap typeFilter={typeFilter} selectedState={selectedState} onStateSelect={setSelectedState} />
           </div>
 
           {/* Top Furnishers */}

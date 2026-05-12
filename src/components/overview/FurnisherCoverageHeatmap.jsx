@@ -50,10 +50,9 @@ function countToColor(count, maxCount) {
   return "#a5b4fc";
 }
 
-export default function FurnisherCoverageHeatmap({ typeFilter = "all" }) {
+export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedState, onStateSelect }) {
   const [geoStates, setGeoStates] = useState([]);
   const [tooltip, setTooltip] = useState(null);
-  const [selectedState, setSelectedState] = useState(null);
   const [allCompanies, setAllCompanies] = useState([]);
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
@@ -108,8 +107,12 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all" }) {
 
   const handleClick = (fips) => {
     const stateName = fipsName[fips];
-    const stateAbbr = nameToAbbrev[stateName] || stateName;
-    setSelectedState({ name: stateName, abbr: stateAbbr });
+    if (selectedState?.name === stateName) {
+      onStateSelect(null);
+    } else {
+      const stateAbbr = nameToAbbrev[stateName] || stateName;
+      onStateSelect({ name: stateName, abbr: stateAbbr });
+    }
   };
 
   const legend = [
