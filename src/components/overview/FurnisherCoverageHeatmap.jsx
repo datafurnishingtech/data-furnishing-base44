@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import { base44 } from "@/api/base44Client";
+import FurnisherTypePopover from "@/components/shared/FurnisherTypePopover";
 
 const fipsName = {
   "01": "Alabama", "02": "Alaska", "04": "Arizona", "05": "Arkansas",
@@ -54,8 +55,10 @@ export default function FurnisherCoverageHeatmap() {
   const [geoStates, setGeoStates] = useState([]);
   const [tooltip, setTooltip] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
+  const [allCompanies, setAllCompanies] = useState([]);
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
+  const [typeFilter, setTypeFilter] = useState("all");
   const svgRef = useRef(null);
 
   useEffect(() => {
@@ -64,23 +67,28 @@ export default function FurnisherCoverageHeatmap() {
       .then(us => setGeoStates(feature(us, us.objects.states).features));
   }, []);
 
-  // Fetch company counts per state for heatmap intensity
+  // Fetch all companies once
   useEffect(() => {
     base44.entities.Company.list('-updated_date', 500)
-      .then(companies => {
-        const counts = {};
-        for (const c of (companies || [])) {
-          if (!c.state) continue;
-          // state field can be abbreviation or full name
-          const stateName = stateAbbrevToName[c.state] || c.state;
-          counts[stateName] = (counts[stateName] || 0) + 1;
-        }
-        setStateCounts(counts);
-        const max = Math.max(...Object.values(counts), 1);
-        setMaxCount(max);
-      })
+      .then(companies => setAllCompanies(companies || []))
       .catch(() => {});
   }, []);
+
+  // Recompute counts whenever companies or filter changes
+  useEffect(() => {
+    const filtered = typeFilter === "all"
+      ? allCompanies
+      : allCompanies.filter(c => c.company_type === typeFilter);
+
+    const counts = {};
+    for (const c of filtered) {
+      if (!c.state) continue;
+      const stateName = stateAbbrevToName[c.state] || c.state;
+      counts[stateName] = (counts[stateName] || 0) + 1;
+    }
+    setStateCounts(counts);
+    setMaxCount(Math.max(...Object.values(counts), 1));
+  }, [allCompanies, typeFilter]);
 
   const projection = geoAlbersUsa().scale(780).translate([WIDTH / 2, HEIGHT / 2]);
   const pathGenerator = geoPath().projection(projection);
@@ -117,6 +125,9 @@ export default function FurnisherCoverageHeatmap() {
 
   return (
     <div className="relative w-full select-none">
+      <div className="mb-2">
+        <FurnisherTypePopover value={typeFilter} onChange={setTypeFilter} />
+      </div>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
