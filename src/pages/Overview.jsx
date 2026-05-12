@@ -83,7 +83,7 @@ export default function Overview() {
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h3 className="text-[11.5px] font-medium text-foreground">Furnisher Coverage Heatmap</h3>
-                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Mapped furnishers by state — hover for detail</p>
+                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Click any state to explore mapped furnishers</p>
               </div>
               <span className="text-[9.5px] text-primary/60 font-medium bg-primary/5 px-2 py-1 rounded">
                 Discovery Tool

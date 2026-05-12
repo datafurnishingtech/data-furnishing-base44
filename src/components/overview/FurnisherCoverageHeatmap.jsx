@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import { base44 } from "@/api/base44Client";
+import StatePanelDrawer from "@/components/overview/StatePanelDrawer";
 
 const fipsName = {
   "01": "Alabama", "02": "Alaska", "04": "Arizona", "05": "Arkansas",
@@ -53,6 +54,7 @@ function countToColor(count, maxCount) {
 export default function FurnisherCoverageHeatmap() {
   const [geoStates, setGeoStates] = useState([]);
   const [tooltip, setTooltip] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
   const svgRef = useRef(null);
@@ -99,7 +101,11 @@ export default function FurnisherCoverageHeatmap() {
     });
   };
 
-
+  const handleClick = (fips) => {
+    const stateName = fipsName[fips];
+    const stateAbbr = nameToAbbrev[stateName] || stateName;
+    setSelectedState({ name: stateName, abbr: stateAbbr });
+  };
 
   const legend = [
     { label: "High", color: "#312e81" },
@@ -122,17 +128,19 @@ export default function FurnisherCoverageHeatmap() {
           const fips = s.id.toString().padStart(2, "0");
           const stateName = fipsName[fips];
           const count = stateCounts[stateName] || 0;
+          const isSelected = selectedState?.name === stateName;
           return (
             <path
               key={fips}
               d={pathGenerator(s)}
-              fill={countToColor(count, maxCount)}
-              stroke="white"
-              strokeWidth="0.6"
+              fill={isSelected ? "#f59e0b" : countToColor(count, maxCount)}
+              stroke={isSelected ? "#d97706" : "white"}
+              strokeWidth={isSelected ? "1.2" : "0.6"}
               strokeLinejoin="round"
-              className="transition-all hover:opacity-80"
+              className="cursor-pointer transition-all hover:opacity-80"
               onMouseMove={(e) => handleMouseMove(e, fips)}
               onMouseLeave={() => setTooltip(null)}
+              onClick={() => handleClick(fips)}
             />
           );
         })}
@@ -151,7 +159,7 @@ export default function FurnisherCoverageHeatmap() {
           <p className="text-[10px] text-muted-foreground whitespace-nowrap">
             {tooltip.count > 0 ? `${tooltip.count} furnisher${tooltip.count !== 1 ? "s" : ""} mapped` : "No furnishers mapped"}
           </p>
-
+          <p className="text-[9.5px] text-primary/60 whitespace-nowrap mt-0.5">Click to explore →</p>
         </div>
       )}
 
@@ -164,7 +172,12 @@ export default function FurnisherCoverageHeatmap() {
         ))}
       </div>
 
-
+      {selectedState && (
+        <StatePanelDrawer
+          state={selectedState}
+          onClose={() => setSelectedState(null)}
+        />
+      )}
     </div>
   );
 }
