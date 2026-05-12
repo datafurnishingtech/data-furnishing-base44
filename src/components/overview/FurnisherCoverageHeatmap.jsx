@@ -245,9 +245,11 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
               </tbody>
               </table>
             </div>
-            <div className="absolute bottom-1 left-0 right-0 flex justify-center pointer-events-none">
-              <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/40 animate-bounce" />
-            </div>
+            {stateCompanies.length > 4 && (
+              <div className="absolute bottom-1 left-0 right-0 flex justify-center pointer-events-none">
+                <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/40 animate-bounce" />
+              </div>
+            )}
           </div>
         </div>
       )}
