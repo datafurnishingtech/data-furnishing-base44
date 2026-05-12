@@ -137,110 +137,113 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
     { label: "None", color: "#e5e7eb" },
   ];
 
+  const stateCompanies = (() => {
+    if (!selectedState) return [];
+    const filtered = typeFilter === "all" ? allCompanies : allCompanies.filter(c => c.company_type === typeFilter);
+    return filtered.filter(c => {
+      const name = stateAbbrevToName[c.state] || c.state;
+      return name === selectedState.name;
+    }).slice(0, 5);
+  })();
+
   return (
-    <div className="relative w-full select-none">
-      <svg
-        ref={svgRef}
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        className="w-full"
-        style={{ height: 190 }}
-      >
-        {geoStates.map((s) => {
-          const fips = s.id.toString().padStart(2, "0");
-          const stateName = fipsName[fips];
-          const count = stateCounts[stateName] || 0;
-          const isSelected = selectedState?.name === stateName;
-          return (
-            <path
-              key={fips}
-              d={pathGenerator(s)}
-              fill={isSelected ? "#f59e0b" : countToColor(count, maxCount)}
-              stroke={isSelected ? "#d97706" : "white"}
-              strokeWidth={isSelected ? "1.2" : "0.6"}
-              strokeLinejoin="round"
-              className="cursor-pointer transition-all hover:opacity-80"
-              onMouseMove={(e) => handleMouseMove(e, fips)}
-              onMouseLeave={() => setTooltip(null)}
-              onClick={() => handleClick(fips)}
-            />
-          );
-        })}
-      </svg>
-
-      {tooltip && (
-        <div
-          className="absolute z-30 pointer-events-none bg-popover border border-border/60 rounded-md px-2.5 py-1.5 shadow-lg"
-          style={{
-            left: `${(tooltip.x / WIDTH) * 100}%`,
-            top: `${(tooltip.y / HEIGHT) * 190}px`,
-            transform: "translate(8px, -110%)",
-          }}
+    <div className="relative w-full select-none" style={{ minHeight: 210 }}>
+      {/* Map view */}
+      <div className={selectedState ? "hidden" : "block"}>
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+          className="w-full"
+          style={{ height: 190 }}
         >
-          <p className="text-[11px] font-medium text-foreground whitespace-nowrap">{tooltip.stateName}</p>
-          <p className="text-[10px] text-muted-foreground whitespace-nowrap">
-            {tooltip.count > 0 ? `${tooltip.count} furnisher${tooltip.count !== 1 ? "s" : ""} mapped` : "No furnishers mapped"}
-          </p>
-          <p className="text-[9.5px] text-primary/60 whitespace-nowrap mt-0.5">Click to explore →</p>
-        </div>
-      )}
+          {geoStates.map((s) => {
+            const fips = s.id.toString().padStart(2, "0");
+            const stateName = fipsName[fips];
+            const count = stateCounts[stateName] || 0;
+            const isSelected = selectedState?.name === stateName;
+            return (
+              <path
+                key={fips}
+                d={pathGenerator(s)}
+                fill={isSelected ? "#f59e0b" : countToColor(count, maxCount)}
+                stroke={isSelected ? "#d97706" : "white"}
+                strokeWidth={isSelected ? "1.2" : "0.6"}
+                strokeLinejoin="round"
+                className="cursor-pointer transition-all hover:opacity-80"
+                onMouseMove={(e) => handleMouseMove(e, fips)}
+                onMouseLeave={() => setTooltip(null)}
+                onClick={() => handleClick(fips)}
+              />
+            );
+          })}
+        </svg>
 
-      <div className="flex items-center gap-3 mt-2 flex-wrap">
-        {legend.map((t) => (
-          <div key={t.label} className="flex items-center gap-1">
-            <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: t.color }} />
-            <span className="text-[9.5px] text-muted-foreground">{t.label}</span>
+        {tooltip && (
+          <div
+            className="absolute z-30 pointer-events-none bg-popover border border-border/60 rounded-md px-2.5 py-1.5 shadow-lg"
+            style={{
+              left: `${(tooltip.x / WIDTH) * 100}%`,
+              top: `${(tooltip.y / HEIGHT) * 190}px`,
+              transform: "translate(8px, -110%)",
+            }}
+          >
+            <p className="text-[11px] font-medium text-foreground whitespace-nowrap">{tooltip.stateName}</p>
+            <p className="text-[10px] text-muted-foreground whitespace-nowrap">
+              {tooltip.count > 0 ? `${tooltip.count} furnisher${tooltip.count !== 1 ? "s" : ""} mapped` : "No furnishers mapped"}
+            </p>
+            <p className="text-[9.5px] text-primary/60 whitespace-nowrap mt-0.5">Click to explore →</p>
           </div>
-        ))}
+        )}
+
+        <div className="flex items-center gap-3 mt-2 flex-wrap">
+          {legend.map((t) => (
+            <div key={t.label} className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: t.color }} />
+              <span className="text-[9.5px] text-muted-foreground">{t.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {selectedState && (() => {
-        const filtered = typeFilter === "all"
-          ? allCompanies
-          : allCompanies.filter(c => c.company_type === typeFilter);
-        const stateCompanies = filtered.filter(c => {
-          const name = stateAbbrevToName[c.state] || c.state;
-          return name === selectedState.name;
-        }).slice(0, 5);
-        return (
-          <div className="mt-2 pt-2 border-t border-border/40">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10.5px] font-medium text-foreground">{selectedState.name}</span>
-              <button onClick={() => onStateSelect(null)} className="text-muted-foreground/40 hover:text-muted-foreground transition-colors">
-                <X className="w-3 h-3" />
-              </button>
-            </div>
-            <table className="w-full">
-              <thead>
-                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
-                  <th className="text-left pb-1.5 font-medium">Furnisher</th>
-                  <th className="text-right pb-1.5 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stateCompanies.map((c) => (
-                  <tr key={c.id} className="border-b border-border/30 last:border-0">
-                    <td className="py-1.5">
-                      <div className="flex items-center gap-2">
-                        <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
-                        <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
-                      </div>
-                    </td>
-                    <td className="py-1.5 text-right">
-                      <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
-                        {c.verification_status === "verified" ? "Verified" : "Unverified"}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-                {stateCompanies.length === 0 && (
-                  <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
-                )}
-              </tbody>
-            </table>
+      {/* State detail view — replaces map in same space */}
+      {selectedState && (
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10.5px] font-medium text-foreground">{selectedState.name}</span>
+            <button onClick={() => onStateSelect(null)} className="text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+              <X className="w-3 h-3" />
+            </button>
           </div>
-        );
-      })()}
-
+          <table className="w-full">
+            <thead>
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <th className="text-left pb-1.5 font-medium">Furnisher</th>
+                <th className="text-right pb-1.5 font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stateCompanies.map((c) => (
+                <tr key={c.id} className="border-b border-border/30 last:border-0">
+                  <td className="py-1.5">
+                    <div className="flex items-center gap-2">
+                      <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
+                      <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
+                    </div>
+                  </td>
+                  <td className="py-1.5 text-right">
+                    <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
+                      {c.verification_status === "verified" ? "Verified" : "Unverified"}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+              {stateCompanies.length === 0 && (
+                <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
