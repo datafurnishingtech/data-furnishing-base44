@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import { base44 } from "@/api/base44Client";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
+import { X } from "lucide-react";
 
 const fipsName = {
   "01": "Alabama", "02": "Alaska", "04": "Arizona", "05": "Arkansas",
@@ -198,26 +200,43 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
         const stateCompanies = filtered.filter(c => {
           const name = stateAbbrevToName[c.state] || c.state;
           return name === selectedState.name;
-        });
-        const total = stateCompanies.length;
-        const verified = stateCompanies.filter(c => c.verification_status === "verified").length;
-        const types = [...new Set(stateCompanies.map(c => c.company_type).filter(Boolean))].length;
+        }).slice(0, 5);
         return (
-          <div className="mt-2 pt-2 border-t border-border/40 flex items-center justify-between">
-            <span className="text-[10.5px] font-medium text-foreground">{selectedState.name}</span>
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] text-muted-foreground">{total} furnisher{total !== 1 ? "s" : ""}</span>
-              <span className="text-[9.5px] text-muted-foreground/40">·</span>
-              <span className="text-[10px] text-emerald-500">{verified} verified</span>
-              <span className="text-[9.5px] text-muted-foreground/40">·</span>
-              <span className="text-[10px] text-muted-foreground">{types} type{types !== 1 ? "s" : ""}</span>
-              <button
-                onClick={() => onStateSelect(null)}
-                className="ml-1 text-muted-foreground/40 hover:text-muted-foreground transition-colors"
-              >
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+          <div className="mt-2 pt-2 border-t border-border/40">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10.5px] font-medium text-foreground">{selectedState.name}</span>
+              <button onClick={() => onStateSelect(null)} className="text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+                <X className="w-3 h-3" />
               </button>
             </div>
+            <table className="w-full">
+              <thead>
+                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                  <th className="text-left pb-1.5 font-medium">Furnisher</th>
+                  <th className="text-right pb-1.5 font-medium">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stateCompanies.map((c) => (
+                  <tr key={c.id} className="border-b border-border/30 last:border-0">
+                    <td className="py-1.5">
+                      <div className="flex items-center gap-2">
+                        <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
+                        <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
+                      </div>
+                    </td>
+                    <td className="py-1.5 text-right">
+                      <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
+                        {c.verification_status === "verified" ? "Verified" : "Unverified"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+                {stateCompanies.length === 0 && (
+                  <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
+                )}
+              </tbody>
+            </table>
           </div>
         );
       })()}
