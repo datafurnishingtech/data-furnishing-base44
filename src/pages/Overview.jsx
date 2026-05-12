@@ -4,7 +4,7 @@ import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Building2, TrendingUp, Globe, Package, ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
-import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
+import FurnisherCoverageHeatmap from "@/components/overview/FurnisherCoverageHeatmap";
 import { Badge } from "@/components/ui/badge";
 import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area } from "recharts";
 
@@ -82,15 +82,14 @@ export default function Overview() {
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
               <div>
-                <h3 className="text-[11.5px] font-medium text-foreground">Bureau Coverage Heatmap</h3>
-                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Coverage % by state — hover for detail</p>
+                <h3 className="text-[11.5px] font-medium text-foreground">Furnisher Coverage Heatmap</h3>
+                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Click any state to explore mapped furnishers</p>
               </div>
-              <div className="text-right">
-                <span className="text-[14px] font-medium text-emerald-500 leading-none">98.1%</span>
-                <p className="text-[10px] text-muted-foreground/60 mt-0.5">Overall</p>
-              </div>
+              <span className="text-[9.5px] text-primary/60 font-medium bg-primary/5 px-2 py-1 rounded">
+                Discovery Tool
+              </span>
             </div>
-            <USCoverageHeatmap />
+            <FurnisherCoverageHeatmap />
           </div>
 
           {/* Top Furnishers */}
