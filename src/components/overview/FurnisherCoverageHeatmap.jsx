@@ -50,24 +50,12 @@ function countToColor(count, maxCount) {
   return "#a5b4fc";
 }
 
-const FILTER_TYPES = [
-  { value: "all", label: "All" },
-  { value: "bank", label: "Banks" },
-  { value: "credit_union", label: "Credit Unions" },
-  { value: "fintech_lender", label: "Fintech" },
-  { value: "direct_furnisher", label: "Direct" },
-  { value: "credit_builder", label: "Credit Builder" },
-  { value: "rent_reporting", label: "Rent Reporting" },
-];
-
 export default function FurnisherCoverageHeatmap() {
   const [geoStates, setGeoStates] = useState([]);
   const [tooltip, setTooltip] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
-  const [allCompanies, setAllCompanies] = useState([]);
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
-  const [activeFilter, setActiveFilter] = useState("all");
   const svgRef = useRef(null);
 
   useEffect(() => {
@@ -76,27 +64,23 @@ export default function FurnisherCoverageHeatmap() {
       .then(us => setGeoStates(feature(us, us.objects.states).features));
   }, []);
 
-  // Fetch all companies once
+  // Fetch company counts per state for heatmap intensity
   useEffect(() => {
     base44.entities.Company.list('-updated_date', 500)
-      .then(companies => setAllCompanies(companies || []))
+      .then(companies => {
+        const counts = {};
+        for (const c of (companies || [])) {
+          if (!c.state) continue;
+          // state field can be abbreviation or full name
+          const stateName = stateAbbrevToName[c.state] || c.state;
+          counts[stateName] = (counts[stateName] || 0) + 1;
+        }
+        setStateCounts(counts);
+        const max = Math.max(...Object.values(counts), 1);
+        setMaxCount(max);
+      })
       .catch(() => {});
   }, []);
-
-  // Recompute counts when companies or filter changes
-  useEffect(() => {
-    const filtered = activeFilter === "all"
-      ? allCompanies
-      : allCompanies.filter(c => c.company_type === activeFilter);
-    const counts = {};
-    for (const c of filtered) {
-      if (!c.state) continue;
-      const stateName = stateAbbrevToName[c.state] || c.state;
-      counts[stateName] = (counts[stateName] || 0) + 1;
-    }
-    setStateCounts(counts);
-    setMaxCount(Math.max(...Object.values(counts), 1));
-  }, [allCompanies, activeFilter]);
 
   const projection = geoAlbersUsa().scale(780).translate([WIDTH / 2, HEIGHT / 2]);
   const pathGenerator = geoPath().projection(projection);
@@ -133,22 +117,6 @@ export default function FurnisherCoverageHeatmap() {
 
   return (
     <div className="relative w-full select-none">
-      {/* Filter bar */}
-      <div className="flex items-center gap-1 flex-wrap mb-2">
-        {FILTER_TYPES.map(ft => (
-          <button
-            key={ft.value}
-            onClick={() => setActiveFilter(ft.value)}
-            className={`text-[9.5px] px-2 py-0.5 rounded-full border transition-colors ${
-              activeFilter === ft.value
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-transparent text-muted-foreground border-border/60 hover:border-primary/50 hover:text-foreground"
-            }`}
-          >
-            {ft.label}
-          </button>
-        ))}
-      </div>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
@@ -190,7 +158,7 @@ export default function FurnisherCoverageHeatmap() {
           <p className="text-[10px] text-muted-foreground whitespace-nowrap">
             {tooltip.count > 0 ? `${tooltip.count} furnisher${tooltip.count !== 1 ? "s" : ""} mapped` : "No furnishers mapped"}
           </p>
-
+          <p className="text-[9.5px] text-primary/60 whitespace-nowrap mt-0.5">Click to explore →</p>
         </div>
       )}
 
