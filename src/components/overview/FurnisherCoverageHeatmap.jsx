@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import { base44 } from "@/api/base44Client";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
-import { X, ChevronDown } from "lucide-react";
+import { X, ChevronDown, AlertCircle } from "lucide-react";
 
 const fipsName = {
   "01": "Alabama", "02": "Alaska", "04": "Arizona", "05": "Arkansas",
@@ -21,7 +21,6 @@ const fipsName = {
   "54": "West Virginia", "55": "Wisconsin", "56": "Wyoming",
 };
 
-// Abbreviation → full name for the Company.state field
 const stateAbbrevToName = {
   AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California",
   CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "D.C.", FL: "Florida",
@@ -59,7 +58,11 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
   const [stateCounts, setStateCounts] = useState({});
   const [maxCount, setMaxCount] = useState(1);
   const [globalMaxCount, setGlobalMaxCount] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
   const svgRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
@@ -67,12 +70,12 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
       .then(us => setGeoStates(feature(us, us.objects.states).features));
   }, []);
 
-  // Fetch all companies once
   useEffect(() => {
+    setIsLoading(true);
+    setFetchError(false);
     base44.entities.Company.list('-updated_date', 500)
       .then(companies => {
         setAllCompanies(companies || []);
-        // Compute global max across ALL companies (no filter) for a stable color scale
         const counts = {};
         for (const c of (companies || [])) {
           if (!c.state) continue;
@@ -81,15 +84,14 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
         }
         setGlobalMaxCount(Math.max(...Object.values(counts), 1));
       })
-      .catch(() => {});
+      .catch(() => setFetchError(true))
+      .finally(() => setIsLoading(false));
   }, []);
 
-  // Recompute counts whenever companies or filter changes
   useEffect(() => {
     const filtered = typeFilter === "all"
       ? allCompanies
       : allCompanies.filter(c => c.company_type === typeFilter);
-
     const counts = {};
     for (const c of filtered) {
       if (!c.state) continue;
@@ -99,6 +101,17 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
     setStateCounts(counts);
     setMaxCount(globalMaxCount);
   }, [allCompanies, typeFilter, globalMaxCount]);
+
+  // Track scroll position to show/hide the down indicator
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollDown(el.scrollTop + el.clientHeight < el.scrollHeight - 4);
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+  }, [selectedState, checkScroll]);
 
   const projection = geoAlbersUsa().scale(780).translate([WIDTH / 2, HEIGHT / 2]);
   const pathGenerator = geoPath().projection(projection);
@@ -110,9 +123,7 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
     const stateName = fipsName[fips];
     const count = stateCounts[stateName] || 0;
     setTooltip({
-      fips,
-      stateName,
-      count,
+      fips, stateName, count,
       x: (e.clientX - svgRect.left) * scaleX,
       y: (e.clientY - svgRect.top) * scaleY,
     });
@@ -146,6 +157,33 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
     });
   })();
 
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <div className="w-full animate-pulse" style={{ minHeight: 210 }}>
+        <div className="w-full rounded-md bg-muted/40" style={{ height: 190 }} />
+        <div className="flex items-center gap-3 mt-2 flex-wrap">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm bg-muted/50" />
+              <div className="w-8 h-2 rounded bg-muted/40" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (fetchError) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center gap-2 text-center" style={{ minHeight: 210 }}>
+        <AlertCircle className="w-5 h-5 text-muted-foreground/40" />
+        <p className="text-[11px] text-muted-foreground/60">Failed to load furnisher data.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full select-none" style={{ minHeight: 210 }}>
       {/* Map view */}
@@ -153,6 +191,7 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
         <svg
           ref={svgRef}
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+          preserveAspectRatio="xMidYMid meet"
           className="w-full"
           style={{ height: 190 }}
         >
@@ -205,7 +244,7 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
         </div>
       </div>
 
-      {/* State detail view — replaces map in same space */}
+      {/* State detail view */}
       {selectedState && (
         <div>
           <div className="flex items-center justify-between mb-2">
@@ -215,39 +254,52 @@ export default function FurnisherCoverageHeatmap({ typeFilter = "all", selectedS
             </button>
           </div>
           <div className="relative">
-            <div className="overflow-y-auto" style={{ maxHeight: 190 }}>
+            <div
+              ref={scrollRef}
+              className="overflow-y-auto"
+              style={{ maxHeight: 190 }}
+              onScroll={checkScroll}
+            >
               <table className="w-full">
-              <thead className="sticky top-0 bg-card">
-                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
-                  <th className="text-left pb-1.5 font-medium">Furnisher</th>
-                  <th className="text-right pb-1.5 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stateCompanies.map((c) => (
-                  <tr key={c.id} className="border-b border-border/30 last:border-0">
-                    <td className="py-1.5">
-                      <div className="flex items-center gap-2">
-                        <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
-                        <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
-                      </div>
-                    </td>
-                    <td className="py-1.5 text-right">
-                      <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
-                        {c.verification_status === "verified" ? "Verified" : "Unverified"}
-                      </span>
-                    </td>
+                <thead className="sticky top-0 bg-card">
+                  <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                    <th className="text-left pb-1.5 font-medium">Furnisher</th>
+                    <th className="text-right pb-1.5 font-medium">Status</th>
                   </tr>
-                ))}
-                {stateCompanies.length === 0 && (
-                  <tr><td colSpan={2} className="py-2 text-[10px] text-muted-foreground/50 text-center">No furnishers mapped</td></tr>
-                )}
-              </tbody>
+                </thead>
+                <tbody>
+                  {stateCompanies.map((c) => (
+                    <tr key={c.id} className="border-b border-border/30 last:border-0">
+                      <td className="py-1.5">
+                        <div className="flex items-center gap-2">
+                          <FurnisherLogo domain={c.website_url?.replace(/^https?:\/\//, "").split("/")[0]} name={c.company_name} size="sm" />
+                          <span className="text-[11px] text-foreground truncate max-w-[140px]">{c.company_name}</span>
+                        </div>
+                      </td>
+                      <td className="py-1.5 text-right">
+                        <span className={`text-[10px] font-medium ${c.verification_status === "verified" ? "text-emerald-500" : "text-muted-foreground/50"}`}>
+                          {c.verification_status === "verified" ? "Verified" : "Unverified"}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                  {stateCompanies.length === 0 && (
+                    <tr>
+                      <td colSpan={2} className="py-6 text-[10px] text-muted-foreground/50 text-center">
+                        No furnishers mapped for this state
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
               </table>
             </div>
-            {stateCompanies.length > 4 && (
-              <div className="absolute -bottom-4 left-0 right-0 flex justify-center pointer-events-none">
-                <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/40 animate-bounce" />
+            {/* Fade + scroll indicator — only when more content is below */}
+            {canScrollDown && (
+              <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+                <div className="h-6 bg-gradient-to-t from-card to-transparent" />
+                <div className="flex justify-center -mt-1">
+                  <ChevronDown className="w-3.5 h-3.5 text-muted-foreground/40 animate-bounce" />
+                </div>
               </div>
             )}
           </div>
