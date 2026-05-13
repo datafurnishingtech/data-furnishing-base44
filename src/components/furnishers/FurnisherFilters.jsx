@@ -12,7 +12,21 @@ const VERIFICATION_OPTIONS = [
   { value: "unverified", label: "Unverified" },
 ];
 
-export default function FurnisherFilters({ search, onSearch, typeFilter, onTypeFilter, verificationFilter, onVerificationFilter, onClear, totalCount }) {
+const REPORTING_AGENCY_OPTIONS = [
+  { value: "all", label: "All Agency Types" },
+  { value: "consumer", label: "Primary Consumer" },
+  { value: "business", label: "Business / Commercial" },
+  { value: "specialty", label: "Specialty Agency" },
+  { value: "alternative_data_provider", label: "Alternative Data" },
+  { value: "collections_reporter", label: "Collections" },
+  { value: "telecom_utility_reporter", label: "Telecom / Utility" },
+  { value: "auto_vehicle_reporter", label: "Auto / Vehicle" },
+  { value: "subprime_nontraditional", label: "Subprime / Nontraditional" },
+  { value: "rental_reporter", label: "Rental" },
+  { value: "screening_agency", label: "Screening Agency" },
+];
+
+export default function FurnisherFilters({ search, onSearch, typeFilter, onTypeFilter, verificationFilter, onVerificationFilter, reportingAgencyFilter, onReportingAgencyFilter, onClear, totalCount }) {
   return (
     <div className="space-y-3 mb-4">
       <div className="flex flex-wrap items-center gap-2">
@@ -24,6 +38,17 @@ export default function FurnisherFilters({ search, onSearch, typeFilter, onTypeF
           </SelectTrigger>
           <SelectContent>
             {VERIFICATION_OPTIONS.map((v) => (
+              <SelectItem key={v.value} value={v.value}>{v.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select value={reportingAgencyFilter || "all"} onValueChange={onReportingAgencyFilter}>
+          <SelectTrigger className="w-auto min-w-[160px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
+            <SelectValue placeholder="Reporting Agency Type" />
+          </SelectTrigger>
+          <SelectContent>
+            {REPORTING_AGENCY_OPTIONS.map((v) => (
               <SelectItem key={v.value} value={v.value}>{v.label}</SelectItem>
             ))}
           </SelectContent>

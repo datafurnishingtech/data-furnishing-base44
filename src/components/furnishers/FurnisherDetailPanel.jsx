@@ -4,6 +4,7 @@ import { base44 } from "@/api/base44Client";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import ProductDataPoints from "./ProductDataPoints";
 import AnimatedBar from "@/components/shared/AnimatedBar";
+import ReportingAgenciesTab from "./ReportingAgenciesTab";
 
 const COMPANY_TYPE_LABELS = {
   direct_furnisher: "Direct Furnisher",
@@ -232,9 +233,7 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
         )}
 
         {activeTab === "coverage" && (
-          <div className="text-[10px] text-muted-foreground/60">
-            <p>Coverage analysis coming soon</p>
-          </div>
+          <ReportingAgenciesTab companyId={company.id} />
         )}
 
         {activeTab === "activity" && (

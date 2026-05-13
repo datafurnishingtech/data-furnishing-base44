@@ -15,9 +15,48 @@
         "consumer",
         "business",
         "specialty",
-        "data_exchange"
+        "data_exchange",
+        "alternative_data_provider",
+        "collections_reporter",
+        "telecom_utility_reporter",
+        "auto_vehicle_reporter",
+        "subprime_nontraditional",
+        "screening_agency",
+        "rental_reporter"
       ],
       "default": "consumer"
+    },
+    "bureau_tier": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "commercial",
+        "specialty",
+        "alternative"
+      ],
+      "default": "primary",
+      "description": "High-level taxonomy tier for grouping"
+    },
+    "focus_areas": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "consumer",
+          "business",
+          "subprime",
+          "auto",
+          "collections",
+          "telecom",
+          "utility",
+          "rental",
+          "employment",
+          "banking",
+          "alternative_data",
+          "identity"
+        ]
+      },
+      "description": "Relevant use-case domains for this bureau"
     },
     "website_url": {
       "type": "string"

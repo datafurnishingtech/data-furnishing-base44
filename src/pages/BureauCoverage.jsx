@@ -149,9 +149,30 @@ export default function BureauCoverage() {
 
         <div className="flex items-center gap-4 mt-3 text-[10px] text-muted-foreground/60 flex-wrap">
           <span className="font-medium text-foreground/70">Bureau legend</span>
-          {["EX Experian", "EQ Equifax", "TU TransUnion", "IN Innovis", "SB SBFE", "ESB Experian Small Business"].map((l) => (
-            <span key={l}>{l}</span>
+          {[
+            { abbr: "EX", label: "Experian", tier: "primary" },
+            { abbr: "EQ", label: "Equifax", tier: "primary" },
+            { abbr: "TU", label: "TransUnion", tier: "primary" },
+            { abbr: "IN", label: "Innovis", tier: "primary" },
+            { abbr: "SB", label: "SBFE", tier: "commercial" },
+            { abbr: "ESB", label: "Experian Small Biz", tier: "commercial" },
+          ].map((b) => (
+            <span key={b.abbr} className="flex items-center gap-1">
+              <span className={`text-[9px] font-medium px-1 py-0.5 rounded ${
+                b.tier === "primary" ? "bg-primary/10 text-primary/80" :
+                b.tier === "commercial" ? "bg-amber-500/10 text-amber-600" :
+                b.tier === "specialty" ? "bg-violet-500/10 text-violet-600" :
+                "bg-teal-500/10 text-teal-600"
+              }`}>{b.abbr}</span>
+              {b.label}
+            </span>
           ))}
+          <span className="flex items-center gap-1 ml-2 pl-2 border-l border-border/40">
+            <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-primary/10 text-primary/80">P</span> Primary
+            <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-amber-500/10 text-amber-600 ml-1">C</span> Commercial
+            <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-violet-500/10 text-violet-600 ml-1">S</span> Specialty
+            <span className="text-[9px] font-medium px-1 py-0.5 rounded bg-teal-500/10 text-teal-600 ml-1">A</span> Alternative
+          </span>
         </div>
       </div>
 
