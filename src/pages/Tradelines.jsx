@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { TrendingUp, ShieldCheck, Package, Globe, Search, Filter, Star, X, ChevronRight, ArrowRight } from "lucide-react";
+import TablePagination from "@/components/shared/TablePagination";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,10 @@ const impactPieData = [
 
 export default function Tradelines() {
   const [selected, setSelected] = useState(tradelines[0]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const totalPages = Math.ceil(tradelines.length / pageSize);
+  const paginated = tradelines.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="flex gap-6">
@@ -95,7 +100,7 @@ export default function Tradelines() {
               </tr>
             </thead>
             <tbody>
-              {tradelines.map((t) => (
+              {paginated.map((t) => (
                 <tr
                   key={t.name}
                   onClick={() => setSelected(t)}
@@ -135,21 +140,14 @@ export default function Tradelines() {
               ))}
             </tbody>
           </table>
-          <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
-            <span className="text-[10px] text-muted-foreground/60">Showing 1–10 of 24,621,831</span>
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5, "..."].map((p, i) => (
-                <button
-                  key={i}
-                  className={`min-w-[24px] h-6 text-[10px] rounded flex items-center justify-center px-1 ${
-                    p === 1 ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
-          </div>
+          <TablePagination
+            page={page}
+            totalPages={totalPages}
+            totalItems={tradelines.length}
+            pageSize={pageSize}
+            onPageChange={setPage}
+            onPageSizeChange={(size) => { setPageSize(size); setPage(1); }}
+          />
         </div>
 
         {/* Impact Score Distribution */}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
+import TablePagination from "@/components/shared/TablePagination";
 import { FileText, Clock, Share2, Layout, TrendingUp, Search, Filter, MoreVertical, X, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,16 @@ const initColors = ["bg-primary", "bg-emerald-600", "bg-amber-600", "bg-purple-6
 
 export default function Reports() {
   const [selected, setSelected] = useState(reports[0]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const totalPages = Math.ceil(reports.length / pageSize);
+  const paginated = reports.slice((page - 1) * pageSize, page * pageSize);
+
+  function handlePageSizeChange(size) {
+    setPageSize(size);
+    setPage(1);
+  }
 
   return (
     <div className="flex gap-6">
@@ -77,7 +88,7 @@ export default function Reports() {
               </tr>
             </thead>
             <tbody>
-              {reports.map((r, idx) => (
+              {paginated.map((r, idx) => (
                 <tr key={r.name} onClick={() => setSelected(r)} className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${selected?.name === r.name ? "bg-primary/5" : ""}`}>
                   <td className="px-4 py-2.5 text-[11px] font-normal text-foreground">{r.name}</td>
                   <td className="px-3 py-2.5 text-[11px] text-foreground/70">{r.type}</td>
@@ -101,14 +112,14 @@ export default function Reports() {
               ))}
             </tbody>
           </table>
-          <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
-            <span className="text-[10px] text-muted-foreground/60">Showing 1–8 of 456 reports</span>
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5, "...", 57].map((p, i) => (
-                <button key={i} className={`w-6 h-6 text-[10px] rounded flex items-center justify-center ${p === 1 ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"}`}>{p}</button>
-              ))}
-            </div>
-          </div>
+          <TablePagination
+            page={page}
+            totalPages={totalPages}
+            totalItems={456}
+            pageSize={pageSize}
+            onPageChange={setPage}
+            onPageSizeChange={handlePageSizeChange}
+          />
         </div>
 
         {/* Report Templates */}
@@ -151,7 +162,6 @@ export default function Reports() {
               <button onClick={() => setSelected(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50" /></button>
             </div>
 
-            {/* Tabs */}
             <div className="flex gap-0 mb-3 border-b border-border/50">
               {["Overview", "Schedule", "History", "Sharing"].map((t, i) => (
                 <button key={t} className={`text-[10px] px-2 py-1.5 border-b-2 transition-colors ${i === 0 ? "border-primary text-primary font-medium" : "border-transparent text-muted-foreground/60 hover:text-foreground"}`}>{t}</button>

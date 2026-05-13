@@ -7,6 +7,7 @@ import FurnisherTable from "@/components/furnishers/FurnisherTable";
 import FurnisherDetailPanel from "@/components/furnishers/FurnisherDetailPanel";
 import FurnisherFilters from "@/components/furnishers/FurnisherFilters";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import TablePagination from "@/components/shared/TablePagination";
 
 export default function Furnishers() {
   const [selected, setSelected] = useState(null);
@@ -14,7 +15,7 @@ export default function Furnishers() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [verificationFilter, setVerificationFilter] = useState("all");
   const [page, setPage] = useState(1);
-  const PAGE_SIZE = 20;
+  const [pageSize, setPageSize] = useState(20);
 
   const { data: companies = [], isLoading } = useQuery({
     queryKey: ["companies"],
@@ -49,11 +50,11 @@ export default function Furnishers() {
   }, [companies, search, typeFilter, verificationFilter]);
 
   const paginated = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return filtered.slice(start, start + PAGE_SIZE);
-  }, [filtered, page]);
+    const start = (page - 1) * pageSize;
+    return filtered.slice(start, start + pageSize);
+  }, [filtered, page, pageSize]);
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const totalPages = Math.ceil(filtered.length / pageSize);
 
   const verifiedCount = companies.filter((c) => c.verification_status === "verified").length;
   const avgConfidence = companies.length
@@ -69,6 +70,7 @@ export default function Furnishers() {
     setTypeFilter("all");
     setVerificationFilter("all");
     setPage(1);
+    setPageSize(20);
   }
 
   return (
@@ -148,36 +150,14 @@ export default function Furnishers() {
               onSelect={setSelected}
             />
             {/* Pagination */}
-            <div className="flex items-center justify-between px-4 py-2.5 mt-1">
-              <span className="text-[10px] text-muted-foreground/60">
-                Showing {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filtered.length)} of {filtered.length}
-              </span>
-              <div className="flex items-center gap-1">
-                {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map((p) => (
-                  <button
-                    key={p}
-                    onClick={() => setPage(p)}
-                    className={`w-6 h-6 text-[10px] rounded flex items-center justify-center ${
-                      p === page ? "bg-primary text-white" : "text-muted-foreground/60 hover:bg-muted"
-                    }`}
-                  >
-                    {p}
-                  </button>
-                ))}
-                {totalPages > 5 && (
-                  <>
-                    <span className="text-[10px] text-muted-foreground/40">...</span>
-                    <button
-                      onClick={() => setPage(totalPages)}
-                      className="w-6 h-6 text-[10px] rounded flex items-center justify-center text-muted-foreground/60 hover:bg-muted"
-                    >
-                      {totalPages}
-                    </button>
-                  </>
-                )}
-              </div>
-              <span className="text-[10px] text-muted-foreground/60">{PAGE_SIZE} / page</span>
-            </div>
+            <TablePagination
+              page={page}
+              totalPages={totalPages}
+              totalItems={filtered.length}
+              pageSize={pageSize}
+              onPageChange={setPage}
+              onPageSizeChange={(size) => { setPageSize(size); setPage(1); }}
+            />
           </>
         )}
       </div>
