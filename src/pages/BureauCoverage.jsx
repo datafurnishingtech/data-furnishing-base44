@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
-import { Building2, Globe, Shield, TrendingUp, ArrowUp, ArrowDown, Search, Filter, X, ArrowRight } from "lucide-react";
+import { ArrowUp, ArrowDown, Search, Filter, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
-
-const bureauCards = [
-  { name: "Experian", abbr: "EX", coverage: 98.7, change: 2.6 },
-  { name: "Equifax", abbr: "EQ", coverage: 97.9, change: 2.1 },
-  { name: "TransUnion", abbr: "TU", coverage: 98.3, change: 2.4 },
-];
-
-const additionalBureaus = [
-  { name: "Innovis", coverage: 93.6, change: 1.8 },
-  { name: "SBFE", coverage: 88.4, change: 1.6 },
-  { name: "Experian SB", coverage: 84.1, change: 1.3 },
-];
+import BureauComparisonTable from "@/components/bureau/BureauComparisonTable";
 
 const furnisherCoverage = [
   { name: "Synchrony Bank", domain: "synchrony.com", abbr: "SYN", product: "Synchrony Bank Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 97.2, confidence: "High", trend: "up" },
@@ -79,31 +68,17 @@ export default function BureauCoverage() {
             </div>
           </div>
 
-          {/* Bureau Comparison */}
-          <div className="bg-card rounded-lg border border-border/60 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11.5px] font-medium text-foreground">Bureau coverage comparison</h3>
-              <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all bureaus</button>
-            </div>
-            <p className="text-[10px] text-muted-foreground/60 mb-3">% of active tradelines covered</p>
-            <div className="grid grid-cols-3 gap-2 mb-3">
-              {bureauCards.map((b) => (
-                <div key={b.name} className="text-center p-2.5 bg-muted/30 rounded-lg">
-                  <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
-                  <p className="text-[14px] font-medium text-foreground leading-none">{b.coverage}%</p>
-                  <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
+          {/* Bureau Comparison Table */}
+          <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
+            <div className="px-5 pt-4 pb-3 border-b border-border/40">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-[11.5px] font-medium text-foreground">Bureau coverage comparison</h3>
+                  <p className="text-[10px] text-muted-foreground/60 mt-0.5">% of active tradelines covered per bureau — click column header to sort</p>
                 </div>
-              ))}
+              </div>
             </div>
-            <div className="grid grid-cols-3 gap-2">
-              {additionalBureaus.map((b) => (
-                <div key={b.name} className="text-center p-2.5 bg-muted/20 rounded-lg">
-                  <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
-                  <p className="text-[14px] font-medium text-foreground leading-none">{b.coverage}%</p>
-                  <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
-                </div>
-              ))}
-            </div>
+            <BureauComparisonTable />
           </div>
         </div>
 
