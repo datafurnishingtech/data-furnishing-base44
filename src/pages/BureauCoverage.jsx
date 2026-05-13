@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
+import BureauComparisonTable from "@/components/bureau/BureauComparisonTable";
 
 const bureauCards = [
   { name: "Experian", abbr: "EX", coverage: 98.7, change: 2.6 },
@@ -81,29 +82,12 @@ export default function BureauCoverage() {
 
           {/* Bureau Comparison */}
           <div className="bg-card rounded-lg border border-border/60 p-5">
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-0.5">
               <h3 className="text-[11.5px] font-medium text-foreground">Bureau coverage comparison</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all bureaus</button>
             </div>
-            <p className="text-[10px] text-muted-foreground/60 mb-3">% of active tradelines covered</p>
-            <div className="grid grid-cols-3 gap-2 mb-3">
-              {bureauCards.map((b) => (
-                <div key={b.name} className="text-center p-2.5 bg-muted/30 rounded-lg">
-                  <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
-                  <p className="text-[14px] font-medium text-foreground leading-none">{b.coverage}%</p>
-                  <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              {additionalBureaus.map((b) => (
-                <div key={b.name} className="text-center p-2.5 bg-muted/20 rounded-lg">
-                  <p className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-1">{b.name}</p>
-                  <p className="text-[14px] font-medium text-foreground leading-none">{b.coverage}%</p>
-                  <p className="text-[10px] text-emerald-500 mt-0.5">↑ {b.change}pts</p>
-                </div>
-              ))}
-            </div>
+            <p className="text-[10px] text-muted-foreground/60 mb-3">% of active tradelines covered — sortable by any column</p>
+            <BureauComparisonTable />
           </div>
         </div>
 
