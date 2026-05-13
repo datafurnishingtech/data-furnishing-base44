@@ -77,7 +77,7 @@ export default function Sidebar() {
                   : "text-foreground/70 hover:bg-muted/50 hover:text-foreground"
               }`}
             >
-              <item.icon className={`w-[14px] h-[14px] flex-shrink-0 ${isActive ? "text-primary" : "opacity-40"}`} />
+              <item.icon className={`w-3 h-3 flex-shrink-0 ${isActive ? "" : "opacity-60"}`} />
               <span className="flex-1 truncate">{item.label}</span>
               {item.badge && (
                 <span className="text-[9px] font-medium bg-primary/10 text-primary rounded px-1.5 py-0.5 leading-none">
