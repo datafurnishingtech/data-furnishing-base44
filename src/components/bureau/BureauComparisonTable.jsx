@@ -2,39 +2,18 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { ArrowUp, ArrowDown, ArrowUpDown, ChevronDown } from "lucide-react";
 
-const TIER_COLORS = {
-  primary: "bg-primary/8 text-primary/80",
-  commercial: "bg-amber-500/10 text-amber-600",
-  specialty: "bg-violet-500/10 text-violet-600",
-  alternative: "bg-teal-500/10 text-teal-600",
-};
-
-const TIER_FILTERS = [
-  { key: "all", label: "All" },
-  { key: "primary", label: "Primary" },
-  { key: "commercial", label: "Commercial" },
-  { key: "specialty", label: "Specialty" },
-  { key: "alternative", label: "Alternative" },
-];
-
 const bureaus = [
-  { name: "Experian", domain: "experian.com", type: "Consumer", tier: "primary", coverage: 98.7, change: 2.6 },
-  { name: "Equifax", domain: "equifax.com", type: "Consumer", tier: "primary", coverage: 97.9, change: 2.1 },
-  { name: "TransUnion", domain: "transunion.com", type: "Consumer", tier: "primary", coverage: 98.3, change: 2.4 },
-  { name: "Innovis", domain: "innovis.com", type: "Consumer", tier: "primary", coverage: 93.6, change: 1.8 },
-  { name: "SBFE", domain: "sbfe.org", type: "Business", tier: "commercial", coverage: 88.4, change: 1.6 },
-  { name: "Experian Business", domain: "experian.com", type: "Business", tier: "commercial", coverage: 84.1, change: 1.3 },
-  { name: "Equifax Business", domain: "equifax.com", type: "Business", tier: "commercial", coverage: 81.7, change: 0.9 },
-  { name: "CreditSafe", domain: "creditsafe.com", type: "Business", tier: "commercial", coverage: 76.3, change: 1.1 },
-  { name: "ChexSystems", domain: "chexsystems.com", type: "Specialty", tier: "specialty", coverage: 71.2, change: 0.6 },
-  { name: "LexisNexis Risk", domain: "lexisnexis.com", type: "Specialty", tier: "specialty", coverage: 68.9, change: 0.4 },
-  { name: "MicroBilt", domain: "microbilt.com", type: "Specialty", tier: "specialty", coverage: 62.4, change: -0.2 },
-  { name: "Clarity Services", domain: "clarityservices.com", type: "Subprime", tier: "specialty", coverage: 58.1, change: 0.3 },
-  { name: "CoreLogic", domain: "corelogic.com", type: "Specialty", tier: "specialty", coverage: 55.4, change: 0.5 },
-  { name: "Teletrack", domain: "teletrack.com", type: "Specialty", tier: "specialty", coverage: 51.7, change: -0.1 },
-  { name: "PRBC / eCredable", domain: "ecredable.com", type: "Alt. Data", tier: "alternative", coverage: 38.2, change: 1.4 },
-  { name: "Rental Kharma", domain: "rentalkharma.com", type: "Alt. Data", tier: "alternative", coverage: 22.6, change: 2.1 },
-  { name: "NCTUE", domain: "nationalconsumertelecommunication.com", type: "Telecom", tier: "alternative", coverage: 44.8, change: 0.8 },
+  { name: "Experian", domain: "experian.com", type: "Consumer", coverage: 98.7, change: 2.6 },
+  { name: "Equifax", domain: "equifax.com", type: "Consumer", coverage: 97.9, change: 2.1 },
+  { name: "TransUnion", domain: "transunion.com", type: "Consumer", coverage: 98.3, change: 2.4 },
+  { name: "Innovis", domain: "innovis.com", type: "Consumer", coverage: 93.6, change: 1.8 },
+  { name: "SBFE", domain: "sbfe.org", type: "Business", coverage: 88.4, change: 1.6 },
+  { name: "Experian Business", domain: "experian.com", type: "Business", coverage: 84.1, change: 1.3 },
+  { name: "Equifax Business", domain: "equifax.com", type: "Business", coverage: 81.7, change: 0.9 },
+  { name: "CreditSafe", domain: "creditsafe.com", type: "Business", coverage: 76.3, change: 1.1 },
+  { name: "ChexSystems", domain: "chexsystems.com", type: "Specialty", coverage: 71.2, change: 0.6 },
+  { name: "LexisNexis Risk", domain: "lexisnexis.com", type: "Specialty", coverage: 68.9, change: 0.4 },
+  { name: "MicroBilt", domain: "microbilt.com", type: "Specialty", coverage: 62.4, change: -0.2 },
 ];
 
 function sortBureaus(data, key, dir) {
@@ -48,7 +27,6 @@ function sortBureaus(data, key, dir) {
 export default function BureauComparisonTable() {
   const [sortKey, setSortKey] = useState("coverage");
   const [sortDir, setSortDir] = useState("desc");
-  const [tierFilter, setTierFilter] = useState("all");
   const [canScrollDown, setCanScrollDown] = useState(false);
   const scrollRef = useRef(null);
 
@@ -67,8 +45,7 @@ export default function BureauComparisonTable() {
     checkScroll();
   }, [sortKey, sortDir, checkScroll]);
 
-  const filtered = tierFilter === "all" ? bureaus : bureaus.filter(b => b.tier === tierFilter);
-  const sorted = sortBureaus(filtered, sortKey, sortDir);
+  const sorted = sortBureaus(bureaus, sortKey, sortDir);
 
   const SortBtn = ({ k, label }) => (
     <button
@@ -84,26 +61,10 @@ export default function BureauComparisonTable() {
 
   return (
     <div className="relative">
-      {/* Tier filter pills */}
-      <div className="flex items-center gap-1 px-4 py-2.5 border-b border-border/30">
-        {TIER_FILTERS.map(f => (
-          <button
-            key={f.key}
-            onClick={() => setTierFilter(f.key)}
-            className={`text-[9.5px] font-medium px-2 py-0.5 rounded transition-colors ${
-              tierFilter === f.key
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted/50 text-muted-foreground/70 hover:bg-muted"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
       <div
         ref={scrollRef}
         className="overflow-y-auto"
-        style={{ maxHeight: 220 }}
+        style={{ maxHeight: 248 }}
         onScroll={checkScroll}
       >
         <table className="w-full">
@@ -131,9 +92,11 @@ export default function BureauComparisonTable() {
                   </div>
                 </td>
                 <td className="px-3 py-2.5">
-                  <span className={`text-[9.5px] font-medium px-1.5 py-0.5 rounded ${TIER_COLORS[b.tier] || "bg-muted text-muted-foreground/70"}`}>
-                    {b.type}
-                  </span>
+                  <span className={`text-[9.5px] font-medium px-1.5 py-0.5 rounded ${
+                    b.type === "Consumer" ? "bg-primary/8 text-primary/80" :
+                    b.type === "Business" ? "bg-amber-500/10 text-amber-600" :
+                    "bg-muted text-muted-foreground/70"
+                  }`}>{b.type}</span>
                 </td>
                 <td className="px-3 py-2.5 text-right">
                   <div className="flex flex-col items-end gap-0.5">
