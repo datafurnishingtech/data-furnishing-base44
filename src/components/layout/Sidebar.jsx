@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Building2,
@@ -9,7 +9,6 @@ import {
   Bell,
   Eye,
   FileText,
-  Settings,
   ChevronUp,
   LogOut,
   User,
@@ -27,11 +26,11 @@ const navItems = [
   { label: "Alerts", icon: Bell, path: "/alerts", badge: 12 },
   { label: "Watchlists", icon: Eye, path: "/watchlists" },
   { label: "Reports", icon: FileText, path: "/reports" },
-  { label: "Settings", icon: Settings, path: "/settings" },
 ];
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -107,7 +106,10 @@ export default function Sidebar() {
             </button>
             <button
               className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] text-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/settings");
+              }}
             >
               <SlidersHorizontal className="w-3 h-3 opacity-60 flex-shrink-0" />
               Account settings
