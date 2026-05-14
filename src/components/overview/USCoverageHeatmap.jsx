@@ -65,12 +65,22 @@ export default function USCoverageHeatmap() {
   const svgRef = useRef(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
       .then((r) => r.json())
       .then((us) => {
+        if (!isMounted) return;
         const featureCollection = feature(us, us.objects.states);
         setStates(featureCollection.features);
+      })
+      .catch(() => {
+        if (isMounted) setStates([]);
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const projection = geoAlbersUsa().scale(780).translate([WIDTH / 2, HEIGHT / 2]);
