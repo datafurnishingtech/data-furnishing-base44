@@ -2,6 +2,7 @@ import React from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { Link2, Package, Globe, Network, Filter, ArrowRight } from "lucide-react";
+import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
@@ -193,7 +194,7 @@ export default function ProductGraph() {
             <span className="text-[9px] font-medium bg-primary/10 text-primary px-1.5 py-0.5 rounded">Furnisher</span>
           </div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-[9px] font-bold text-primary">SB</div>
+            <FurnisherLogo domain="synchrony.com" name="Synchrony Bank" size="sm" />
             <div>
               <p className="text-[11px] font-medium text-foreground">Synchrony Bank</p>
               <p className="text-[10px] text-muted-foreground/60">Furnisher ID: FURN-00124</p>

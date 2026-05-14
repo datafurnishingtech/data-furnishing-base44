@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 
-const initials = (name) => name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+const initials = (name = "") => name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+
+const normalizeDomain = (value = "") => {
+  if (!value) return "";
+  return value
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .split("/")[0]
+    .trim()
+    .toLowerCase();
+};
 
 // Hand-curated reliable logo URLs for brands that generic APIs fail on
 const OVERRIDES = {
@@ -17,6 +27,10 @@ const OVERRIDES = {
   "navient.com": "https://logo.clearbit.com/navient.com",
   "experian.com": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Experian_logo.svg/512px-Experian_logo.svg.png",
   "transunion.com": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/TransUnion_logo.svg/512px-TransUnion_logo.svg.png",
+  "equifax.com": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Equifax.svg/512px-Equifax.svg.png",
+  "chase.com": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/J.P._Morgan_Logo_2008_1.svg/512px-J.P._Morgan_Logo_2008_1.svg.png",
+  "lendingclub.com": "https://logo.clearbit.com/lendingclub.com",
+  "nelnet.com": "https://logo.clearbit.com/nelnet.com",
 };
 
 const logoSources = (domain, fallbackName) => {
@@ -37,9 +51,10 @@ const logoSources = (domain, fallbackName) => {
 
 export default function FurnisherLogo({ domain, name, size = "sm" }) {
   const [srcIndex, setSrcIndex] = useState(0);
+  const cleanDomain = normalizeDomain(domain);
   const dim = size === "lg" ? "w-10 h-10" : size === "md" ? "w-8 h-8" : "w-7 h-7";
   const textSize = size === "lg" ? "text-[11px]" : "text-[9px]";
-  const sources = logoSources(domain, name);
+  const sources = logoSources(cleanDomain, name);
 
   if (srcIndex < sources.length) {
     return (
