@@ -2,19 +2,27 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { ArrowUp, ArrowDown, ArrowUpDown, ChevronDown } from "lucide-react";
 
+const AUTHORIZED_PRIMARY_AGENCIES = new Set([
+  "Experian",
+  "Equifax",
+  "TransUnion",
+  "SBFE",
+  "Experian Business",
+  "Equifax Business",
+]);
+
 const bureaus = [
   { name: "Experian", domain: "experian.com", type: "Consumer", coverage: 98.7, change: 2.6 },
   { name: "Equifax", domain: "equifax.com", type: "Consumer", coverage: 97.9, change: 2.1 },
   { name: "TransUnion", domain: "transunion.com", type: "Consumer", coverage: 98.3, change: 2.4 },
-  { name: "Innovis", domain: "innovis.com", type: "Consumer", coverage: 93.6, change: 1.8 },
   { name: "SBFE", domain: "sbfe.org", type: "Business", coverage: 88.4, change: 1.6 },
   { name: "Experian Business", domain: "experian.com", type: "Business", coverage: 84.1, change: 1.3 },
   { name: "Equifax Business", domain: "equifax.com", type: "Business", coverage: 81.7, change: 0.9 },
-  { name: "CreditSafe", domain: "creditsafe.com", type: "Business", coverage: 76.3, change: 1.1 },
-  { name: "ChexSystems", domain: "chexsystems.com", type: "Specialty", coverage: 71.2, change: 0.6 },
-  { name: "LexisNexis Risk", domain: "lexisnexis.com", type: "Specialty", coverage: 68.9, change: 0.4 },
-  { name: "MicroBilt", domain: "microbilt.com", type: "Specialty", coverage: 62.4, change: -0.2 },
 ];
+
+const authorizedPrimaryBureaus = bureaus.filter((bureau) =>
+  AUTHORIZED_PRIMARY_AGENCIES.has(bureau.name) && ["Consumer", "Business"].includes(bureau.type)
+);
 
 function sortBureaus(data, key, dir) {
   return [...data].sort((a, b) => {
@@ -45,7 +53,7 @@ export default function BureauComparisonTable() {
     checkScroll();
   }, [sortKey, sortDir, checkScroll]);
 
-  const sorted = sortBureaus(bureaus, sortKey, sortDir);
+  const sorted = sortBureaus(authorizedPrimaryBureaus, sortKey, sortDir);
 
   const SortBtn = ({ k, label }) => (
     <button
