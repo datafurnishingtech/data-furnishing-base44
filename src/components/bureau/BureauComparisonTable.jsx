@@ -69,7 +69,7 @@ export default function BureauComparisonTable() {
       >
         <table className="w-full">
           <thead className="sticky top-0 bg-card z-10">
-            <tr className="text-[9.5px] font-medium tracking-[0.06em] border-b border-border/50">
+            <tr className="text-[9.5px] font-medium uppercase tracking-[0.06em] border-b border-border/50">
               <th className="text-left px-4 py-2.5 font-medium text-muted-foreground/60">
                 <SortBtn k="name" label="Bureau" />
               </th>

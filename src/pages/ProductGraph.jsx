@@ -138,7 +138,7 @@ export default function ProductGraph() {
           <h3 className="text-[11.5px] font-medium text-foreground mb-3">Top relationships</h3>
           <table className="w-full">
             <thead>
-              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="text-left pb-2 font-medium w-6">#</th>
                 <th className="text-left pb-2 font-medium">Furnisher</th>
                 <th className="text-left pb-2 font-medium">Product</th>

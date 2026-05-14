@@ -94,7 +94,7 @@ export default function BureauCoverage() {
           </div>
           <table className="w-full">
             <thead>
-              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="text-left px-4 py-2.5 font-medium">Furnisher</th>
                 <th className="text-left px-3 py-2.5 font-medium">Product</th>
                 <th className="text-left px-3 py-2.5 font-medium">Product type</th>

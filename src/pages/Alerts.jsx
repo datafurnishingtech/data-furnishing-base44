@@ -100,7 +100,7 @@ export default function Alerts() {
         <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="w-10 px-3 py-2.5"><Checkbox className="w-3 h-3" /></th>
                 <th className="text-left px-3 py-2.5 font-medium">Alert</th>
                 <th className="text-left px-3 py-2.5 font-medium">Severity</th>
