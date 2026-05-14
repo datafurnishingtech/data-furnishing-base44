@@ -60,7 +60,7 @@ export default function Reports() {
         <div className="bg-card rounded-lg border border-border/60 overflow-hidden mb-5">
           <div className="px-4 py-3 border-b border-border/50">
             <div className="flex items-center justify-between mb-2.5">
-              <h3 className="text-[11.5px] font-medium text-foreground">Recent reports</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Recent Reports</h3>
               <Button variant="outline" size="sm" className="text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">Export</Button>
             </div>
             <div className="flex items-center gap-2">
@@ -126,7 +126,7 @@ export default function Reports() {
         <div className="bg-card rounded-lg border border-border/60 p-5">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-[11.5px] font-medium text-foreground">Report templates</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Report Templates</h3>
               <p className="text-[10px] text-muted-foreground/60 mt-0.5">Start from a template to quickly generate insights.</p>
             </div>
             <button className="text-[10px] text-primary/70 hover:text-primary transition-colors flex items-center gap-1">View all templates <ArrowRight className="w-2.5 h-2.5" /></button>

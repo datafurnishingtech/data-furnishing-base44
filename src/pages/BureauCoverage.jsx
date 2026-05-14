@@ -34,7 +34,7 @@ export default function BureauCoverage() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0">
-        <PageHeader title="Bureau coverage" subtitle="Map where products and furnishers report across consumer and business bureaus.">
+        <PageHeader title="Bureau Coverage" subtitle="Map where products and furnishers report across consumer and business bureaus.">
           <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">
             <Filter className="w-3 h-3" /> Filters
           </Button>
@@ -56,7 +56,7 @@ export default function BureauCoverage() {
         {/* Heatmap + Bureau Comparison */}
         <div className="grid grid-cols-2 gap-4 mb-5">
           <div className="bg-card rounded-lg border border-border/60 p-5">
-            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">U.S. consumer coverage heatmap</h3>
+            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">U.S. Consumer Coverage Heatmap</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Coverage % of active tradelines reported by state — hover for detail</p>
             <USCoverageHeatmap />
             <div className="flex items-center justify-between mt-2.5">
@@ -73,7 +73,7 @@ export default function BureauCoverage() {
             <div className="px-5 pt-4 pb-3 border-b border-border/40">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-[11.5px] font-medium text-foreground">Bureau coverage comparison</h3>
+                  <h3 className="text-[11.5px] font-medium text-foreground">Bureau Coverage Comparison</h3>
                   <p className="text-[10px] text-muted-foreground/60 mt-0.5">% of active tradelines covered per bureau — click column header to sort</p>
                 </div>
               </div>
@@ -85,7 +85,7 @@ export default function BureauCoverage() {
         {/* Furnisher Coverage Directory */}
         <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
           <div className="px-4 py-3 border-b border-border/50">
-            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Furnisher coverage directory</h3>
+            <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Furnisher Coverage Directory</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-2.5">Explore coverage by furnisher, product, and bureau.</p>
             <div className="relative max-w-sm">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />

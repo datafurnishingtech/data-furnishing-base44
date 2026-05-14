@@ -154,7 +154,7 @@ export default function Tradelines() {
         <div className="bg-card rounded-lg border border-border/60 p-5">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-[11.5px] font-medium text-foreground">Impact score distribution</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Impact Score Distribution</h3>
               <p className="text-[10px] text-muted-foreground/60 mt-0.5">Tradelines by score range</p>
             </div>
             <Select>

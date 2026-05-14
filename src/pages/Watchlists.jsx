@@ -140,7 +140,7 @@ export default function Watchlists() {
         <div className="bg-card rounded-lg border border-border/60 p-5">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-[11.5px] font-medium text-foreground">Watchlist health overview</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Watchlist Health Overview</h3>
               <p className="text-[10px] text-muted-foreground/60 mt-0.5">vs last 30 days</p>
             </div>
             <button className="text-[10px] text-primary/70 hover:text-primary transition-colors flex items-center gap-1">View full report <ArrowRight className="w-2.5 h-2.5" /></button>

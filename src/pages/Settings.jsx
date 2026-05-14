@@ -87,7 +87,7 @@ export default function Settings() {
         <div className="bg-card rounded-lg border border-border/60 p-5 mb-4">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-[11.5px] font-medium text-foreground">Organization profile</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Organization Profile</h3>
               <p className="text-[10px] text-muted-foreground/60 mt-0.5">Manage your organization details and workspace profile.</p>
             </div>
             <Button variant="outline" size="sm" className="text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">Edit profile</Button>
@@ -113,7 +113,7 @@ export default function Settings() {
         {/* Team Permissions */}
         <div className="bg-card rounded-lg border border-border/60 p-5 mb-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[11.5px] font-medium text-foreground">Team permissions</h3>
+            <h3 className="text-[11.5px] font-medium text-foreground">Team Permissions</h3>
             <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all team members →</button>
           </div>
           <table className="w-full mb-3">
@@ -155,7 +155,7 @@ export default function Settings() {
         <div className="grid grid-cols-3 gap-4 mb-4">
           {/* Bureau Connections */}
           <div className="bg-card rounded-lg border border-border/60 p-4">
-            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Bureau & data source connections</h3>
+            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Bureau & Data Source Connections</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Manage and monitor your data source connections.</p>
             {dataSources.map((ds) => (
               <div key={ds.name} className="flex items-center gap-2 py-1">
@@ -169,7 +169,7 @@ export default function Settings() {
 
           {/* Alert Thresholds */}
           <div className="bg-card rounded-lg border border-border/60 p-4">
-            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Alert thresholds</h3>
+            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Alert Thresholds</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Configure global thresholds for alerts.</p>
             {[["New furnisher onboarded", "75", "Impact score"], ["Coverage drop", "10%", "Change"], ["Data quality issue", "95%", "Error rate"], ["Bureau coverage drop", "15%", "Change"], ["High impact tradeline", "85", "Impact score"]].map(([name, val, unit]) => (
               <div key={name} className="flex items-center justify-between py-1">
@@ -185,7 +185,7 @@ export default function Settings() {
 
           {/* Watchlist Preferences */}
           <div className="bg-card rounded-lg border border-border/60 p-4">
-            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Watchlist preferences</h3>
+            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Watchlist Preferences</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Set defaults for watchlist monitoring.</p>
             <div className="space-y-2.5">
               {["Auto-add new high-impact furnishers", "Monitor coverage changes", "Monitor data quality issues"].map((s) => (
@@ -210,7 +210,7 @@ export default function Settings() {
         {/* API & Export */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-card rounded-lg border border-border/60 p-4">
-            <h3 className="text-[11px] font-medium text-foreground mb-0.5">API & export settings</h3>
+            <h3 className="text-[11px] font-medium text-foreground mb-0.5">API & Export Settings</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Configure and monitor your default export behavior.</p>
             <div className="space-y-1.5">
               {[["API access", "Enabled", true], ["API environment", "Production", false], ["Rate limit", "1,000 req/min", false]].map(([k, v, green]) => (
@@ -246,7 +246,7 @@ export default function Settings() {
           </div>
 
           <div className="bg-card rounded-lg border border-border/60 p-4">
-            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Default report options</h3>
+            <h3 className="text-[11px] font-medium text-foreground mb-0.5">Default Report Options</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Set defaults for reports and data delivery.</p>
             <div className="grid grid-cols-2 gap-3">
               {[["Default report view", "Impact score"], ["Group by", "Furnisher"], ["Sort by", "Impact (high → low)"], ["Default date range", "Last 30 days"]].map(([k, v]) => (
@@ -273,7 +273,7 @@ export default function Settings() {
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
-            <h4 className="text-[11.5px] font-medium text-foreground">Workspace summary</h4>
+            <h4 className="text-[11.5px] font-medium text-foreground">Workspace Summary</h4>
           </div>
           <p className="text-[10px] text-muted-foreground/60 mb-3">Your workspace health and configuration at a glance.</p>
           <div className="flex items-center justify-center mb-1">
@@ -299,7 +299,7 @@ export default function Settings() {
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
-            <h4 className="text-[11.5px] font-medium text-foreground">Connected data sources</h4>
+            <h4 className="text-[11.5px] font-medium text-foreground">Connected Data Sources</h4>
           </div>
           <p className="text-[10px] text-muted-foreground/60 mb-3">5 of 6 sources connected</p>
           {connectedSources.map((s) => (
@@ -318,7 +318,7 @@ export default function Settings() {
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
-            <h4 className="text-[11.5px] font-medium text-foreground">Notification health</h4>
+            <h4 className="text-[11.5px] font-medium text-foreground">Notification Health</h4>
           </div>
           <p className="text-[10px] text-muted-foreground/60 mb-3">All systems operational</p>
           {notificationHealth.map((n) => (
@@ -334,7 +334,7 @@ export default function Settings() {
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center gap-2 mb-2.5">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
-            <h4 className="text-[11.5px] font-medium text-foreground">Quick actions</h4>
+            <h4 className="text-[11.5px] font-medium text-foreground">Quick Actions</h4>
           </div>
           {["Test data connection", "Export workspace config", "View audit log", "Restore defaults"].map((a) => (
             <button key={a} className="w-full text-left text-[10.5px] text-foreground/70 hover:text-primary py-1 transition-colors">{a}</button>

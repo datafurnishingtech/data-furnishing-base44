@@ -58,7 +58,7 @@ export default function ProductGraph() {
   return (
     <div className="flex gap-6">
       <div className="flex-1 min-w-0">
-        <PageHeader title="Product graph" subtitle="Visualize relationships between furnishers, products, and bureaus across the credit ecosystem.">
+        <PageHeader title="Product Graph" subtitle="Visualize relationships between furnishers, products, and bureaus across the credit ecosystem.">
           <button className="text-[11px] text-primary/70 hover:text-primary transition-colors font-normal">Reset filters</button>
         </PageHeader>
 
@@ -93,7 +93,7 @@ export default function ProductGraph() {
         {/* Ecosystem Graph */}
         <div className="bg-card rounded-lg border border-border/60 p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[11.5px] font-medium text-foreground">Ecosystem graph</h3>
+            <h3 className="text-[11.5px] font-medium text-foreground">Ecosystem Graph</h3>
             <div className="flex gap-1.5">
               <Button variant="outline" size="sm" className="text-[11px] h-7 px-2.5 font-normal border-border/60">Fit view</Button>
               <Button variant="outline" size="sm" className="text-[11px] h-7 w-7 p-0 border-border/60">−</Button>
@@ -135,7 +135,7 @@ export default function ProductGraph() {
 
         {/* Top Relationships */}
         <div className="bg-card rounded-lg border border-border/60 p-5">
-          <h3 className="text-[11.5px] font-medium text-foreground mb-3">Top relationships</h3>
+          <h3 className="text-[11.5px] font-medium text-foreground mb-3">Top Relationships</h3>
           <table className="w-full">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
