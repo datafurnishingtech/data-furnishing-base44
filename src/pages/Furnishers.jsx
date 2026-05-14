@@ -8,8 +8,6 @@ import FurnisherDetailPanel from "@/components/furnishers/FurnisherDetailPanel";
 import FurnisherFilters from "@/components/furnishers/FurnisherFilters";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import TablePagination from "@/components/shared/TablePagination";
-import EmptyState from "@/components/shared/EmptyState";
-import LoadingState from "@/components/shared/LoadingState";
 
 export default function Furnishers() {
   const [selected, setSelected] = useState(null);
@@ -137,14 +135,13 @@ export default function Furnishers() {
 
         {/* Table */}
         {isLoading ? (
-          <LoadingState rows={8} />
+          <div className="bg-card rounded-lg border border-border/60 p-12 flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
         ) : paginated.length === 0 ? (
-          <EmptyState
-            title="No furnishers match your filters"
-            description="Clear the current filters or try a broader search to find more furnishers."
-            actionLabel="Clear filters"
-            onAction={handleClear}
-          />
+          <div className="bg-card rounded-lg border border-border/60 p-12 text-center">
+            <p className="text-[12px] text-muted-foreground">No furnishers match your filters.</p>
+          </div>
         ) : (
           <>
             <FurnisherTable

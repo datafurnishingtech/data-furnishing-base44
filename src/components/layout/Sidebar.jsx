@@ -49,7 +49,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card/98 text-foreground flex flex-col z-50 border-r border-border/50 shadow-sm">
+    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50">
       {/* Logo */}
       <div className="flex items-center justify-center px-3 h-14">
         <img
@@ -70,10 +70,10 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[11px] font-medium transition-colors ${
+              className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[11px] transition-colors ${
                 isActive
                   ? "bg-primary/8 text-primary"
-                  : "text-foreground/62 hover:bg-muted/50 hover:text-foreground"
+                  : "text-foreground/70 hover:bg-muted/50 hover:text-foreground"
               }`}
             >
               <item.icon className={`w-3 h-3 flex-shrink-0 ${isActive ? "" : "opacity-60"}`} />
