@@ -30,13 +30,13 @@ export default function FurnisherTable({ companies, selected, onSelect }) {
     <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
       <table className="w-full">
         <thead>
-          <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+          <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
             <th className="text-left px-4 py-2.5 font-medium">Furnisher</th>
             <th className="text-left px-3 py-2.5 font-medium">Type</th>
             <th className="text-left px-3 py-2.5 font-medium">Headquarters</th>
             <th className="text-left px-3 py-2.5 font-medium">Confidence</th>
             <th className="text-left px-3 py-2.5 font-medium">Verification</th>
-            <th className="text-left px-3 py-2.5 font-medium">Last Verified</th>
+            <th className="text-left px-3 py-2.5 font-medium">Last verified</th>
             <th className="w-8"></th>
           </tr>
         </thead>

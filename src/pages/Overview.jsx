@@ -101,12 +101,12 @@ export default function Overview() {
           {/* Top Furnishers */}
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11.5px] font-medium text-foreground">Top Furnishers by Volume</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Top furnishers by volume</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
                   <th className="text-left pb-2 font-medium">#</th>
                   <th className="text-left pb-2 font-medium">Furnisher</th>
                   <th className="text-right pb-2 font-medium">Tradelines</th>
@@ -187,12 +187,12 @@ export default function Overview() {
           {/* Watchlist Snapshot */}
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11.5px] font-medium text-foreground">Watchlist Snapshot</h3>
+              <h3 className="text-[11.5px] font-medium text-foreground">Watchlist snapshot</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
             <table className="w-full">
               <thead>
-                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+                <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
                   <th className="text-left pb-2 font-medium">Watchlist</th>
                   <th className="text-right pb-2 font-medium">Items</th>
                 </tr>
@@ -215,15 +215,15 @@ export default function Overview() {
 
         {/* Recent Trade Activity */}
         <div className="bg-card rounded-lg border border-border/60 p-5">
-          <h3 className="text-[11.5px] font-medium text-foreground mb-3">Recent Trade Activity</h3>
+          <h3 className="text-[11.5px] font-medium text-foreground mb-3">Recent trade activity</h3>
           <table className="w-full">
             <thead>
-              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
                 <th className="text-left pb-2 font-medium">Trade ID</th>
                 <th className="text-left pb-2 font-medium">Furnisher</th>
                 <th className="text-left pb-2 font-medium">Product</th>
                 <th className="text-left pb-2 font-medium">Bureau</th>
-                <th className="text-left pb-2 font-medium">Reported On</th>
+                <th className="text-left pb-2 font-medium">Reported on</th>
                 <th className="text-left pb-2 font-medium">Status</th>
               </tr>
             </thead>

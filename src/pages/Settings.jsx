@@ -118,7 +118,7 @@ export default function Settings() {
           </div>
           <table className="w-full mb-3">
             <thead>
-              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+              <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 tracking-[0.06em]">
                 <th className="text-left pb-2 font-medium">User</th>
                 <th className="text-left pb-2 font-medium">Role</th>
                 <th className="text-left pb-2 font-medium">Permissions</th>
