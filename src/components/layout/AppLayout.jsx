@@ -9,9 +9,9 @@ export default function AppLayout() {
     <div className="min-h-screen bg-background">
       <Sidebar />
       <div className="ml-[210px] p-3">
-        <div className="bg-card rounded-xl shadow-sm overflow-hidden">
+        <div className="rounded-xl overflow-hidden">
           <TopBar />
-          <main className="p-6">
+          <main className="p-6 bg-background">
             <Outlet />
           </main>
         </div>
