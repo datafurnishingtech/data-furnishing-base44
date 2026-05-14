@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,17 @@ const VERIFICATION_OPTIONS = [
 ];
 
 export default function FurnisherFilters({ search, onSearch, typeFilter, onTypeFilter, verificationFilter, onVerificationFilter, onClear, totalCount }) {
+  const [localSearch, setLocalSearch] = useState(search);
+
+  useEffect(() => {
+    const timer = setTimeout(() => onSearch(localSearch), 250);
+    return () => clearTimeout(timer);
+  }, [localSearch]);
+
+  useEffect(() => {
+    setLocalSearch(search);
+  }, [search]);
+
   return (
     <div className="space-y-3 mb-4">
       <div className="flex flex-wrap items-center gap-2">
@@ -43,8 +54,8 @@ export default function FurnisherFilters({ search, onSearch, typeFilter, onTypeF
           <Input
             placeholder="Search furnishers by name, description..."
             className="pl-8 h-7 text-[11px] border-border/60"
-            value={search}
-            onChange={(e) => onSearch(e.target.value)}
+            value={localSearch}
+            onChange={(e) => setLocalSearch(e.target.value)}
           />
         </div>
         <span className="text-[10px] text-muted-foreground/60 whitespace-nowrap">{totalCount} results</span>

@@ -67,7 +67,7 @@ export default function Overview() {
     setSelectedState(null);
   };
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col xl:flex-row gap-6">
       {/* Main content */}
       <div className="flex-1 min-w-0">
         <PageHeader
@@ -76,7 +76,7 @@ export default function Overview() {
         />
 
         {/* Stats */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mb-6">
           <StatCard label="Furnishers" value="2,847" change={12.5} />
           <StatCard label="Tradelines" value="24.6M" change={11.8} />
           <StatCard label="Bur. Coverage" value="98.1%" change={2.4} />
@@ -85,9 +85,9 @@ export default function Overview() {
         </div>
 
         {/* Heatmap + Top Furnishers */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
           {/* Heatmap */}
-          <div className="bg-card rounded-lg border border-border/60 p-5">
+          <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-5">
             <div className="flex items-center justify-between mb-3">
               <div>
                 <h3 className="text-[11.5px] font-medium text-foreground">Furnisher Coverage Heatmap</h3>
@@ -99,7 +99,7 @@ export default function Overview() {
           </div>
 
           {/* Top Furnishers */}
-          <div className="bg-card rounded-lg border border-border/60 p-5">
+          <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[11.5px] font-medium text-foreground">Top Furnishers by Volume</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
@@ -134,9 +134,9 @@ export default function Overview() {
         </div>
 
         {/* Alerts + Product Mix + Watchlist */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {/* Recent Alerts */}
-          <div className="bg-card rounded-lg border border-border/60 p-5">
+          <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[11.5px] font-medium text-foreground">Recent Alerts</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
@@ -156,7 +156,7 @@ export default function Overview() {
           </div>
 
           {/* Product Mix */}
-          <div className="bg-card rounded-lg border border-border/60 p-5">
+          <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-5">
             <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Product Mix</h3>
             <p className="text-[10px] text-muted-foreground/70 mb-3">Distribution by category</p>
             <div className="flex items-center gap-4">
@@ -185,7 +185,7 @@ export default function Overview() {
           </div>
 
           {/* Watchlist Snapshot */}
-          <div className="bg-card rounded-lg border border-border/60 p-5">
+          <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[11.5px] font-medium text-foreground">Watchlist Snapshot</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
@@ -214,7 +214,7 @@ export default function Overview() {
         </div>
 
         {/* Recent Trade Activity */}
-        <div className="bg-card rounded-lg border border-border/60 p-5">
+        <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-5">
           <h3 className="text-[11.5px] font-medium text-foreground mb-3">Recent Trade Activity</h3>
           <table className="w-full">
             <thead>
@@ -259,8 +259,8 @@ export default function Overview() {
       </div>
 
       {/* Right Insights Panel */}
-      <div className="w-[260px] flex-shrink-0 space-y-4">
-        <div className="bg-card rounded-lg border border-border/60 p-4">
+      <div className="w-full xl:w-[260px] flex-shrink-0 space-y-4">
+        <div className="bg-card/95 rounded-xl border border-border/60 shadow-sm p-4">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
             <h3 className="text-[11.5px] font-medium text-foreground">Insights</h3>
