@@ -149,7 +149,7 @@ export default function BureauCoverage() {
 
         <div className="flex items-center gap-4 mt-3 text-[10px] text-muted-foreground/60 flex-wrap">
           <span className="font-medium text-foreground/70">Bureau legend</span>
-          {["EX Experian", "EQ Equifax", "TU TransUnion", "IN Innovis", "SB SBFE", "ESB Experian Small Business"].map((l) => (
+          {["EX Experian", "EQ Equifax", "TU TransUnion", "IN Innovis", "SB SBFE", "ESB Experian Small Business", "D&B Dun & Bradstreet"].map((l) => (
             <span key={l}>{l}</span>
           ))}
         </div>
