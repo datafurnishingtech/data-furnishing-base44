@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronDown, LogOut, SlidersHorizontal, User } from "lucide-react";
+import { LogOut, SlidersHorizontal, User } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
 
 export default function AccountMenu() {
@@ -29,7 +29,7 @@ export default function AccountMenu() {
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className={`flex items-center gap-1.5 rounded-full p-0.5 pr-1.5 transition-colors ${
+        className={`flex items-center rounded-full p-0.5 transition-colors ${
           open ? "bg-muted" : "hover:bg-muted/70"
         }`}
         aria-label="Open account menu"
@@ -38,7 +38,6 @@ export default function AccountMenu() {
         <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-semibold text-primary-foreground">
           {initials}
         </div>
-        <ChevronDown className={`w-3 h-3 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
