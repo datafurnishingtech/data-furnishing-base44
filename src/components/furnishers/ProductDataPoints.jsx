@@ -120,10 +120,10 @@ export default function ProductDataPoints({ product, bureauCoverage }) {
                       <span className="font-medium text-foreground">{cov.bureau_name}</span>
                       <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${
                         cov.reporting_status === "confirmed_reports"
-                          ? "bg-emerald-500/10 text-emerald-600"
+                          ? "text-emerald-600"
                           : cov.reporting_status === "likely_reports"
-                          ? "bg-amber-500/10 text-amber-600"
-                          : "bg-muted text-muted-foreground"
+                          ? "text-amber-600"
+                          : "text-muted-foreground"
                       }`}>
                         {REPORTING_STATUS_LABELS[cov.reporting_status] || cov.reporting_status}
                       </span>

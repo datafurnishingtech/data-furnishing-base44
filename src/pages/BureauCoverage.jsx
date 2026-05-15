@@ -122,7 +122,7 @@ export default function BureauCoverage() {
                   <td className="px-3 py-2.5">
                     <div className="flex gap-0.5 flex-wrap">
                       {f.bureaus.map((b) => (
-                        <span key={b} className="text-[9px] font-medium bg-primary/10 text-primary px-1 py-0.5 rounded">{b}</span>
+                        <span key={b} className="text-[9px] font-medium text-primary px-1 py-0.5 rounded">{b}</span>
                       ))}
                     </div>
                   </td>
@@ -171,7 +171,7 @@ export default function BureauCoverage() {
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-[11px] font-medium text-foreground">{selectedFurnisher.name}</span>
-                  <span className="text-[9px] font-medium bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded">Verified</span>
+                  <span className="text-[9px] font-medium text-emerald-600 px-1.5 py-0.5 rounded">Verified</span>
                 </div>
                 <p className="text-[10px] text-muted-foreground/60 mt-0.5">{selectedFurnisher.type}</p>
               </div>
@@ -195,7 +195,7 @@ export default function BureauCoverage() {
                     </div>
                   </div>
                   <div>
-                    <span className="text-[9.5px] font-medium text-emerald-600 bg-emerald-500/10 px-1.5 py-0.5 rounded">High coverage</span>
+                    <span className="text-[9.5px] font-medium text-emerald-600 px-1.5 py-0.5 rounded">High coverage</span>
                     <p className="text-[10px] text-muted-foreground/60 mt-1.5">↑ 2.1pts vs 30d</p>
                   </div>
                 </div>
@@ -210,9 +210,9 @@ export default function BureauCoverage() {
                       <div className="flex items-center gap-1.5">
                         <span className="text-[10.5px] font-medium tabular-nums">{g.gap}</span>
                         <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${
-                          g.level === "High Impact" ? "bg-destructive/10 text-destructive" :
-                          g.level === "Medium" ? "bg-amber-500/10 text-amber-600" :
-                          "bg-muted text-muted-foreground"
+                          g.level === "High Impact" ? "text-destructive" :
+                          g.level === "Medium" ? "text-amber-600" :
+                          "text-muted-foreground"
                         }`}>{g.level}</span>
                       </div>
                     </div>

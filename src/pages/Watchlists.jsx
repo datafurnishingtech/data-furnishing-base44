@@ -19,8 +19,8 @@ const watchlists = [
   { name: "Competitive Tracking", desc: "Monitor competitor activity and expansion", type: "Competitive", items: 17, changes: 7, changePct: "53.8%", risk: "Low", lastUpdated: "May 31, 2025", updatedAgo: "5h ago", owner: "Taylor Morgan" },
 ];
 
-const riskColors = { High: "bg-destructive/10 text-destructive", Medium: "bg-amber-500/10 text-amber-600", Low: "bg-emerald-500/10 text-emerald-600" };
-const typeColors = { Furnisher: "bg-primary/10 text-primary", Product: "bg-emerald-500/10 text-emerald-600", Coverage: "bg-amber-500/10 text-amber-600", Competitive: "bg-purple-500/10 text-purple-700" };
+const riskColors = { High: "text-destructive", Medium: "text-amber-600", Low: "text-emerald-600" };
+const typeColors = { Furnisher: "text-primary", Product: "text-emerald-600", Coverage: "text-amber-600", Competitive: "text-purple-700" };
 
 const recentChanges = [
   { furnisher: "Synchrony Bank", domain: "synchrony.com", change: "Coverage improved to 98%", time: "2h ago" },
@@ -109,13 +109,13 @@ export default function Watchlists() {
                     <p className="text-[11px] font-normal text-foreground">{w.name}</p>
                     <p className="text-[10px] text-muted-foreground/60">{w.desc}</p>
                   </td>
-                  <td className="px-3 py-2.5"><Badge className={`${typeColors[w.type]} border-0 text-[9.5px] px-1.5`}>{w.type}</Badge></td>
+                  <td className="px-3 py-2.5"><Badge className={`${typeColors[w.type]} text-[9.5px] px-1.5`}>{w.type}</Badge></td>
                   <td className="px-3 py-2.5 text-[11px] text-foreground/70 tabular-nums">{w.items}</td>
                   <td className="px-3 py-2.5 text-[11px]">
                     <span className="text-emerald-500">↑ {w.changes}</span>
                     <span className="text-muted-foreground/60 ml-1 text-[10px]">{w.changePct}</span>
                   </td>
-                  <td className="px-3 py-2.5"><Badge className={`${riskColors[w.risk]} border-0 text-[9.5px] px-1.5`}>{w.risk}</Badge></td>
+                  <td className="px-3 py-2.5"><Badge className={`${riskColors[w.risk]} text-[9.5px] px-1.5`}>{w.risk}</Badge></td>
                   <td className="px-3 py-2.5">
                     <p className="text-[10px] text-muted-foreground/60 tabular-nums">{w.lastUpdated}</p>
                     <p className="text-[10px] text-muted-foreground/50">{w.updatedAgo}</p>
@@ -170,7 +170,7 @@ export default function Watchlists() {
             </div>
             <div className="flex items-center gap-1.5 mb-0.5">
               <span className="text-[11px] font-medium text-foreground">{selected.name}</span>
-              <span className="text-[9px] font-medium bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded flex-shrink-0">Active</span>
+              <span className="text-[9px] font-medium text-emerald-600 px-1.5 py-0.5 rounded flex-shrink-0">Active</span>
             </div>
             <p className="text-[10px] text-muted-foreground/60 mb-0.5">{selected.type} watchlist</p>
             <p className="text-[10px] text-muted-foreground/50 mb-3">{selected.items} items · Updated {selected.updatedAgo}</p>
