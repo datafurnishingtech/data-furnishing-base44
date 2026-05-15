@@ -25,17 +25,17 @@ const alerts = [
 ];
 
 const severityColors = {
-  Critical: "text-destructive",
-  High: "text-amber-600",
-  Medium: "text-amber-500",
-  Low: "text-muted-foreground",
+  Critical: "bg-destructive text-white",
+  High: "bg-amber-500 text-white",
+  Medium: "bg-amber-400 text-white",
+  Low: "bg-muted text-muted-foreground",
 };
 
 const statusColors = {
-  New: "text-primary",
-  Investigating: "text-amber-600",
-  Informational: "text-muted-foreground",
-  Resolved: "text-emerald-600",
+  New: "bg-primary/10 text-primary border-primary/20",
+  Investigating: "bg-amber-100 text-amber-700 border-amber-200",
+  Informational: "bg-muted text-muted-foreground border-border",
+  Resolved: "bg-emerald-100 text-emerald-700 border-emerald-200",
 };
 
 const trendData = Array.from({ length: 30 }, (_, i) => ({ x: i, y: Math.floor(Math.random() * 30) + 10 }));
@@ -124,7 +124,7 @@ export default function Alerts() {
                     <p className="text-[10px] text-muted-foreground/60">{a.desc}</p>
                   </td>
                   <td className="px-3 py-2.5">
-                    <Badge className={`${severityColors[a.severity]} text-[9.5px] px-1.5 h-4`}>{a.severity}</Badge>
+                    <Badge className={`${severityColors[a.severity]} border-0 text-[9.5px] px-1.5 h-4`}>{a.severity}</Badge>
                   </td>
                   <td className="px-3 py-2.5 text-[11px] text-foreground/70">{a.category}</td>
                   <td className="px-3 py-2.5 text-[11px] text-foreground/70">{a.source}</td>
@@ -160,7 +160,7 @@ export default function Alerts() {
               <button onClick={() => setSelected(null)}><X className="w-3.5 h-3.5 text-muted-foreground/50" /></button>
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <Badge className={`${severityColors[selected.severity]} text-[9.5px]`}>{selected.severity}</Badge>
+              <Badge className={`${severityColors[selected.severity]} border-0 text-[9.5px]`}>{selected.severity}</Badge>
               <span className="text-[10px] text-muted-foreground/60">ALT-2025-051231</span>
             </div>
 

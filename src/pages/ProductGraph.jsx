@@ -191,7 +191,7 @@ export default function ProductGraph() {
           <div className="flex items-center gap-2 mb-3">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />
             <h4 className="text-[11.5px] font-medium text-foreground">Selected node</h4>
-            <span className="text-[9px] font-medium text-primary px-1.5 py-0.5 rounded">Furnisher</span>
+            <span className="text-[9px] font-medium bg-primary/10 text-primary px-1.5 py-0.5 rounded">Furnisher</span>
           </div>
           <div className="flex items-center gap-2 mb-3">
             <FurnisherLogo domain="synchrony.com" name="Synchrony Bank" size="sm" />
@@ -199,7 +199,7 @@ export default function ProductGraph() {
               <p className="text-[11px] font-medium text-foreground">Synchrony Bank</p>
               <p className="text-[10px] text-muted-foreground/60">Furnisher ID: FURN-00124</p>
             </div>
-            <span className="text-[9px] font-medium text-emerald-600 px-1.5 py-0.5 rounded ml-auto">Active</span>
+            <span className="text-[9px] font-medium bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded ml-auto">Active</span>
           </div>
 
           <h5 className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-2">Relationship summary</h5>

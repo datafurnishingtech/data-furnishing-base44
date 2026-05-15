@@ -82,7 +82,7 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] font-medium text-foreground truncate">{company.company_name}</span>
               {company.verification_status === "verified" && (
-                <span className="text-[9px] font-medium text-emerald-600 px-1.5 py-0.5 rounded flex-shrink-0">
+                <span className="text-[9px] font-medium bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded flex-shrink-0">
                   Verified
                 </span>
               )}
@@ -175,10 +175,10 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
                   </span>
                   <span className={`text-[9.5px] font-medium px-1.5 py-0.5 rounded ${
                     company.confidence_score >= 90
-                      ? "text-emerald-600"
+                      ? "bg-emerald-500/10 text-emerald-600"
                       : company.confidence_score >= 75
-                      ? "text-amber-600"
-                      : "text-destructive"
+                      ? "bg-amber-500/10 text-amber-600"
+                      : "bg-destructive/10 text-destructive"
                   }`}>
                     {company.confidence_score >= 90 ? "High" : company.confidence_score >= 75 ? "Medium" : "Low"}
                   </span>

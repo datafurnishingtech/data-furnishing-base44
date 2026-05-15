@@ -122,13 +122,13 @@ export default function Tradelines() {
                   <td className="px-3 py-2.5">
                     <div className="flex gap-1">
                       {t.bureaus.map((b) => (
-                        <span key={b} className="text-[9.5px] font-medium text-primary px-1.5 py-0.5 rounded">{b}</span>
+                        <span key={b} className="text-[9.5px] font-medium bg-primary/10 text-primary px-1.5 py-0.5 rounded">{b}</span>
                       ))}
                     </div>
                   </td>
                   <td className="px-3 py-2.5">
-                    <span className={`inline-flex items-center justify-center w-8 h-5 rounded text-[10px] font-semibold ${
-                      t.impactScore >= 85 ? "text-primary" : t.impactScore >= 75 ? "text-primary/80" : "text-primary/60"
+                    <span className={`inline-flex items-center justify-center w-8 h-5 rounded text-[10px] font-semibold text-white ${
+                      t.impactScore >= 85 ? "bg-primary" : t.impactScore >= 75 ? "bg-primary/70" : "bg-primary/40"
                     }`}>
                       {t.impactScore}
                     </span>

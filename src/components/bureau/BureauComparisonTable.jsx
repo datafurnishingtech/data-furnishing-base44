@@ -174,10 +174,10 @@ export default function BureauComparisonTable() {
                   </td>
                   <td className="px-3 py-2.5">
                     <span className={`text-[9.5px] font-medium px-1.5 py-0.5 rounded ${
-                      b.bureauType === "consumer" ? "text-primary/80" :
-                      b.bureauType === "business" ? "text-amber-600" :
-                      b.bureauType === "specialty" ? "text-muted-foreground/70" :
-                      "text-secondary-foreground"
+                      b.bureauType === "consumer" ? "bg-primary/10 text-primary/80" :
+                      b.bureauType === "business" ? "bg-amber-500/10 text-amber-600" :
+                      b.bureauType === "specialty" ? "bg-muted text-muted-foreground/70" :
+                      "bg-secondary text-secondary-foreground"
                     }`}>{b.type}</span>
                   </td>
                   <td className="px-3 py-2.5 text-right">
