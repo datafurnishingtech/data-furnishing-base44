@@ -1,6 +1,7 @@
 import React from "react";
 import { Search, Bell, HelpCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import AccountMenu from "./AccountMenu";
 
 export default function TopBar() {
   return (
@@ -26,9 +27,7 @@ export default function TopBar() {
         <button className="p-1.5 rounded-md hover:bg-muted transition-colors">
           <HelpCircle className="w-4 h-4 text-muted-foreground" />
         </button>
-        <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-[10px] font-semibold text-primary-foreground">
-          AK
-        </div>
+        <AccountMenu />
       </div>
     </header>
   );

@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Building2,
@@ -9,10 +9,6 @@ import {
   Bell,
   Eye,
   FileText,
-  ChevronUp,
-  LogOut,
-  User,
-  SlidersHorizontal,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/lib/AuthContext";
@@ -30,23 +26,13 @@ const navItems = [
 
 export default function Sidebar() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const { user } = useAuth();
 
   // Display name and initials — fall back to static values if no auth user
   const displayName = user?.full_name || "Alex Kim";
   const displayRole = user?.role || "Data Analyst";
   const initials = displayName.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50">
@@ -88,50 +74,9 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* User Account Menu */}
-      <div className="p-2.5 relative" ref={menuRef}>
-        {/* Dropdown — renders above the trigger */}
-        {menuOpen && (
-          <div className="absolute bottom-full left-2.5 right-2.5 mb-1.5 bg-popover border border-border/60 rounded-lg shadow-lg overflow-hidden z-50 py-1">
-            <div className="px-3 py-2 border-b border-border/40 mb-1">
-              <p className="text-[11px] font-medium text-foreground truncate">{displayName}</p>
-              <p className="text-[10px] text-muted-foreground/60 truncate">{displayRole}</p>
-            </div>
-            <button
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] text-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              <User className="w-3 h-3 opacity-60 flex-shrink-0" />
-              Profile
-            </button>
-            <button
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] text-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors"
-              onClick={() => {
-                setMenuOpen(false);
-                navigate("/settings");
-              }}
-            >
-              <SlidersHorizontal className="w-3 h-3 opacity-60 flex-shrink-0" />
-              Account settings
-            </button>
-            <div className="h-px bg-border/40 my-1" />
-            <button
-              className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] text-destructive/80 hover:bg-destructive/6 hover:text-destructive transition-colors"
-              onClick={() => { setMenuOpen(false); logout(); }}
-            >
-              <LogOut className="w-3 h-3 flex-shrink-0" />
-              Sign out
-            </button>
-          </div>
-        )}
-
-        {/* Trigger */}
-        <button
-          onClick={() => setMenuOpen(o => !o)}
-          className={`w-full flex items-center gap-2 rounded-md px-1.5 py-1 transition-colors group ${
-            menuOpen ? "bg-muted/50" : "hover:bg-muted/40"
-          }`}
-        >
+      {/* User Identity */}
+      <div className="p-2.5 relative">
+        <div className="w-full flex items-center gap-2 rounded-md px-1.5 py-1">
           <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[9px] font-semibold text-white flex-shrink-0">
             {initials}
           </div>
@@ -139,8 +84,7 @@ export default function Sidebar() {
             <p className="text-[11px] font-medium text-foreground truncate">{displayName}</p>
             <p className="text-[10px] text-foreground/40 truncate">{displayRole}</p>
           </div>
-          <ChevronUp className={`w-3 h-3 text-muted-foreground/40 flex-shrink-0 transition-transform ${menuOpen ? "rotate-180" : ""}`} />
-        </button>
+        </div>
       </div>
     </aside>
   );
