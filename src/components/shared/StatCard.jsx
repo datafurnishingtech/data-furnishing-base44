@@ -12,7 +12,7 @@ export default function StatCard({ label, value, change, changeLabel, icon: Icon
   const displayValue = scaled && typeof value === 'number' ? formatScaledNumber(value) : value;
   
   return (
-    <div className="bg-card rounded-2xl border border-border px-5 py-4 flex flex-col gap-2 min-w-0 shadow-none">
+    <div className="bg-card rounded-lg border border-border/60 px-4 py-3.5 flex flex-col gap-2 min-w-0">
       <span className="text-[10px] font-medium tracking-[0.06em] uppercase text-muted-foreground/70 truncate whitespace-nowrap">
         {label}
       </span>
