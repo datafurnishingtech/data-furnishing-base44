@@ -40,8 +40,9 @@
     --sidebar-accent-foreground: 0 0% 10%;
     --sidebar-border: 60 6% 90%;
     --sidebar-ring: 248 90% 64%;
-    --success: 155 36% 36%;
-    --warning: 36 66% 43%;
+    --success: 139 52% 31%;
+    --warning: 39 100% 30%;
+    --info: 228 56% 48%;
   }
 
   .dark {
@@ -98,5 +99,24 @@
   ::selection {
     background: hsl(var(--accent));
     color: hsl(var(--accent-foreground));
+  }
+
+  .recharts-cartesian-grid line,
+  .recharts-polar-grid-angle line,
+  .recharts-polar-grid-concentric circle {
+    stroke: #EEEEEB;
+  }
+
+  .recharts-text,
+  .recharts-label {
+    fill: #8A8A8A;
+    font-size: 11px;
+  }
+
+  .recharts-tooltip-wrapper .recharts-default-tooltip {
+    border: 1px solid #E6E6E3 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(25,25,25,0.08) !important;
+    background: #FFFFFF !important;
   }
 }

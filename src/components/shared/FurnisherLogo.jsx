@@ -58,7 +58,7 @@ export default function FurnisherLogo({ domain, name, size = "sm" }) {
 
   if (srcIndex < sources.length) {
     return (
-      <div className={`${dim} rounded-md overflow-hidden bg-white border border-border/40 flex items-center justify-center flex-shrink-0`}>
+      <div className={`${dim} rounded-lg overflow-hidden bg-card border border-border flex items-center justify-center flex-shrink-0`}>
         <img
           src={sources[srcIndex]}
           alt={name}
@@ -69,7 +69,7 @@ export default function FurnisherLogo({ domain, name, size = "sm" }) {
     );
   }
   return (
-    <div className={`${dim} rounded-md bg-primary/10 flex items-center justify-center ${textSize} font-semibold text-primary flex-shrink-0`}>
+    <div className={`${dim} rounded-lg bg-accent border border-[#DCD5FF] flex items-center justify-center ${textSize} font-semibold text-accent-foreground flex-shrink-0`}>
       {initials(name)}
     </div>
   );
