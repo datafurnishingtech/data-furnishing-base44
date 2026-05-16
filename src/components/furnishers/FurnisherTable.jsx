@@ -27,10 +27,10 @@ const COMPANY_TYPE_LABELS = {
 
 export default function FurnisherTable({ companies, selected, onSelect }) {
   return (
-    <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-none">
       <table className="w-full">
         <thead>
-          <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
+          <tr className="text-[11px] font-medium text-muted-foreground border-b border-border uppercase tracking-[0.06em]">
             <th className="text-left px-4 py-2.5 font-medium">Furnisher</th>
             <th className="text-left px-3 py-2.5 font-medium">Type</th>
             <th className="text-left px-3 py-2.5 font-medium">Headquarters</th>
@@ -45,8 +45,8 @@ export default function FurnisherTable({ companies, selected, onSelect }) {
             <tr
               key={c.id}
               onClick={() => onSelect(c)}
-              className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${
-                selected?.id === c.id ? "bg-primary/5" : ""
+              className={`h-14 border-b border-border/70 last:border-0 hover:bg-[#FAFAF8] cursor-pointer transition-colors ${
+                selected?.id === c.id ? "bg-accent" : ""
               }`}
             >
               <td className="px-4 py-2.5">
