@@ -5,13 +5,13 @@ import AccountMenu from "./AccountMenu";
 
 export default function TopBar() {
   return (
-    <header className="h-12 bg-background flex items-center justify-between px-5 sticky top-3 z-40 rounded-lg shadow-sm border border-border">
+    <header className="h-12 bg-card flex items-center justify-between px-5 sticky top-3 z-40 rounded-lg shadow-sm border border-border/60">
       {/* Search */}
       <div className="relative w-full max-w-sm">
         <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
         <Input
           placeholder="Search furnishers, products, trade data..."
-          className="pl-8 pr-12 h-8 bg-card border-border text-xs"
+          className="pl-8 pr-12 h-8 bg-muted/50 border-border text-xs"
         />
         <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-muted-foreground bg-background border border-border rounded px-1 py-0.5">
           ⌘K

@@ -35,7 +35,7 @@ export default function Sidebar() {
 
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-sidebar text-sidebar-foreground flex flex-col z-50 border-r border-sidebar-border">
+    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50">
       {/* Logo */}
       <div className="flex items-center justify-center px-3 h-14">
         <img
@@ -58,8 +58,8 @@ export default function Sidebar() {
               to={item.path}
               className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[11px] transition-colors ${
                 isActive
-                  ? "bg-sidebar-accent text-primary"
-                  : "text-sidebar-foreground/70 hover:bg-muted hover:text-sidebar-foreground"
+                  ? "bg-primary/8 text-primary"
+                  : "text-foreground/70 hover:bg-muted/50 hover:text-foreground"
               }`}
             >
               <item.icon className={`w-3 h-3 flex-shrink-0 ${isActive ? "" : "opacity-60"}`} />
