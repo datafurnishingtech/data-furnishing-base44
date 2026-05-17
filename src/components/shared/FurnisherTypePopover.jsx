@@ -80,7 +80,7 @@ export default function FurnisherTypePopover({ value, onChange }) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 h-7 px-2.5 rounded-md border border-border/60 text-[11px] text-muted-foreground bg-transparent hover:bg-muted/30 transition-colors w-[140px] justify-between"
+        className="flex items-center gap-1.5 h-7 px-2.5 rounded-md border border-border/60 text-[11px] text-foreground/70 bg-card hover:bg-muted/50 hover:text-foreground transition-colors w-[140px] justify-between"
       >
         <span className="truncate flex-1 text-left">{getTypeLabel(value)}</span>
         <ChevronDown className="w-3 h-3 opacity-50 flex-shrink-0" />
@@ -90,9 +90,9 @@ export default function FurnisherTypePopover({ value, onChange }) {
         <div className="absolute top-full left-0 mt-1 w-56 bg-popover border border-border/60 rounded-lg shadow-lg z-50 py-1 max-h-80 overflow-y-auto">
           <button
             onClick={() => { onChange("all"); setOpen(false); }}
-            className="w-full flex items-center justify-between px-3 py-1.5 text-[11px] hover:bg-muted/40 transition-colors"
+            className="w-full flex items-center justify-between px-3 py-1.5 text-[11px] text-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors"
           >
-            <span className="font-medium text-foreground">All Types</span>
+            <span className="font-medium">All Types</span>
             {(!value || value === "all") && <Check className="w-3 h-3 text-primary" />}
           </button>
           <div className="h-px bg-border/50 my-1" />
@@ -106,9 +106,9 @@ export default function FurnisherTypePopover({ value, onChange }) {
                 <button
                   key={t.value}
                   onClick={() => { onChange(t.value); setOpen(false); }}
-                  className="w-full flex items-center justify-between px-3 pl-7 py-1.5 text-[11px] hover:bg-muted/40 transition-colors"
+                  className="w-full flex items-center justify-between px-3 pl-7 py-1.5 text-[11px] text-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors"
                 >
-                  <span className={value === t.value ? "text-primary font-medium" : "text-foreground/80"}>{t.label}</span>
+                  <span className={value === t.value ? "text-primary font-medium" : ""}>{t.label}</span>
                   {value === t.value && <Check className="w-3 h-3 text-primary" />}
                 </button>
               ))}
