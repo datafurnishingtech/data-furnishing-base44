@@ -2,6 +2,7 @@ import React from "react";
 import { CheckCircle2, Clock, MoreVertical } from "lucide-react";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import AnimatedBar from "@/components/shared/AnimatedBar";
+import SortableHeader from "./SortableHeader";
 
 const COMPANY_TYPE_LABELS = {
   direct_furnisher: "Direct Furnisher",
@@ -25,18 +26,23 @@ const COMPANY_TYPE_LABELS = {
   unknown: "Unknown",
 };
 
-export default function FurnisherTable({ companies, selected, onSelect }) {
+export default function FurnisherTable({ companies, selected, onSelect, sortConfig, onSort }) {
   return (
-    <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
-      <table className="w-full">
-        <thead>
-          <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
-            <th className="text-left px-4 py-2.5 font-medium">Furnisher</th>
-            <th className="text-left px-3 py-2.5 font-medium">Type</th>
-            <th className="text-left px-3 py-2.5 font-medium">Headquarters</th>
-            <th className="text-left px-3 py-2.5 font-medium">Confidence</th>
-            <th className="text-left px-3 py-2.5 font-medium">Verification</th>
-            <th className="text-left px-3 py-2.5 font-medium">Last Verified</th>
+    <div className="bg-card rounded-xl border border-border/60 overflow-hidden shadow-sm">
+      <div className="px-4 py-3 border-b border-border/50 bg-muted/15">
+        <p className="text-[11.5px] font-semibold text-foreground">Company coverage details</p>
+        <p className="text-[10px] text-muted-foreground/65 mt-0.5">Sort by furnisher, type, location, confidence, verification, or last review.</p>
+      </div>
+      <div className="overflow-x-auto">
+      <table className="w-full min-w-[860px]">
+        <thead className="bg-card sticky top-0 z-10">
+          <tr className="text-[9.5px] border-b border-border/60">
+            <SortableHeader label="Furnisher" sortKey="company_name" activeKey={sortConfig.key} direction={sortConfig.direction} onSort={onSort} className="text-left px-4" />
+            <SortableHeader label="Type" sortKey="company_type" activeKey={sortConfig.key} direction={sortConfig.direction} onSort={onSort} className="text-left px-3" />
+            <SortableHeader label="Headquarters" sortKey="headquarters_location" activeKey={sortConfig.key} direction={sortConfig.direction} onSort={onSort} className="text-left px-3" />
+            <SortableHeader label="Confidence" sortKey="confidence_score" activeKey={sortConfig.key} direction={sortConfig.direction} onSort={onSort} className="text-left px-3" />
+            <SortableHeader label="Verification" sortKey="verification_status" activeKey={sortConfig.key} direction={sortConfig.direction} onSort={onSort} className="text-left px-3" />
+            <SortableHeader label="Last Verified" sortKey="last_verified_at" activeKey={sortConfig.key} direction={sortConfig.direction} onSort={onSort} className="text-left px-3" />
             <th className="w-8"></th>
           </tr>
         </thead>
@@ -45,8 +51,8 @@ export default function FurnisherTable({ companies, selected, onSelect }) {
             <tr
               key={c.id}
               onClick={() => onSelect(c)}
-              className={`border-b border-border/30 last:border-0 hover:bg-muted/20 cursor-pointer transition-colors ${
-                selected?.id === c.id ? "bg-primary/5" : ""
+              className={`border-b border-border/30 last:border-0 hover:bg-muted/25 cursor-pointer transition-colors ${
+                selected?.id === c.id ? "bg-primary/5 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
               }`}
             >
               <td className="px-4 py-2.5">
@@ -101,6 +107,7 @@ export default function FurnisherTable({ companies, selected, onSelect }) {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

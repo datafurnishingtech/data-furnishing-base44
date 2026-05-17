@@ -14,6 +14,7 @@ export default function Furnishers() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [verificationFilter, setVerificationFilter] = useState("all");
+  const [sortConfig, setSortConfig] = useState({ key: "confidence_score", direction: "desc" });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
 
@@ -35,6 +36,8 @@ export default function Furnishers() {
   }, [companies]);
 
   const filtered = useMemo(() => {
+    const verificationRank = { verified: 3, partially_verified: 2, unverified: 1 };
+
     return companies
       .filter((c) => {
         const matchSearch =
@@ -46,8 +49,19 @@ export default function Furnishers() {
         const matchVerification = verificationFilter === "all" || c.verification_status === verificationFilter;
         return matchSearch && matchType && matchVerification;
       })
-      .sort((a, b) => (b.confidence_score || 0) - (a.confidence_score || 0));
-  }, [companies, search, typeFilter, verificationFilter]);
+      .sort((a, b) => {
+        const key = sortConfig.key;
+        const direction = sortConfig.direction === "asc" ? 1 : -1;
+        const aValue = key === "verification_status" ? verificationRank[a[key]] || 0 : a[key];
+        const bValue = key === "verification_status" ? verificationRank[b[key]] || 0 : b[key];
+
+        if (typeof aValue === "number" || typeof bValue === "number") {
+          return ((aValue || 0) - (bValue || 0)) * direction;
+        }
+
+        return String(aValue || "").localeCompare(String(bValue || "")) * direction;
+      });
+  }, [companies, search, typeFilter, verificationFilter, sortConfig]);
 
   const paginated = useMemo(() => {
     const start = (page - 1) * pageSize;
@@ -71,6 +85,14 @@ export default function Furnishers() {
     setVerificationFilter("all");
     setPage(1);
     setPageSize(20);
+  }
+
+  function handleSort(key) {
+    setSortConfig((current) => ({
+      key,
+      direction: current.key === key && current.direction === "asc" ? "desc" : "asc",
+    }));
+    setPage(1);
   }
 
   return (
@@ -148,6 +170,8 @@ export default function Furnishers() {
               companies={paginated}
               selected={selected}
               onSelect={setSelected}
+              sortConfig={sortConfig}
+              onSort={handleSort}
             />
             {/* Pagination */}
             <TablePagination
