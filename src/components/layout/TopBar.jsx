@@ -20,12 +20,12 @@ export default function TopBar() {
 
       {/* Right actions */}
       <div className="flex items-center gap-2 ml-4">
-        <button className="relative p-1.5 rounded-md hover:bg-muted transition-colors">
-          <Bell className="w-4 h-4 text-muted-foreground" />
+        <button className="relative p-1.5 rounded-md text-muted-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors">
+          <Bell className="w-4 h-4" />
           <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-destructive rounded-full" />
         </button>
-        <button className="p-1.5 rounded-md hover:bg-muted transition-colors">
-          <HelpCircle className="w-4 h-4 text-muted-foreground" />
+        <button className="p-1.5 rounded-md text-muted-foreground/70 hover:bg-muted/50 hover:text-foreground transition-colors">
+          <HelpCircle className="w-4 h-4" />
         </button>
         <AccountMenu />
       </div>

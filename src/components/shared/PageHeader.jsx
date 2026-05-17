@@ -13,11 +13,11 @@ export default function PageHeader({ title, subtitle, children }) {
       </div>
       <div className="flex items-center gap-1.5">
         {children}
-        <Button variant="outline" size="sm" className="gap-1.5 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60 hover:text-foreground">
+        <Button variant="outline" size="sm" className="gap-1.5 text-[11px] h-7 px-2.5 font-normal border-border/60">
           <Calendar className="w-3 h-3" />
           May 2025
         </Button>
-        <Button variant="outline" size="sm" className="gap-1.5 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60 hover:text-foreground">
+        <Button variant="outline" size="sm" className="gap-1.5 text-[11px] h-7 px-2.5 font-normal border-border/60">
           <Download className="w-3 h-3" />
           Export
         </Button>
