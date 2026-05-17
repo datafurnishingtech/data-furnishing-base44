@@ -110,7 +110,7 @@ export default function BureauCoverage() {
                 <th className="text-left px-3 py-2.5 font-medium">Product</th>
                 <th className="text-left px-3 py-2.5 font-medium">Type</th>
                 <th className="text-left px-3 py-2.5 font-medium">Covered bureaus</th>
-                <th className="text-left px-3 py-2.5 font-medium">Coverage %</th>
+                <th className="text-left px-3 py-2.5 font-medium">Coverage</th>
                 <th className="text-left px-3 py-2.5 font-medium">Confidence</th>
                 <th className="text-left px-3 py-2.5 font-medium">Trend</th>
               </tr>
