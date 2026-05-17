@@ -10,7 +10,7 @@ export default function AnimatedBar({ value, className = "" }) {
 
   return (
     <div
-      className={`h-full bg-gradient-to-r from-primary via-accent to-primary rounded-full transition-all duration-700 ease-out ${className}`}
+      className={`h-full bg-gradient-to-r from-primary/35 via-accent/75 to-primary rounded-full transition-all duration-700 ease-out ${className}`}
       style={{ width: `${width}%` }}
     />
   );
