@@ -87,7 +87,7 @@ export default function FurnisherTypePopover({ value, onChange }) {
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-1 w-56 bg-popover border border-border/60 rounded-lg shadow-lg z-50 py-1 max-h-80 overflow-y-auto">
+        <div className="absolute top-full left-0 mt-1 w-56 bg-popover border border-border/60 rounded-lg shadow-lg shadow-slate-900/5 z-50 py-1 max-h-80 overflow-y-auto">
           <button
             onClick={() => { onChange("all"); setOpen(false); }}
             className="w-full flex items-center justify-between px-3 py-1.5 text-[11px] hover:bg-muted/40 transition-colors"
