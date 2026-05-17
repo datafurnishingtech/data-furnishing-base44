@@ -8,6 +8,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import USCoverageHeatmap from "@/components/overview/USCoverageHeatmap";
 import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import BureauComparisonTable from "@/components/bureau/BureauComparisonTable";
+import CoverageFilters from "@/components/bureau/CoverageFilters";
 
 const furnisherCoverage = [
   { name: "Synchrony Bank", domain: "synchrony.com", abbr: "SYN", product: "Synchrony Bank Credit Card", type: "Credit Card", bureaus: ["EX", "EQ", "TU", "IN", "SB", "ESB"], coverage: 97.2, confidence: "High", trend: "up" },
@@ -30,6 +31,8 @@ const coverageGaps = [
 
 export default function BureauCoverage() {
   const [selectedFurnisher, setSelectedFurnisher] = useState(furnisherCoverage[0]);
+  const [filterReportingStatus, setFilterReportingStatus] = useState(null);
+  const [filterBureauType, setFilterBureauType] = useState(null);
 
   return (
     <div className="flex gap-6">
@@ -87,9 +90,17 @@ export default function BureauCoverage() {
           <div className="px-4 py-3 border-b border-border/50">
             <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Furnisher Coverage Directory</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-2.5">Explore coverage by furnisher, product, and bureau.</p>
-            <div className="relative max-w-sm">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />
-              <Input placeholder="Search furnishers or products..." className="pl-8 h-7 text-[11px] border-border/60" />
+            <div className="flex gap-3 items-center mb-3">
+              <div className="relative flex-1">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />
+                <Input placeholder="Search furnishers or products..." className="pl-8 h-7 text-[11px] border-border/60" />
+              </div>
+              <CoverageFilters 
+                reportingStatus={filterReportingStatus}
+                bureauType={filterBureauType}
+                onReportingStatusChange={setFilterReportingStatus}
+                onBureauTypeChange={setFilterBureauType}
+              />
             </div>
           </div>
           <table className="w-full">
@@ -105,7 +116,10 @@ export default function BureauCoverage() {
               </tr>
             </thead>
             <tbody>
-              {furnisherCoverage.map((f) => (
+              {furnisherCoverage
+                .filter((f) => !filterReportingStatus || f.reportingStatus === filterReportingStatus)
+                .filter((f) => !filterBureauType || f.bureaus.includes(filterBureauType === "consumer" ? "EX" : filterBureauType === "business" ? "IN" : filterBureauType === "specialty" ? "SB" : ""))
+                .map((f) => (
                 <tr
                   key={f.name + f.product}
                   onClick={() => setSelectedFurnisher(f)}
