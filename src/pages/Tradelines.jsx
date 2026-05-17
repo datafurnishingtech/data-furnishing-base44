@@ -1,6 +1,4 @@
-import React, { useMemo, useState } from "react";
-import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 import StatCard from "@/components/shared/StatCard";
 import PageHeader from "@/components/shared/PageHeader";
 import { TrendingUp, ShieldCheck, Package, Globe, Search, Filter, Star, X, ChevronRight, ArrowRight } from "lucide-react";
@@ -9,7 +7,6 @@ import FurnisherLogo from "@/components/shared/FurnisherLogo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import BureauFilter from "@/components/tradelines/BureauFilter";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 
 const tradelines = [
@@ -45,37 +42,8 @@ export default function Tradelines() {
   const [selected, setSelected] = useState(tradelines[0]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [bureauFilter, setBureauFilter] = useState("all");
-
-  const { data: bureaus = [] } = useQuery({
-    queryKey: ["bureaus"],
-    queryFn: () => base44.entities.Bureau.list("bureau_name", 100),
-    initialData: [],
-  });
-
-  const selectedBureau = bureaus.find((bureau) => bureau.id === bureauFilter);
-
-  const filteredTradelines = useMemo(() => {
-    if (!selectedBureau) return tradelines;
-
-    const bureauName = selectedBureau.bureau_name?.toLowerCase();
-    const bureauAbbr = selectedBureau.abbr?.toLowerCase();
-
-    return tradelines.filter((tradeline) =>
-      tradeline.bureaus.some((bureau) => {
-        const normalized = bureau.toLowerCase();
-        return normalized === bureauAbbr || normalized === bureauName;
-      })
-    );
-  }, [selectedBureau]);
-
-  const totalPages = Math.ceil(filteredTradelines.length / pageSize) || 1;
-  const paginated = filteredTradelines.slice((page - 1) * pageSize, page * pageSize);
-
-  const handleBureauFilterChange = (value) => {
-    setBureauFilter(value);
-    setPage(1);
-  };
+  const totalPages = Math.ceil(tradelines.length / pageSize);
+  const paginated = tradelines.slice((page - 1) * pageSize, page * pageSize);
 
   return (
     <div className="flex gap-6">
@@ -96,32 +64,17 @@ export default function Tradelines() {
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/60" />
             <Input placeholder="Search by product or furnisher..." className="pl-8 h-7 text-[11px] border-border/60" />
           </div>
-          <Select>
-            <SelectTrigger className="w-auto min-w-[100px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
-              <SelectValue placeholder="Product type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-            </SelectContent>
-          </Select>
-          <BureauFilter value={bureauFilter} onChange={handleBureauFilterChange} bureaus={bureaus} />
-          <Select>
-            <SelectTrigger className="w-auto min-w-[100px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
-              <SelectValue placeholder="Impact score" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-auto min-w-[100px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
-              <SelectValue placeholder="Reporting frequency" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-            </SelectContent>
-          </Select>
-          <button onClick={() => handleBureauFilterChange("all")} className="text-[11px] text-muted-foreground/60 hover:text-foreground">Clear filters</button>
+          {["Product type", "Bureau", "Impact score", "Reporting frequency"].map((f) => (
+            <Select key={f}>
+              <SelectTrigger className="w-auto min-w-[100px] h-7 text-[11px] border-border/60 text-muted-foreground font-normal">
+                <SelectValue placeholder={f} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+              </SelectContent>
+            </Select>
+          ))}
+          <button className="text-[11px] text-muted-foreground/60 hover:text-foreground">Clear filters</button>
           <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">
             <Filter className="w-3 h-3" /> Filters
           </Button>
@@ -190,7 +143,7 @@ export default function Tradelines() {
           <TablePagination
             page={page}
             totalPages={totalPages}
-            totalItems={filteredTradelines.length}
+            totalItems={tradelines.length}
             pageSize={pageSize}
             onPageChange={setPage}
             onPageSizeChange={(size) => { setPageSize(size); setPage(1); }}
