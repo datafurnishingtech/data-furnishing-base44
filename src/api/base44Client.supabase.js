@@ -1,6 +1,6 @@
 import { createClient } from "@base44/sdk";
 import { appParams } from "@/lib/app-params";
-import { supabase } from "@/lib/supabaseClient";
+import { getSupabase } from "@/lib/supabaseClient";
 import { fetchMyProfile, ensureProfileRow } from "@/services/profileService";
 import { applySuperAdminProfile } from "@/lib/accessHelpers";
 import * as bridge from "@/lib/supabaseDataBridge";
@@ -17,6 +17,7 @@ const sdk = createClient({
 });
 
 async function mapSupabaseUser() {
+  const supabase = await getSupabase();
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) {
     const err = new Error("Not authenticated");
@@ -58,6 +59,7 @@ sdk.auth = {
     window.location.assign(target);
   },
   logout: async () => {
+    const supabase = await getSupabase();
     await supabase.auth.signOut();
     localStorage.removeItem("auth_token");
     localStorage.removeItem("user_session");

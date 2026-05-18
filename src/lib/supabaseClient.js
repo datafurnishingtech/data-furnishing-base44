@@ -1,25 +1,49 @@
 import { createClient } from "@supabase/supabase-js";
+import { base44 } from "@/api/base44Client";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const authOptions = {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    flowType: "pkce",
+  },
+};
 
-export const supabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+let runtimeConfigPromise = null;
+const viteSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const viteSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseConfigured && import.meta.env.DEV) {
-  console.warn(
-    "[supabase] Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY. Copy .env.local.example to .env.local and restart the dev server."
-  );
+export let supabaseConfigured = Boolean(viteSupabaseUrl && viteSupabaseAnonKey);
+export let supabase = createClient(
+  viteSupabaseUrl || "https://placeholder.supabase.co",
+  viteSupabaseAnonKey || "placeholder",
+  authOptions
+);
+
+async function loadRuntimeConfig() {
+  if (!runtimeConfigPromise) {
+    runtimeConfigPromise = base44.functions.invoke("getSupabaseConfig", {}).then((response) => response.data);
+  }
+  return runtimeConfigPromise;
 }
 
-export const supabase = createClient(
-  supabaseUrl || "https://placeholder.supabase.co",
-  supabaseAnonKey || "placeholder",
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      flowType: "pkce",
-    },
+export async function getSupabase() {
+  if (supabaseConfigured) return supabase;
+
+  const config = await loadRuntimeConfig();
+  const supabaseUrl = config?.supabaseUrl;
+  const supabaseAnonKey = config?.supabaseAnonKey;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("Supabase config is missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Base44 secrets.");
   }
-);
+
+  supabase = createClient(supabaseUrl, supabaseAnonKey, authOptions);
+  supabaseConfigured = true;
+
+  if (config.enableAccessGate) window.__VITE_ENABLE_ACCESS_GATE__ = config.enableAccessGate;
+  if (config.superAdminEmails) window.__VITE_SUPER_ADMIN_EMAILS__ = config.superAdminEmails;
+
+  return supabase;
+}

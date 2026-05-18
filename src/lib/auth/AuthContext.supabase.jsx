@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { getSupabase } from "@/lib/supabaseClient";
 import { ensureProfileRow, fetchMyProfile, syncSuperAdminProfile } from "@/services/profileService";
 import { applySuperAdminProfile, hasDashboardAccess, isSuperAdminEmail } from "@/lib/accessHelpers";
 
@@ -129,6 +129,7 @@ export const AuthProvider = ({ children }) => {
   const checkUserAuth = useCallback(async () => {
     try {
       setIsLoadingAuth(true);
+      const supabase = await getSupabase();
       const { data, error } = await supabase.auth.getSession();
       if (error) throw error;
       await applySession(data.session);
@@ -169,7 +170,8 @@ export const AuthProvider = ({ children }) => {
       setIsLoadingPublicSettings(true);
       setAppPublicSettings({ id: "supabase", public_settings: {} });
       try {
-        const { data, error } = await supabase.auth.getSession();
+        const supabase = await getSupabase();
+      const { data, error } = await supabase.auth.getSession();
         if (!mounted) return;
         if (error) throw error;
         await applySession(data.session);
@@ -192,30 +194,39 @@ export const AuthProvider = ({ children }) => {
 
     hydrate();
 
-    // Never await inside onAuthStateChange — it deadlocks Supabase auth and spins forever.
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "INITIAL_SESSION") return;
-      setTimeout(async () => {
-        if (!mounted) return;
-        try {
-          await applySession(session);
-          setAuthChecked(true);
-        } catch (e) {
-          console.warn("auth state change:", e?.message || e);
-        } finally {
-          finishLoading();
-        }
-      }, 0);
-    });
+    let listener = null;
+
+    const setupAuthListener = async () => {
+      const supabase = await getSupabase();
+      if (!mounted) return;
+      const { data } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === "INITIAL_SESSION") return;
+        setTimeout(async () => {
+          if (!mounted) return;
+          try {
+            await applySession(session);
+            setAuthChecked(true);
+          } catch (e) {
+            console.warn("auth state change:", e?.message || e);
+          } finally {
+            finishLoading();
+          }
+        }, 0);
+      });
+      listener = data;
+    };
+
+    setupAuthListener();
 
     return () => {
       mounted = false;
-      listener.subscription.unsubscribe();
+      listener?.subscription?.unsubscribe();
     };
   }, [applySession]);
 
   const login = async ({ email, password }) => {
     const normalizedEmail = String(email || "").trim().toLowerCase();
+    const supabase = await getSupabase();
     const { data, error } = await supabase.auth.signInWithPassword({
       email: normalizedEmail,
       password,
@@ -243,6 +254,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signUp = async ({ email, password, metadata }) => {
+    const supabase = await getSupabase();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -256,6 +268,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const resetPassword = async (email) => {
+    const supabase = await getSupabase();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth-login`,
     });
@@ -263,6 +276,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signInWithGoogle = async () => {
+    const supabase = await getSupabase();
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${window.location.origin}/` },
@@ -271,6 +285,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = useCallback(async () => {
+    const supabase = await getSupabase();
     try {
       await supabase.auth.signOut({ scope: "local" });
     } catch {
@@ -291,6 +306,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const refreshProfile = useCallback(async () => {
+    const supabase = await getSupabase();
     const { data, error } = await supabase.auth.getSession();
     if (error) throw error;
     await applySession(data.session);

@@ -212,6 +212,7 @@ export default function Overview() {
             </table>
           </div>
         </div>
+        </div>
 
         {/* Recent Trade Activity */}
         <div className="bg-card rounded-lg border border-border/60 p-5">

@@ -1,16 +1,20 @@
-const envEmails = import.meta.env.VITE_SUPER_ADMIN_EMAILS || "";
-const parsed = envEmails
-  .split(",")
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
+function getSuperAdminEmails() {
+  const envEmails = window.__VITE_SUPER_ADMIN_EMAILS__ || import.meta.env.VITE_SUPER_ADMIN_EMAILS || "";
+  const parsed = envEmails
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
 
-export const SUPER_ADMIN_EMAILS = parsed.length
-  ? parsed
-  : ["waqasdostdost0092@gmail.com", "camthompsonbiz@gmail.com"];
+  return parsed.length
+    ? parsed
+    : ["waqasdostdost0092@gmail.com", "camthompsonbiz@gmail.com"];
+}
+
+export const SUPER_ADMIN_EMAILS = getSuperAdminEmails();
 
 export function isSuperAdminEmail(email) {
   if (!email || typeof email !== "string") return false;
-  return SUPER_ADMIN_EMAILS.includes(email.trim().toLowerCase());
+  return getSuperAdminEmails().includes(email.trim().toLowerCase());
 }
 
 export function applySuperAdminProfile(profile, user) {
