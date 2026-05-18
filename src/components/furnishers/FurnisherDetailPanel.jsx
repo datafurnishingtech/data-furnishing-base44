@@ -64,7 +64,7 @@ export default function FurnisherDetailPanel({ company, productCount, onClose })
     : "";
 
   return (
-    <div className="w-[260px] flex-shrink-0">
+    <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0">
       <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">

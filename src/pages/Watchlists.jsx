@@ -44,7 +44,7 @@ export default function Watchlists() {
   const [selected, setSelected] = useState(watchlists[0]);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <PageHeader title="Watchlists" subtitle="Track priority entities and monitor market movements that matter most.">
           <Button className="bg-primary text-primary-foreground text-[11px] gap-1 h-7 px-2.5">
@@ -53,7 +53,7 @@ export default function Watchlists() {
         </PageHeader>
 
         {/* Stats */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           <StatCard label="Total watchlists" value="18" change={12.5} />
           <StatCard label="Watched furnishers" value="126" change={10.3} />
           <StatCard label="Watched products" value="248" change={9.8} />
@@ -85,7 +85,7 @@ export default function Watchlists() {
 
         {/* Table */}
         <div className="bg-card rounded-lg border border-border/60 overflow-hidden mb-5">
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="w-10 px-3 py-2.5"><Checkbox className="w-3 h-3" /></th>
@@ -125,7 +125,7 @@ export default function Watchlists() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
             <span className="text-[10px] text-muted-foreground/60">Showing 1–5 of 18 watchlists</span>
             <div className="flex items-center gap-1">
@@ -145,7 +145,7 @@ export default function Watchlists() {
             </div>
             <button className="text-[10px] text-primary/70 hover:text-primary transition-colors flex items-center gap-1">View full report <ArrowRight className="w-2.5 h-2.5" /></button>
           </div>
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {healthData.map((h) => (
               <div key={h.label} className="text-center">
                 <p className="text-[14px] font-medium text-foreground leading-none">{h.value}</p>
@@ -159,7 +159,7 @@ export default function Watchlists() {
 
       {/* Right Panel */}
       {selected && (
-        <div className="w-[260px] flex-shrink-0">
+        <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0">
           <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">

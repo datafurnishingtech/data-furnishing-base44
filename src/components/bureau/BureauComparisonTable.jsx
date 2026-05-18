@@ -124,11 +124,11 @@ export default function BureauComparisonTable() {
     <div className="relative">
       <div
         ref={scrollRef}
-        className="overflow-y-auto"
+        className="overflow-y-auto overflow-x-auto"
         style={{ maxHeight: 248 }}
         onScroll={checkScroll}
       >
-        <table className="w-full">
+        <table className="w-full min-w-[520px]">
           <thead className="sticky top-0 bg-card z-10">
             <tr className="text-[9.5px] font-medium uppercase tracking-[0.06em] border-b border-border/50">
               <th className="text-left px-4 py-2.5 font-medium text-muted-foreground/60">

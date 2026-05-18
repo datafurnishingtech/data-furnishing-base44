@@ -144,7 +144,7 @@ export default function AuthRegister() {
                 <button type="button" onClick={() => { setStep(1); setErrors({}); }} className="text-[10px] text-primary hover:underline flex-shrink-0">Change</button>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block">First name</label>
                   <Input value={form.firstName} onChange={set("firstName")} placeholder="Alex" className={`h-10 text-[13px] ${errors.firstName ? "border-destructive" : ""}`} autoComplete="given-name" />

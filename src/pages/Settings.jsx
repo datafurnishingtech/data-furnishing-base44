@@ -57,7 +57,7 @@ export default function Settings() {
   const [showApiKey, setShowApiKey] = useState(false);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <div className="mb-5">
           <h1 className="text-[15px] font-semibold text-foreground tracking-tight">Settings</h1>
@@ -92,7 +92,7 @@ export default function Settings() {
             </div>
             <Button variant="outline" size="sm" className="text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">Edit profile</Button>
           </div>
-          <div className="grid grid-cols-4 gap-3 mb-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
             {[["Organization name", "Synchrony Bank"], ["Headquarters", "Stamford, CT, USA"], ["Website", "synchrony.com"], ["Organization ID", "SYNC-001"]].map(([label, val]) => (
               <div key={label}>
                 <Label className="text-[10px] text-muted-foreground/60">{label}</Label>
@@ -100,7 +100,7 @@ export default function Settings() {
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {[["Industry", "Financial Services"], ["Timezone", "Eastern Time (ET)"], ["Default currency", "USD"], ["Date format", "MM/DD/YYYY"]].map(([label, placeholder]) => (
               <div key={label}>
                 <Label className="text-[10px] text-muted-foreground/60">{label}</Label>
@@ -152,7 +152,7 @@ export default function Settings() {
         </div>
 
         {/* Bottom sections */}
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {/* Bureau Connections */}
           <div className="bg-card rounded-lg border border-border/60 p-4">
             <h3 className="text-[11px] font-medium text-foreground mb-0.5">Bureau & Data Source Connections</h3>
@@ -268,7 +268,7 @@ export default function Settings() {
       </div>
 
       {/* Right Panel */}
-      <div className="w-[260px] flex-shrink-0 space-y-4">
+      <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0 space-y-4">
         {/* Workspace Summary */}
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center gap-2 mb-3">

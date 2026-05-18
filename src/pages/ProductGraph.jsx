@@ -57,14 +57,14 @@ const bureauNodes = [
 
 export default function ProductGraph() {
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <PageHeader title="Product Graph" subtitle="Visualize relationships between furnishers, products, and bureaus across the credit ecosystem.">
           <button className="text-[11px] text-primary/70 hover:text-primary transition-colors font-normal">Reset filters</button>
         </PageHeader>
 
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           <StatCard label="Linked furnishers" value="2,847" change={12.5} />
           <StatCard label="Product nodes" value="1,248" change={9.8} />
           <StatCard label="Bureaus mapped" value="5" change={0} changeLabel="No change vs 30d" />
@@ -137,7 +137,7 @@ export default function ProductGraph() {
         {/* Top Relationships */}
         <div className="bg-card rounded-lg border border-border/60 p-5">
           <h3 className="text-[11.5px] font-medium text-foreground mb-3">Top Relationships</h3>
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="text-left pb-2 font-medium w-6">#</th>
@@ -162,13 +162,13 @@ export default function ProductGraph() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <button className="text-[10px] text-primary/70 hover:text-primary transition-colors mt-2.5 flex items-center gap-1">View all relationships <ArrowRight className="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       {/* Right Panel */}
-      <div className="w-[260px] flex-shrink-0 space-y-4">
+      <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0 space-y-4">
         {/* Bureau Coverage */}
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center justify-between mb-3">
@@ -203,7 +203,7 @@ export default function ProductGraph() {
           </div>
 
           <h5 className="text-[9.5px] font-medium text-muted-foreground/60 uppercase tracking-[0.06em] mb-2">Relationship summary</h5>
-          <div className="grid grid-cols-4 gap-1.5 text-center mb-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center mb-3">
             {[["6", "Products"], ["5", "Bureaus"], ["28", "Links"], ["94%", "Confidence"]].map(([v, l]) => (
               <div key={l}><p className="text-[13px] font-semibold text-foreground leading-none">{v}</p><p className="text-[9px] text-muted-foreground/60 leading-tight mt-0.5">{l}</p></div>
             ))}

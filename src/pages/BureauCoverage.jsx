@@ -35,7 +35,7 @@ export default function BureauCoverage() {
   const [filterBureauType, setFilterBureauType] = useState(null);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <PageHeader title="Bureau Coverage" subtitle="Map where products and furnishers report across consumer and business bureaus.">
           <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">
@@ -44,7 +44,7 @@ export default function BureauCoverage() {
         </PageHeader>
 
         {/* Stats */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           <StatCard label="Covered furnishers" value="1,842" change={12.6} />
           <StatCard label="Consumer bureau cov." value="98.1%" change={2.4} />
           <StatCard label="Business bureau cov." value="86.7%" change={1.8} />
@@ -57,7 +57,7 @@ export default function BureauCoverage() {
         </div>
 
         {/* Heatmap + Bureau Comparison */}
-        <div className="grid grid-cols-2 gap-4 mb-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">U.S. Consumer Coverage Heatmap</h3>
             <p className="text-[10px] text-muted-foreground/60 mb-3">Coverage % of active tradelines reported by state — hover for detail</p>
@@ -103,7 +103,7 @@ export default function BureauCoverage() {
               />
             </div>
           </div>
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="text-left px-4 py-2.5 font-medium">Furnisher</th>
@@ -150,7 +150,7 @@ export default function BureauCoverage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
             <span className="text-[10px] text-muted-foreground/60">Showing 1–8 of 1,842 results</span>
             <div className="flex items-center gap-1">
@@ -171,7 +171,7 @@ export default function BureauCoverage() {
 
       {/* Right Panel */}
       {selectedFurnisher && (
-        <div className="w-[260px] flex-shrink-0">
+        <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0">
           <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
