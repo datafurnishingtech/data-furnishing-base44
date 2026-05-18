@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/lib/AuthContext";
+import { useMobileNav } from "@/components/layout/MobileNavContext";
 
 const navItems = [
   { label: "Overview", icon: LayoutDashboard, path: "/" },
@@ -27,6 +28,7 @@ const navItems = [
 export default function Sidebar() {
   const location = useLocation();
   const { user } = useAuth();
+  const { open, close } = useMobileNav();
 
   // Display name and initials — fall back to static values if no auth user
   const displayName = user?.full_name || "Alex Kim";
@@ -35,7 +37,20 @@ export default function Sidebar() {
 
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50 border-r border-border/70">
+    <>
+      {open && (
+        <button
+          type="button"
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          aria-label="Close navigation menu"
+          onClick={close}
+        />
+      )}
+    <aside
+      className={`fixed left-0 top-0 h-screen w-[210px] bg-card text-foreground flex flex-col z-50 border-r border-border/70 transition-transform duration-200 ease-out lg:translate-x-0 ${
+        open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      }`}
+    >
       {/* Logo */}
       <div className="flex items-center justify-center px-3 h-14">
         <img
@@ -56,6 +71,7 @@ export default function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
+              onClick={close}
               className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[11px] transition-colors ${
                 isActive
                   ? "bg-primary/8 text-primary"
@@ -87,5 +103,6 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

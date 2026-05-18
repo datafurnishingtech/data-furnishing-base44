@@ -46,12 +46,12 @@ export default function Tradelines() {
   const paginated = tradelines.slice((page - 1) * pageSize, page * pageSize);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <PageHeader title="Tradeline Intelligence" subtitle="Explore what gets reported, how often, and which tradelines drive the most impact." />
 
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           <StatCard label="Total tradelines" value="24.6M" change={11.8} />
           <StatCard label="High-impact tradelines" value="8.2M" change={13.6} />
           <StatCard label="Verified products" value="7,312" change={15.1} />
@@ -85,7 +85,7 @@ export default function Tradelines() {
           <div className="px-4 py-2.5 border-b border-border/50">
             <h3 className="text-[11.5px] font-medium text-foreground">Tradelines <span className="text-muted-foreground/50 font-normal">(24,621,831)</span></h3>
           </div>
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="w-8 px-3 py-2.5"></th>
@@ -139,7 +139,7 @@ export default function Tradelines() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <TablePagination
             page={page}
             totalPages={totalPages}
@@ -185,7 +185,7 @@ export default function Tradelines() {
 
       {/* Detail Panel */}
       {selected && (
-        <div className="w-[260px] flex-shrink-0">
+        <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0">
           <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">

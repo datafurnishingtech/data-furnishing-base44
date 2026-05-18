@@ -67,7 +67,7 @@ export default function Overview() {
     setSelectedState(null);
   };
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       {/* Main content */}
       <div className="flex-1 min-w-0">
         <PageHeader
@@ -76,7 +76,7 @@ export default function Overview() {
         />
 
         {/* Stats */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           <StatCard label="Furnishers" value="2,847" change={12.5} />
           <StatCard label="Tradelines" value="24.6M" change={11.8} />
           <StatCard label="Bur. Coverage" value="98.1%" change={2.4} />
@@ -85,7 +85,7 @@ export default function Overview() {
         </div>
 
         {/* Heatmap + Top Furnishers */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
           {/* Heatmap */}
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
@@ -104,7 +104,7 @@ export default function Overview() {
               <h3 className="text-[11.5px] font-medium text-foreground">Top Furnishers by Volume</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
-            <table className="w-full">
+            <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
               <thead>
                 <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                   <th className="text-left pb-2 font-medium">#</th>
@@ -126,7 +126,7 @@ export default function Overview() {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
             <button className="flex items-center gap-1 text-[10px] text-primary/70 hover:text-primary transition-colors mt-3">
               View all furnishers <ArrowRight className="w-2.5 h-2.5" />
             </button>
@@ -134,7 +134,7 @@ export default function Overview() {
         </div>
 
         {/* Alerts + Product Mix + Watchlist */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           {/* Recent Alerts */}
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <div className="flex items-center justify-between mb-3">
@@ -159,8 +159,8 @@ export default function Overview() {
           <div className="bg-card rounded-lg border border-border/60 p-5">
             <h3 className="text-[11.5px] font-medium text-foreground mb-0.5">Product Mix</h3>
             <p className="text-[10px] text-muted-foreground/70 mb-3">Distribution by category</p>
-            <div className="flex items-center gap-4">
-              <div className="w-28 h-28">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 min-w-0">
+              <div className="w-28 h-28 flex-shrink-0 mx-auto sm:mx-0">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie data={productMix} dataKey="value" cx="50%" cy="50%" innerRadius={28} outerRadius={48} paddingAngle={2}>
@@ -190,7 +190,7 @@ export default function Overview() {
               <h3 className="text-[11.5px] font-medium text-foreground">Watchlist Snapshot</h3>
               <button className="text-[10px] text-primary/70 hover:text-primary transition-colors">View all</button>
             </div>
-            <table className="w-full">
+            <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
               <thead>
                 <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                   <th className="text-left pb-2 font-medium">Watchlist</th>
@@ -216,7 +216,7 @@ export default function Overview() {
         {/* Recent Trade Activity */}
         <div className="bg-card rounded-lg border border-border/60 p-5">
           <h3 className="text-[11.5px] font-medium text-foreground mb-3">Recent Trade Activity</h3>
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="text-left pb-2 font-medium">Trade ID</th>
@@ -251,7 +251,7 @@ export default function Overview() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <button className="flex items-center gap-1 text-[10px] text-primary/70 hover:text-primary transition-colors mt-3 ml-auto">
             View all trade activity <ArrowRight className="w-2.5 h-2.5" />
           </button>
@@ -259,7 +259,7 @@ export default function Overview() {
       </div>
 
       {/* Right Insights Panel */}
-      <div className="w-[260px] flex-shrink-0 space-y-4">
+      <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0 space-y-4">
         <div className="bg-card rounded-lg border border-border/60 p-4">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-0.5 h-3.5 bg-primary/60 rounded-full" />

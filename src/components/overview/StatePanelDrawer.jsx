@@ -122,7 +122,7 @@ export default function StatePanelDrawer({ state, onClose }) {
 
         {/* Summary metrics */}
         {!loading && data && (
-          <div className="grid grid-cols-4 gap-px bg-border flex-shrink-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border flex-shrink-0">
             <div className="bg-card px-4 py-3 text-center">
               <p className="text-[16px] font-semibold text-foreground leading-none">{summary.total ?? 0}</p>
               <p className="text-[9.5px] text-muted-foreground/60 mt-1">Total Mapped</p>

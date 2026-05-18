@@ -74,7 +74,7 @@ export default function Furnishers() {
   }
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <PageHeader
           title="Furnisher Registry"
@@ -82,7 +82,7 @@ export default function Furnishers() {
         />
 
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           <StatCard label="Total furnishers" value={isLoading ? "—" : companies.length.toLocaleString()} change={12.5} />
           <StatCard label="Verified furnishers" value={isLoading ? "—" : verifiedCount.toLocaleString()} change={10.3} />
           <StatCard label="Total products" value={isLoading ? "—" : products.length.toLocaleString()} change={8.7} />

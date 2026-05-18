@@ -44,7 +44,7 @@ export default function Alerts() {
   const [selected, setSelected] = useState(alerts[0]);
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       <div className="flex-1 min-w-0">
         <PageHeader title="Alerts" subtitle="Real-time monitoring of changes across the credit data ecosystem.">
           <Button variant="outline" size="sm" className="gap-1 text-[11px] h-7 px-2.5 font-normal text-muted-foreground border-border/60">
@@ -53,7 +53,7 @@ export default function Alerts() {
         </PageHeader>
 
         {/* Stats */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           <StatCard label="New alerts" value="128" change={18.6} />
           <StatCard label="Critical signals" value="24" change={26.7} />
           <StatCard label="Coverage changes" value="37" change={12.4} />
@@ -98,7 +98,7 @@ export default function Alerts() {
 
         {/* Table */}
         <div className="bg-card rounded-lg border border-border/60 overflow-hidden">
-          <table className="w-full">
+          <div className="overflow-x-auto"><table className="w-full min-w-[640px]">
             <thead>
               <tr className="text-[9.5px] font-medium text-muted-foreground/60 border-b border-border/50 uppercase tracking-[0.06em]">
                 <th className="w-10 px-3 py-2.5"><Checkbox className="w-3 h-3" /></th>
@@ -136,7 +136,7 @@ export default function Alerts() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
           <div className="flex items-center justify-between px-4 py-2.5 border-t border-border/50">
             <span className="text-[10px] text-muted-foreground/60">Showing 1–10 of 128 alerts</span>
             <div className="flex items-center gap-1">
@@ -150,7 +150,7 @@ export default function Alerts() {
 
       {/* Detail Panel */}
       {selected && (
-        <div className="w-[260px] flex-shrink-0">
+        <div className="w-full lg:w-[260px] flex-shrink-0 min-w-0">
           <div className="bg-card rounded-lg border border-border/60 p-4 sticky top-20">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
