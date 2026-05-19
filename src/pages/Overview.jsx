@@ -8,6 +8,7 @@ import FurnisherCoverageHeatmap from "@/components/overview/FurnisherCoverageHea
 import FurnisherTypePopover from "@/components/shared/FurnisherTypePopover";
 import { Badge } from "@/components/ui/badge";
 import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area } from "recharts";
+import { downloadCoverageReport } from "@/lib/coverageReportExport";
 
 const topFurnishers = [
   { rank: 1, name: "Synchrony Bank", domain: "synchrony.com", tradelines: "2.3M" },
@@ -66,6 +67,19 @@ export default function Overview() {
     setTypeFilter(val);
     setSelectedState(null);
   };
+
+  const handleExportReport = () => {
+    downloadCoverageReport({
+      typeFilter,
+      selectedState,
+      topFurnishers,
+      productMix,
+      watchlistData,
+      tradeActivity,
+      recentActivity,
+    });
+  };
+
   return (
     <div className="flex flex-col lg:flex-row gap-6 min-w-0">
       {/* Main content */}
@@ -73,6 +87,7 @@ export default function Overview() {
         <PageHeader
           title="Dashboard Overview"
           subtitle="Your Data Furnishing Intelligence Command Center"
+          onExport={handleExportReport}
         />
 
         {/* Stats */}

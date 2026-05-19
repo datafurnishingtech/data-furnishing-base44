@@ -2,7 +2,7 @@ import React from "react";
 import { Calendar, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function PageHeader({ title, subtitle, children }) {
+export default function PageHeader({ title, subtitle, children, onExport }) {
   return (
     <div className="flex flex-col gap-3 mb-5 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
       <div className="min-w-0">
@@ -17,7 +17,7 @@ export default function PageHeader({ title, subtitle, children }) {
           <Calendar className="w-3 h-3" />
           May 2025
         </Button>
-        <Button variant="outline" size="sm" className="gap-1.5 text-[11px] h-7 px-2.5 font-normal border-border/60">
+        <Button variant="outline" size="sm" onClick={onExport} className="gap-1.5 text-[11px] h-7 px-2.5 font-normal border-border/60">
           <Download className="w-3 h-3" />
           Export
         </Button>
