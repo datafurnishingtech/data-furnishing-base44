@@ -32,9 +32,8 @@ export default function AuthRegister() {
 
   const validateStep1 = () => {
     const e = {};
-    if (!form.email) e.email = "Work email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid work email address.";
-    else if (/gmail|yahoo|hotmail|outlook\.com|icloud/.test(form.email)) e.email = "Please use your work email address.";
+    if (!form.email) e.email = "Email is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid email address.";
     return e;
   };
 
@@ -102,7 +101,7 @@ export default function AuthRegister() {
           {step === 1 ? (
             <>
               <h1 className="text-[19px] font-semibold text-foreground tracking-tight">Request access</h1>
-              <p className="text-[12.5px] text-muted-foreground mt-1.5">Start with your work email</p>
+              <p className="text-[12.5px] text-muted-foreground mt-1.5">Start with your email</p>
             </>
           ) : (
             <>
@@ -116,12 +115,12 @@ export default function AuthRegister() {
           {step === 1 ? (
             <form onSubmit={handleStep1} className="space-y-4" noValidate>
               <div>
-                <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block">Work email</label>
+                <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block">Email</label>
                 <Input
                   type="email"
                   value={form.email}
                   onChange={set("email")}
-                  placeholder="you@company.com"
+                  placeholder="you@email.com"
                   className={`h-10 text-[13px] ${errors.email ? "border-destructive" : ""}`}
                   autoComplete="email"
                   autoFocus
