@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Inter+Tight:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -94,4 +94,145 @@
     overflow-x: hidden;
     max-width: 100%;
   }
+}
+
+/* Auth pages only — visual language matched to Framer landing tokens.
+   Does not override global SaaS theme tokens used by the dashboard. */
+.df-auth-shell {
+  --df-auth-purple: #6e05ff;
+  --df-auth-purple-hover: #5a04d4;
+  --df-auth-ink: #050505;
+  --df-auth-muted: rgba(5, 5, 5, 0.55);
+  --df-auth-border: rgba(5, 5, 5, 0.1);
+  --df-auth-card: #ffffff;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--df-auth-ink);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(110, 5, 255, 0.12), transparent 60%),
+    radial-gradient(800px 400px at 100% 100%, rgba(226, 205, 255, 0.35), transparent 55%),
+    #fafafa;
+}
+
+.df-auth-title {
+  font-family: "Inter Tight", Inter, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--df-auth-ink);
+  line-height: 1.15;
+}
+
+.df-auth-subtitle {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--df-auth-muted);
+  line-height: 1.45;
+}
+
+.df-auth-card {
+  background: var(--df-auth-card);
+  border: 1px solid var(--df-auth-border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 1px 2px rgba(5, 5, 5, 0.04), 0 12px 40px rgba(110, 5, 255, 0.06);
+}
+
+.df-auth-shell label {
+  color: rgba(5, 5, 5, 0.5);
+  letter-spacing: 0.06em;
+}
+
+.df-auth-shell input:not([type="checkbox"]),
+.df-auth-shell select {
+  height: 44px !important;
+  border-radius: 999px !important;
+  border-color: var(--df-auth-border) !important;
+  background: #fff !important;
+  font-size: 13px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  color: var(--df-auth-ink) !important;
+  box-shadow: none !important;
+}
+
+.df-auth-shell input:focus-visible,
+.df-auth-shell select:focus-visible {
+  outline: none !important;
+  border-color: var(--df-auth-purple) !important;
+  box-shadow: 0 0 0 3px rgba(110, 5, 255, 0.15) !important;
+}
+
+.df-auth-shell button[type="submit"],
+.df-auth-shell .df-auth-primary {
+  height: 44px !important;
+  border-radius: 999px !important;
+  background: var(--df-auth-purple) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.df-auth-shell button[type="submit"]:hover:not(:disabled),
+.df-auth-shell .df-auth-primary:hover:not(:disabled) {
+  background: var(--df-auth-purple-hover) !important;
+}
+
+.df-auth-shell button[type="submit"]:disabled {
+  opacity: 0.7;
+}
+
+.df-auth-shell .df-auth-outline {
+  height: 44px !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--df-auth-border) !important;
+  background: #fff !important;
+  color: var(--df-auth-ink) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  box-shadow: none !important;
+}
+
+.df-auth-shell .df-auth-outline:hover {
+  background: rgba(110, 5, 255, 0.04) !important;
+  border-color: rgba(110, 5, 255, 0.25) !important;
+}
+
+.df-auth-shell a {
+  color: var(--df-auth-purple);
+}
+
+.df-auth-shell a:hover {
+  color: var(--df-auth-purple-hover);
+}
+
+.df-auth-footer {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--df-auth-muted);
+  margin-top: 28px;
+}
+
+.df-auth-divider {
+  position: relative;
+  margin: 24px 0;
+}
+
+.df-auth-divider::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: var(--df-auth-border);
+}
+
+.df-auth-divider span {
+  position: relative;
+  display: inline-block;
+  background: var(--df-auth-card);
+  padding: 0 10px;
+  font-size: 11px;
+  color: var(--df-auth-muted);
 }

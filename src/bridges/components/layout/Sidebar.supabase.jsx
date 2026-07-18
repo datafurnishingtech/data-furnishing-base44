@@ -17,7 +17,7 @@ import { isAdminProfile } from "@/lib/accessHelpers";
 import { useMobileNav } from "@/components/layout/MobileNavContext";
 
 const baseNavItems = [
-  { label: "Overview", icon: LayoutDashboard, path: "/" },
+  { label: "Overview", icon: LayoutDashboard, path: "/overview" },
   { label: "Furnishers", icon: Building2, path: "/furnishers" },
   { label: "Tradelines", icon: TrendingUp, path: "/tradelines" },
   { label: "Bureau Coverage", icon: Globe, path: "/bureau-coverage" },
