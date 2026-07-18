@@ -13,6 +13,6 @@ export default function DFIAdminRoute() {
   const { profile, user, isLoadingProfile } = useAuth();
   if (isLoadingProfile && !profile) return <Spinner />;
   const authUser = user ? { id: user.id, email: user.email } : null;
-  if (!isAdminProfile(profile, authUser)) return <Navigate to="/" replace />;
+  if (!isAdminProfile(profile, authUser)) return <Navigate to="/overview" replace />;
   return <Outlet />;
 }
